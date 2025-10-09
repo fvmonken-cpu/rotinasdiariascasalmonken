@@ -6,19 +6,22 @@
   Referrer-Policy: strict-origin-when-cross-origin
 
 # JavaScript files
-*.js
+/assets/*.js
   Content-Type: application/javascript; charset=utf-8
   Cache-Control: public, max-age=31536000, immutable
 
 # CSS files  
-*.css
+/assets/*.css
   Content-Type: text/css; charset=utf-8
   Cache-Control: public, max-age=31536000, immutable
 
 # HTML files
-*.html
+/index.html
   Cache-Control: no-cache
 
-# Assets folder
-/assets/*
-  Cache-Control: public, max-age=31536000, immutable
+# Static assets
+/favicon.ico
+  Cache-Control: public, max-age=31536000
+  
+/icon-*.png
+  Cache-Control: public, max-age=31536000
