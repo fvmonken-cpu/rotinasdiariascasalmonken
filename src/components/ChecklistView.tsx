@@ -12,7 +12,7 @@ import ReopenChecklistDialog from './ReopenChecklistDialog';
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 import { supabase } from '@/lib/supabase';
 import { mockTemplates } from '@/data/mockData';
-import { generateTemplateForProfession, loadProfessionalCategories } from '@/utils/masterTaskUtils';
+import { generateTemplateForProfession, generateTemplateForProfessionFromSupabase, loadProfessionalCategories } from '@/utils/masterTaskUtils';
 import { DailyChecklist, TaskProgress, ChecklistTemplate, ChecklistPeriod } from '@/types';
 import { filterTasksByPeriodAndFrequency, getTaskRescheduleInfo } from '@/utils/taskFrequencyUtils';
 import { checkAndCleanupChecklists } from '@/utils/checklistCleanup';
@@ -148,18 +148,55 @@ const ChecklistView = ()=>{
             const templates = JSON.parse(savedTemplates);
             userTemplate = templates.find((t: ChecklistTemplate)=>t.role === user.role);
         }
+        if (!userTemplate && isSupabaseConnected) {
+            console.log('🔄 Loading template directly from Supabase master tasks for role:', user.role);
+            try {
+                userTemplate = await generateTemplateForProfessionFromSupabase(user.role, user.role);
+                if (userTemplate) {
+                    console.log('✅ Generated template from Supabase with', userTemplate.tasks.length, 'tasks');
+                }
+            } catch (error) {
+                console.error('❌ Failed to generate template from Supabase:', error);
+            }
+        }
         if (!userTemplate) {
             const professionalCategories = loadProfessionalCategories();
             const profession = professionalCategories.find((p)=>p.roleKey === user.role);
             if (profession) {
+                console.log('📋 Generating template from localStorage data for profession:', profession.name);
                 userTemplate = generateTemplateForProfession(user.role, profession.name);
             }
         }
-        if (!userTemplate) {
+        if (!userTemplate && isSupabaseConnected) {
+            console.log('🔄 Loading saved template from Supabase for role:', user.role);
+            try {
+                const { data: templates, error } = await supabase.from('checklist_templates').select('*').eq('role', user.role).limit(1);
+                if (error) {
+                    console.error('❌ Error loading template from Supabase:', error);
+                } else if (templates && templates.length > 0) {
+                    const supabaseTemplate = templates[0];
+                    userTemplate = {
+                        id: supabaseTemplate.id,
+                        role: supabaseTemplate.role,
+                        name: supabaseTemplate.name,
+                        tasks: supabaseTemplate.task_ids || [],
+                        createdAt: supabaseTemplate.created_at,
+                        updatedAt: supabaseTemplate.updated_at
+                    };
+                    console.log('✅ Loaded saved template from Supabase:', userTemplate.name);
+                }
+            } catch (error) {
+                console.error('❌ Failed to load template from Supabase:', error);
+            }
+        }
+        if (!userTemplate && !isSupabaseConnected) {
+            console.log('⚠️ Falling back to mock data (Supabase not connected)');
             userTemplate = mockTemplates.find((t)=>t.role === user.role);
         }
         if (!userTemplate) {
-            console.log('No template found for role:', user.role);
+            console.log('❌ No template found for role:', user.role);
+            console.log('💡 Please create tasks and assign them to the role in the admin panel');
+            toast.error(`Nenhuma tarefa encontrada para o perfil ${user.role}. Configure as tarefas no painel administrativo.`);
             setIsLoading(false);
             return;
         }

@@ -97,6 +97,7 @@ export const SupabaseAuthProvider = ({ children }: AuthProviderProps)=>{
                 console.log('🔑 Using Supabase authentication...');
                 const userData = await authenticateUser(email, password);
                 setUser(userData);
+                localStorage.setItem('supabase_current_user', JSON.stringify(userData));
                 console.log('✅ Supabase login successful:', userData.name);
                 toast.success(`Bem-vindo(a), ${userData.name}!`);
             } else {
@@ -180,6 +181,7 @@ export const SupabaseAuthProvider = ({ children }: AuthProviderProps)=>{
             setUser(null);
             if (isSupabaseConnected) {
                 await supabase.auth.signOut();
+                localStorage.removeItem('supabase_current_user');
                 console.log('✅ Supabase logout successful');
             } else {
                 localStorage.removeItem('currentUser');
@@ -198,14 +200,27 @@ export const SupabaseAuthProvider = ({ children }: AuthProviderProps)=>{
             setIsSupabaseConnected(connected);
             if (connected) {
                 await initializeDatabase();
-                const { data: { session } } = await supabase.auth.getSession();
-                if (session?.user?.email) {
+                const savedUser = localStorage.getItem('supabase_current_user');
+                if (savedUser) {
                     try {
-                        const userData = await getUser(session.user.email);
+                        const userData = JSON.parse(savedUser);
                         setUser(userData);
-                        console.log('✅ Restored Supabase session:', userData.name);
+                        console.log('✅ Restored user from localStorage:', userData.name);
                     } catch (error) {
-                        console.log('⚠️ Failed to restore Supabase session:', error);
+                        console.error('❌ Failed to restore user from localStorage:', error);
+                        localStorage.removeItem('supabase_current_user');
+                    }
+                } else {
+                    const { data: { session } } = await supabase.auth.getSession();
+                    if (session?.user?.email) {
+                        try {
+                            const userData = await getUser(session.user.email);
+                            setUser(userData);
+                            localStorage.setItem('supabase_current_user', JSON.stringify(userData));
+                            console.log('✅ Restored Supabase session:', userData.name);
+                        } catch (error) {
+                            console.log('⚠️ Failed to restore Supabase session:', error);
+                        }
                     }
                 }
             } else {

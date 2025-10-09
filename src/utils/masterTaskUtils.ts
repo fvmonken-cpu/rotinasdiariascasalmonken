@@ -1,4 +1,5 @@
 import { Task, TaskCategory, ProfessionalCategory, ChecklistTemplate, User } from '@/types';
+import { supabase } from '@/lib/supabase';
 
 /**
  * Carrega todas as tarefas mestras do localStorage
@@ -6,6 +7,53 @@ import { Task, TaskCategory, ProfessionalCategory, ChecklistTemplate, User } fro
 export const loadMasterTasks = (): Task[] => {
   const savedTasks = localStorage.getItem('masterTasks');
   return savedTasks ? JSON.parse(savedTasks) : [];
+};
+
+/**
+ * Carrega todas as tarefas mestras do Supabase
+ */
+export const loadMasterTasksFromSupabase = async (): Promise<Task[]> => {
+  try {
+    const { data: tasks, error } = await supabase
+      .from('master_tasks')
+      .select(`
+        *,
+        task_categories (
+          name,
+          color
+        )
+      `);
+    
+    if (error) {
+      console.error('❌ Error loading master tasks from Supabase:', error);
+      return [];
+    }
+    
+    if (!tasks) {
+      return [];
+    }
+    
+    // Converter formato do Supabase para o formato esperado
+    const convertedTasks: Task[] = tasks.map(task => ({
+      id: task.id,
+      title: task.name,
+      description: task.description || '',
+      category: task.task_categories?.name || 'Sem categoria',
+      categoryId: task.category_id,
+      period: task.assigned_periods?.[0] || 'morning', // Usar o primeiro período se houver
+      frequency: task.frequency || 'daily',
+      assignedProfessions: task.assigned_roles || [],
+      isRequired: task.is_required || false,
+      createdAt: task.created_at,
+      updatedAt: task.updated_at
+    }));
+    
+    console.log('✅ Loaded', convertedTasks.length, 'master tasks from Supabase');
+    return convertedTasks;
+  } catch (error) {
+    console.error('❌ Failed to load master tasks from Supabase:', error);
+    return [];
+  }
 };
 
 /**
@@ -72,6 +120,71 @@ export const generateTemplateForProfession = (
   };
 
   return template;
+};
+
+/**
+ * Versão que carrega dados do Supabase - Converte tarefas mestras em template
+ */
+export const generateTemplateForProfessionFromSupabase = async (
+  professionRoleKey: string, 
+  professionName: string
+): Promise<ChecklistTemplate | null> => {
+  try {
+    console.log('🔄 Loading template data from Supabase for role:', professionRoleKey);
+    
+    // Carregar tarefas do Supabase que são atribuídas a este role
+    const { data: tasks, error } = await supabase
+      .from('master_tasks')
+      .select(`
+        *,
+        task_categories (
+          name,
+          color
+        )
+      `)
+      .contains('assigned_roles', [professionRoleKey]);
+    
+    if (error) {
+      console.error('❌ Error loading tasks from Supabase:', error);
+      return null;
+    }
+    
+    if (!tasks || tasks.length === 0) {
+      console.log(`❌ No tasks found in Supabase for role: ${professionRoleKey}`);
+      return null;
+    }
+    
+    // Converter tarefas do Supabase para formato esperado
+    const templateTasks: Task[] = tasks.map(task => ({
+      id: task.id,
+      title: task.name,
+      description: task.description || '',
+      category: task.task_categories?.name || 'Sem categoria',
+      categoryId: task.category_id,
+      period: task.assigned_periods?.[0] || 'morning',
+      frequency: task.frequency || 'daily',
+      assignedProfessions: task.assigned_roles || [],
+      isRequired: task.is_required || false,
+      createdAt: task.created_at,
+      updatedAt: task.updated_at
+    }));
+    
+    const template: ChecklistTemplate = {
+      id: `template-${professionRoleKey}`,
+      name: `Checklist Diário de ${professionName}`,
+      role: professionRoleKey as User['role'],
+      tasks: templateTasks,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+    
+    console.log('✅ Generated template from Supabase with', templateTasks.length, 'tasks');
+    return template;
+    
+  } catch (error) {
+    console.error('❌ Failed to generate template from Supabase:', error);
+    return null;
+  }
 };
 
 /**
