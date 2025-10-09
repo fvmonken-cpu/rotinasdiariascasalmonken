@@ -13,6 +13,29 @@
   to = "/index.html"
   status = 200
   force = false
+  conditions = {Role = [""], Country = [""]}
+
+# Specific redirects for assets
+[[redirects]]
+  from = "/assets/*"
+  to = "/assets/:splat"
+  status = 200
+
+# Specific redirects for static files
+[[redirects]]
+  from = "/favicon.ico"
+  to = "/favicon.ico"
+  status = 200
+
+[[redirects]]
+  from = "*.js"
+  to = "/:splat"
+  status = 200
+
+[[redirects]]
+  from = "*.css"
+  to = "/:splat"
+  status = 200
 
 # Headers for security and performance
 [[headers]]
@@ -28,3 +51,19 @@
   for = "/index.html"
   [headers.values]
     Cache-Control = "no-cache"
+
+# Fix MIME types for JS files
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+  for = "*.mjs"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+  for = "/assets/*.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
