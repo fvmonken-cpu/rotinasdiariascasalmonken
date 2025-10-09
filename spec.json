@@ -1,0 +1,518 @@
+{
+  "9Bg2588ldPqkptp8": {
+    "contentMarkdown": "User profile header section with light gray background and bottom border, containing user name, role and email",
+    "categoryId": "17582046453730"
+  },
+  "9FPyA6D47wcxTEhi": {
+    "contentMarkdown": "**New User Login Instructions**\n\n- Display: Bold text \"Novo usuário?\"\n- Information: Clear instruction for new users\n- Password Display: Shows temporary password \"temp-hash\" in code format\n- Purpose: Helps new users understand default login credentials\n- Visibility: Always visible on login screen\n- Styling: Blue text color consistent with info section theme",
+    "categoryId": "17582046453733"
+  },
+  "CTI2Hek0NhN7qv6q": {
+    "contentMarkdown": "**Temporary Password Display Code**\n\n- Content: \"temp-hash\"\n- Format: Inline code element\n- Styling: Light blue background (bg-blue-100), padding, rounded corners\n- Purpose: Clearly highlights the temporary password for new users\n- Context: Part of new user login instructions\n- Accessibility: High contrast for easy reading",
+    "categoryId": "17582046453733"
+  },
+  "Cmh3zvBWocXNteZR": {
+    "contentMarkdown": "**Checklist Details View**\n- User Information Section\n- Period and Progress Summary\n- Task Details List\n  - Task Status Icons (completed/incomplete)\n  - Task Names (loaded from master_tasks)\n  - Completion Times\n  - Task Notes (if available)\n- Fallback for Unknown Tasks",
+    "categoryId": "17582046453732"
+  },
+  "F7K3FbstqA2rAXnt": {
+    "contentMarkdown": "**Header Layout Responsive Interaction**\n\nHeader container adapts between mobile and desktop layouts:\n- Mobile: Compressed padding (px-3), smaller logo, truncated title\n- Desktop: Full padding (px-4), full-size elements, complete subtitle\n- Flex management: flex-1 for logo area, flex-shrink-0 for buttons\n- Smart spacing: space-x-1 on mobile, space-x-4 on desktop",
+    "categoryId": "17582046453731"
+  },
+  "HTKgeZ8JhG2XabYR": {
+    "contentMarkdown": "Container for admin navigation buttons with horizontal spacing between Administração and Sair buttons",
+    "categoryId": "17582046453730"
+  },
+  "IoyQ2wyZTtdejaJN": {
+    "contentMarkdown": "**Gerenciamento de Usuários**\n- Lista de usuários\n- Botão Adicionar Usuário\n- Informações do usuário\n    - Avatar com iniciais\n    - Nome e email\n    - Badge da função\n- Ações do usuário\n    - Botão editar\n    - Botão excluir (não disponível para admin)",
+    "categoryId": "17582046453732"
+  },
+  "JAojc8mZGQiYLtw3": {
+    "contentMarkdown": "**User Login Form**\n- Email: Required, email format validation\n- Password: Required, minimum security validation\n- Submit Button: Disabled during loading, shows spinner\n- Error Display: Shows validation and authentication errors",
+    "categoryId": "17582046453733"
+  },
+  "MMwf19abCvTZRIKT": {
+    "contentMarkdown": "**User Login Form**\n\n- Email Address: Single line input\n    - Required\n    - Validation: Valid email format\n- Password: Password input\n    - Required  \n    - Validation: Minimum 6 characters\n- Remember Me: Checkbox\n    - Optional\n- Login Button",
+    "categoryId": "17582046453733"
+  },
+  "R0WkYV9ctDe6FiGl": {
+    "contentMarkdown": "Display 'Total de Tarefas' as the section title for task count information",
+    "categoryId": "Content"
+  },
+  "SHwOqvRpICizw35i": {
+    "contentMarkdown": "**Navigation Buttons Section**\n\n- Universal Navigation Buttons\n  - Home Button (hidden on mobile, visible on desktop)\n  - Logout Button (hidden on mobile, visible on desktop)\n- Role-specific Navigation\n  - Director: Dashboard Button (icon-only on mobile)\n  - Admin: Dashboard + Administration Buttons (icon-only on mobile)\n- User Avatar Dropdown\n  - Smaller size on mobile (9x9 vs 10x10)\n  - Contains all navigation options for mobile users",
+    "categoryId": "17582046453732"
+  },
+  "SwpGcsyWmQqSvy9j": {
+    "contentMarkdown": "User dropdown menu with enhanced visibility styling - white background, gray border, shadow, high z-index to appear above all elements",
+    "categoryId": "17582046453730"
+  },
+  "T7gCnl1ypr03vqOU": {
+    "contentMarkdown": "**User Avatar Dropdown Menu**\n\n- Avatar Display\n  - User Initials in colored background (role-based colors)\n  - Responsive sizing (h-9 w-9 on mobile, h-10 w-10 on desktop)\n  - Hover shadow effect\n- Dropdown Content\n  - User Information (name, role, email)\n  - Home Navigation Option\n  - Change Password Option\n  - Logout Option\n- Mobile Functionality: Primary navigation method on small screens",
+    "categoryId": "17582046453732"
+  },
+  "VVsYRY8WddHZkhyE": {
+    "contentMarkdown": "Menu items container with padding for proper spacing",
+    "categoryId": "17582046453730"
+  },
+  "action-buttons": {
+    "contentMarkdown": "**User Management Action Buttons**\n\n- Edit Button\n  - Edit Icon (4x4 with flex-shrink-0)\n  - Edit Label (text-xs, hidden on desktop)\n  - Blue outline styling\n- Password Button  \n  - Key Icon (4x4 with flex-shrink-0)\n  - Password Label (\"Senha\" text-xs, hidden on desktop)\n  - Orange color scheme with hover states\n- Delete Button\n  - Trash Icon (4x4 with flex-shrink-0) \n  - Delete Label (\"Excluir\" text-xs, hidden on desktop)\n  - Red color scheme with hover states\n- Conditional rendering for self-deletion prevention",
+    "categoryId": "17582046453732"
+  },
+  "add-professional-category-content": {
+    "contentMarkdown": "**Professional Category Form**\n\n- Nome da Categoria: Single line input\n  - Required\n  - Validation: Non-empty string\n  - Placeholder: \"Ex: Secretária, Enfermeira...\"\n- Chave da Categoria: Single line input\n  - Required\n  - Validation: Lowercase letters only, no spaces, unique\n  - Placeholder: \"Ex: secretary, nurse...\"\n- Descrição: Multi-line textarea\n  - Optional\n  - Placeholder: \"Descreva as responsabilidades desta categoria...\"\n- Cor de Identificação: Color picker grid\n  - Required\n  - 4x4 grid of predefined colors\n  - Visual selection with border highlight\n- Action Buttons (full-width on mobile)\n  - Cancel Button\n  - Save/Update Button",
+    "categoryId": "17582046453733"
+  },
+  "add-role-select": {
+    "contentMarkdown": "**Add User Role Selection Form**\n\n- Role: Required dropdown selection\n  - Secretary: Standard user role for administrative tasks\n  - Nurse: Healthcare professional role with medical permissions  \n  - SDR: Sales Development Representative role\n  - Director: Management level access and oversight\n  - Administrator: Full system access and user management capabilities\n  - Validation: Must select one role option\n- Form allows creation of users with any role including multiple administrators",
+    "categoryId": "17582046453733"
+  },
+  "add-task-btn": {
+    "contentMarkdown": "**Button Click**\nWhen clicked, opens a dialog with form to add new task to selected template including title, description, category, priority, period, frequency, and required status",
+    "categoryId": "17582046453731"
+  },
+  "add-template-btn": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, opens dialog to create a new template. Allows selecting template name and role function.",
+    "categoryId": "17582046453731"
+  },
+  "add-user-button": {
+    "contentMarkdown": "**Click Event** Should trigger onClick handler that logs '🔘 Add User button clicked!' to console and calls setIsAddDialogOpen(true) to open the add user modal dialog. The button uses DialogTrigger component from shadcn/ui which should automatically handle the dialog opening behavior.",
+    "categoryId": "17582046453731"
+  },
+  "add-user-dialog-content": {
+    "contentMarkdown": "**Add User Form**\n\n- Nome Completo: Single line input\n  - Required\n  - Validation: Non-empty string\n- Email: Email input\n  - Required\n  - Validation: Valid email format, unique\n- Função: Select dropdown\n  - Required\n  - Options: Secretário(a), Enfermeiro(a), SDR, Diretor(a), Administrador\n- Action Buttons (full-width on mobile)\n  - Cancel Button\n  - Add Button",
+    "categoryId": "17582046453733"
+  },
+  "add-user-form": {
+    "contentMarkdown": "**Adicionar Usuário Form**\n- Nome Completo: Single line input\n  - Required\n  - Validation: Must not be empty\n- Email: Email input\n  - Required\n  - Validation: Valid email format, must be unique\n- Função: Select dropdown\n  - Required\n  - Options: Secretário(a), Enfermeiro(a), SDR, Diretor(a)\n- Adicionar Button",
+    "categoryId": "17582046453733"
+  },
+  "admin-nav-buttons": {
+    "contentMarkdown": "**Admin Navigation Interaction**\n\nRole-specific navigation for admin users:\n- Mobile: Icon-only buttons (Dashboard and Administration)\n- Desktop: Full text labels with icons\n- Spacing: Compressed on mobile (space-x-1), normal on desktop (space-x-2)\n- Visual states: Proper active/inactive button variants",
+    "categoryId": "17582046453731"
+  },
+  "admin-reports-card": {
+    "contentMarkdown": "**Admin Reports Dashboard**\n- Reports Header\n  - Title and Description\n  - Date Selector\n  - Refresh Button\n- User Reports List\n  - Active Users\n  - Deleted Users (marked as \"Excluído\")\n  - Checklist Summary per User\n  - Checklist Details Modal Trigger",
+    "categoryId": "17582046453732"
+  },
+  "admin-reports-section": {
+    "contentMarkdown": "**Admin Reports Section**\n- Date Selector\n    - Label\n    - Date Input\n- Refresh Button\n- User Reports List\n    - User Avatar\n    - User Details\n    - Checklists\n        - Period Label\n        - Completion Badge\n        - Timing Info\n        - Details Button\n- Empty State\n- Checklist Details Dialog\n    - Summary Grid\n    - Tasks Details",
+    "categoryId": "17582046453732"
+  },
+  "admin-view": {
+    "contentMarkdown": "**Admin Panel Page** - Role template selection sidebar - Task management interface for each role - Add, edit, delete task functionality - Template customization with priority, category, time estimation",
+    "categoryId": "17582046453732"
+  },
+  "alYKKJ95qJg20qzR": {
+    "contentMarkdown": "Logout icon in red color scheme for the direct logout button",
+    "categoryId": "17582046453730"
+  },
+  "app-header": {
+    "contentMarkdown": "**Mobile-First Application Header Design**\n\nResponsive header design optimized for mobile devices while maintaining desktop functionality.\n\n- Theme color: Clean white background with subtle gray borders\n- Font: Responsive typography with smaller sizes on mobile (text-lg vs text-xl)\n- Border radius style: Clean borders with subtle shadows on interactive elements",
+    "categoryId": "17582046453730"
+  },
+  "cancel-checklist-btn": {
+    "contentMarkdown": "**Click Event** Cancel checklist button triggers confirmation dialog asking if user really wants to cancel current checklist progress and return to home screen",
+    "categoryId": "17582046453731"
+  },
+  "cancel-checklist-dialog": {
+    "contentMarkdown": "**Confirmation Dialog** Shows warning dialog when user wants to cancel checklist with two options: 'Permanecer no Checklist' (stay) or 'Cancelar Checklist' (confirm cancel)",
+    "categoryId": "17582046453731"
+  },
+  "change-password-${user.id}": {
+    "contentMarkdown": "**Change Password Confirmation**\n\n- Confirmation Dialog: AlertDialog component\n  - Title: \"Forçar Troca de Senha\"\n  - Description: Explains temporary password generation\n  - User Name: Bold display of target user\n- Action Buttons\n  - Cancel Button: Standard gray styling\n  - Confirm Button: Orange theme (bg-orange-600 hover:bg-orange-700)\n  - Action: Generates \"temp123\" as temporary password\n- Toast Notification: Success message with new temporary password",
+    "categoryId": "17582046453733"
+  },
+  "change-password-dialog": {
+    "contentMarkdown": "**Admin Force Password Change** Dialog that allows admin to force generate a new temporary password for any user without requiring the old password",
+    "categoryId": "17582046453731"
+  },
+  "checklist-${checklist.id}": {
+    "contentMarkdown": "**Checklist Item Mobile Layout**\n\n- Checklist Period and Completion Badge\n  - Period info with clock icon\n  - Completion percentage badge (compact on mobile)\n- Timing Information\n  - Start time\n  - End time (stacked on mobile, inline on desktop)\n- Action Buttons\n  - Finalized badge (checkmark symbol on mobile, full text on desktop)\n  - Details button (icon-only on mobile, with text on desktop)",
+    "categoryId": "17582046453732"
+  },
+  "checklist-details-dialog": {
+    "contentMarkdown": "**Checklist Details Dialog Error Handling**\nWhen user clicks \"Detalhes\" button and errors occur:\n- Validate user object and role before loading\n- Show error state if user/role is missing\n- Display error boundary for component crashes\n- Provide retry mechanism for failed operations\n- Log detailed error information to console",
+    "categoryId": "17582046453731"
+  },
+  "checklist-details-view": {
+    "contentMarkdown": "**Checklist Details View Content**\n- Checklist Summary Section\n  - User Name\n  - Period Label\n  - Progress Percentage\n  - Start Time\n  - End Time\n  - Status\n- Tasks Details Section\n  - Task List\n  - Task Status Icons\n  - Task Names (with fallback)\n  - Completion Times\n  - Task Notes",
+    "categoryId": "17582046453732"
+  },
+  "checklist-view": {
+    "contentMarkdown": "**Checklist Creation Page**\n\n- Period Selection Section\n    - Period selector buttons (Start Day, End Day, Start Shift, End Shift)\n    - Shift options when applicable\n- Active Checklist Section\n    - Checklist header with period info\n    - Task list with checkboxes\n        - Task titles and descriptions\n        - Priority indicators\n        - Completion timestamps\n        - Notes fields\n    - Progress indicator\n    - Action buttons\n        - Finalize checklist\n        - Reset checklist\n        - Cancel checklist\n- Finalization Dialog\n    - Final report textarea\n    - Submit button",
+    "categoryId": "17582046453732"
+  },
+  "clinic-logo-container": {
+    "contentMarkdown": "Logo container with clinic branding image - displays Espaço Casal Monken golden logo with proper aspect ratio and clean positioning in header",
+    "categoryId": "17582046453730"
+  },
+  "clinic-logo-image": {
+    "contentMarkdown": "Clinic logo image displaying the complete Espaço Casal Monken branding - golden curved symbol with text arranged in circular format, no cropping or distortion",
+    "categoryId": "17582046453730"
+  },
+  "configuration-tabs-list": {
+    "contentMarkdown": "**Responsive Tab Navigation Interaction**\n\nTabs adapt between mobile and desktop layouts:\n- Mobile: Stacked vertically (grid-cols-1) with shortened labels\n- Desktop: Horizontal layout (grid-cols-3) with full labels\n- Tab text: \"Profissionais\", \"Categorias\", \"Tarefas\" on mobile\n- Desktop text: Full descriptive names\n- Auto height adjustment and proper padding",
+    "categoryId": "17582046453731"
+  },
+  "confirm-add-button": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, validates form data and adds new user to the system. Shows success toast and closes dialog",
+    "categoryId": "17582046453731"
+  },
+  "confirm-cancel-checklist-btn": {
+    "contentMarkdown": "**Click Event** Confirms checklist cancellation by permanently deleting checklist from localStorage, clearing all progress, returning to period selection screen, and showing confirmation toast",
+    "categoryId": "17582046453731"
+  },
+  "confirm-delete-task": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, removes the task from the template. Task is permanently deleted and cannot be recovered.",
+    "categoryId": "17582046453731"
+  },
+  "confirm-delete-template": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, permanently deletes the selected template and all its tasks. Action cannot be undone.",
+    "categoryId": "17582046453731"
+  },
+  "confirm-start-btn": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, starts a new checklist for the selected period, replacing any existing checklist. Creates new checklist with appropriate tasks based on period selection.",
+    "categoryId": "17582046453731"
+  },
+  "create-template-btn": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, creates a new empty template with the specified name and role. Template becomes available for task management.",
+    "categoryId": "17582046453731"
+  },
+  "current-period-title": {
+    "contentMarkdown": "**Period Title Display** Shows the current checklist period name (e.g., 'Início do Dia', 'Final do Dia') prominently below user welcome message with clipboard emoji",
+    "categoryId": "17582046453732"
+  },
+  "daily-cleanup-system": {
+    "contentMarkdown": "**Automatic Cleanup** System automatically removes old finalized checklists when day changes, keeping only current day checklists in localStorage",
+    "categoryId": "17582046453733"
+  },
+  "dashboard-icon-admin": {
+    "contentMarkdown": "BarChart3 icon for admin dashboard navigation button with consistent sizing (w-4 h-4) and margin spacing",
+    "categoryId": "17582046453730"
+  },
+  "dashboard-view": {
+    "contentMarkdown": "**Team Dashboard Page**\n\n- Header Section\n    - Page title: \"Team Dashboard\"\n    - Description: \"Monitor team progress and completion rates\"\n    - Current date badge\n- Statistics Cards\n    - Total Members count\n    - Completed checklists count\n    - In Progress count\n    - Average Completion percentage\n- Team Progress Section\n    - Role filter tabs (All, Secretary, Nurse, SDR, Director)\n    - Team member cards\n        - User avatar and info\n        - Role badge\n        - Status badge\n        - Progress metrics\n        - Last activity timestamp",
+    "categoryId": "17582046453732"
+  },
+  "date-input": {
+    "contentMarkdown": "**Date Change Event**\nWhen date is changed, automatically loads reports for the selected date. Updates the reports list to show activity for that specific date.",
+    "categoryId": "17582046453731"
+  },
+  "delete-confirm-button": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, permanently removes the user from the system. Admin users cannot be deleted. Shows success toast.",
+    "categoryId": "17582046453731"
+  },
+  "delete-user-${user.id}": {
+    "contentMarkdown": "**Delete User Confirmation**\n\n- Confirmation Dialog: AlertDialog component\n  - Title: \"Confirmar Exclusão\"\n  - Description: Warning about permanent action\n  - User Name: Bold display of user to be deleted\n- Action Buttons\n  - Cancel Button: Standard gray styling\n  - Delete Button: Red theme (bg-red-600 hover:bg-red-700)\n  - Action: Permanently removes user from system\n- Conditional Display: Hidden for current user (prevents self-deletion)",
+    "categoryId": "17582046453733"
+  },
+  "demo-user-admin": {
+    "contentMarkdown": "**Click Event** Auto-fill login form with admin demo account credentials (admin@company.com / demo123)",
+    "categoryId": "17582046453731"
+  },
+  "demo-user-director": {
+    "contentMarkdown": "**Click Event** Auto-fill login form with director demo account credentials (sarah@company.com / demo123)",
+    "categoryId": "17582046453731"
+  },
+  "demo-user-nurse": {
+    "contentMarkdown": "**Click Event** Auto-fill login form with nurse demo account credentials (anna@company.com / demo123)",
+    "categoryId": "17582046453731"
+  },
+  "demo-user-sdr": {
+    "contentMarkdown": "**Click Event** Auto-fill login form with SDR demo account credentials (david@company.com / demo123)",
+    "categoryId": "17582046453731"
+  },
+  "demo-user-secretary": {
+    "contentMarkdown": "**Click Event** Auto-fill login form with secretary demo account credentials (mike@company.com / demo123)",
+    "categoryId": "17582046453731"
+  },
+  "diagnose-button": {
+    "contentMarkdown": "**Click Event** When clicked, runs comprehensive Supabase connection diagnosis checking environment variables, database connection status, table existence, and data counts, then displays detailed results in a diagnostic alert below",
+    "categoryId": "17582046453731"
+  },
+  "diagnostic-alert": {
+    "contentMarkdown": "**Diagnostic Results Section** - Connection diagnosis summary - Environment configuration status - Database connection status with error details - Table accessibility status for each required table - Data count for existing records",
+    "categoryId": "17582046453732"
+  },
+  "direct-logout-btn": {
+    "contentMarkdown": "**Click Event**\nDirect logout button visible only for admin users. When clicked, immediately logs out the user and redirects to login screen. Red styling to indicate logout action.",
+    "categoryId": "17582046453731"
+  },
+  "director-nav-buttons": {
+    "contentMarkdown": "**Director Navigation Interaction**\n\nRole-specific navigation for director users:\n- Mobile: Icon-only buttons with compact padding (px-2)\n- Desktop: Full text labels with normal padding (px-3)\n- Active state: default variant for current view\n- Hover states: proper button styling transitions",
+    "categoryId": "17582046453731"
+  },
+  "dropdown-change-password-button": {
+    "contentMarkdown": "**Click Event**\nOpens change password dialog for the current user, allowing them to modify their own account password by providing current password and new password with confirmation",
+    "categoryId": "17582046453731"
+  },
+  "dropdown-home-button": {
+    "contentMarkdown": "**Dropdown Home Button**\nAlternative home navigation option available in the user avatar dropdown menu. Provides same functionality as header home button.",
+    "categoryId": "17582046453731"
+  },
+  "ePmrL8I9sntcymTK": {
+    "contentMarkdown": "**Dynamic Task Section Title** Displays 'Tarefas - [Period Name]' when specific period is selected, otherwise shows generic 'Today's Tasks' title",
+    "categoryId": "17582046453732"
+  },
+  "edit-user-${user.id}": {
+    "contentMarkdown": "**Edit User Form**\n\n- Nome Completo: Single line input\n  - Required\n  - Validation: Non-empty string\n  - Placeholder: User's current name\n- Email: Single line email input\n  - Required  \n  - Validation: Valid email format\n  - Placeholder: User's current email\n- Função: Dropdown select\n  - Required\n  - Options: Secretário(a), Enfermeiro(a), SDR, Diretor(a), Administrador\n  - Default: User's current role\n- Action Buttons (responsive layout)\n  - Cancel Button (outline variant)\n  - Save Button (primary variant)",
+    "categoryId": "17582046453733"
+  },
+  "edit-user-dialog-content": {
+    "contentMarkdown": "**Edit User Form**\n\n- Nome Completo: Single line input\n  - Required\n  - Validation: Non-empty string\n  - Pre-filled with current value\n- Email: Email input\n  - Required\n  - Validation: Valid email format, unique\n  - Pre-filled with current value\n- Função: Select dropdown\n  - Required\n  - Options: Secretário(a), Enfermeiro(a), SDR, Diretor(a), Administrador\n  - Pre-selected with current value\n- Action Buttons (full-width on mobile)\n  - Cancel Button\n  - Save Button",
+    "categoryId": "17582046453733"
+  },
+  "edit-user-form": {
+    "contentMarkdown": "**Editar Usuário Form**\n- Nome Completo: Single line input\n  - Required\n  - Validation: Must not be empty\n- Email: Email input\n  - Required\n  - Validation: Valid email format, must be unique\n- Função: Select dropdown\n  - Required\n  - Disabled for admin users\n  - Options: Secretário(a), Enfermeiro(a), SDR, Diretor(a), Administrador\n- Salvar Button",
+    "categoryId": "17582046453733"
+  },
+  "email-input": {
+    "contentMarkdown": "**Email Field Error Recovery**\nWhen login fails due to incorrect password:\n- Preserve email field value using localStorage backup system\n- Clear only password field\n- Show error message with toast notification\n- Multiple timeout recovery mechanisms (50ms, 150ms, 300ms)\n- State monitoring to detect and restore email if zeroed",
+    "categoryId": "17582046453731"
+  },
+  "error-state": {
+    "contentMarkdown": "**Error State Display**\n- Error Icon (XCircle)\n- Error Title: \"Erro ao carregar detalhes\"\n- Error Message: Specific error description\n- Retry Button: \"Tentar novamente\"",
+    "categoryId": "17582046453732"
+  },
+  "finalization-dialog": {
+    "contentMarkdown": "**Checklist Finalization Flow**\n- Validates all required tasks are completed\n- Collects optional final observations\n- Generates comprehensive final report\n- Saves checklist as finalized and immutable",
+    "categoryId": "17582046453731"
+  },
+  "finalization-dialog-content": {
+    "contentMarkdown": "**Finalization Dialog Content**\n- Progress summary card\n- Required tasks validation\n- Final observations textarea\n- Action buttons (Cancel/Finalize)",
+    "categoryId": "17582046453732"
+  },
+  "finalization-success-redirect": {
+    "contentMarkdown": "**Auto Redirect** After successful checklist finalization, automatically return to home screen after 5 seconds with countdown toast notification",
+    "categoryId": "17582046453731"
+  },
+  "finalize-checklist": {
+    "contentMarkdown": "**Finalize Checklist Button**\nOpens finalization dialog to generate final report and mark checklist as complete. Only available when checklist is not already finalized.",
+    "categoryId": "17582046453731"
+  },
+  "header-content": {
+    "contentMarkdown": "**Responsive Header Layout Interaction**\n\nHeader adapts between mobile and desktop layouts:\n- Mobile: Stacked vertically with full-width buttons\n- Desktop: Horizontal layout with auto-width buttons\n- Smooth transitions between breakpoints at sm (640px)\n- Maintains accessibility across all screen sizes",
+    "categoryId": "17582046453731"
+  },
+  "install-pwa-button": {
+    "contentMarkdown": "**Click Event** When clicked, triggers the browser's native PWA installation prompt, allowing users to install the web app as a native mobile application on their device home screen",
+    "categoryId": "17582046453731"
+  },
+  "login-button": {
+    "contentMarkdown": "**Login Button Click**\nWhen user clicks login button with invalid credentials, the system should:\n- Preserve the email field value\n- Clear only the password field\n- Show error message below form\n- Display toast notification with error\n- Keep form accessible for retry\n- Log detailed debug information to console",
+    "categoryId": "17582046453731"
+  },
+  "login-container": {
+    "contentMarkdown": "Professional healthcare checklist management system with clean, modern design\n\n- Theme color: Blue gradient (#3B82F6 primary, #1E40AF secondary) with cyan accents\n- Font: System fonts (Inter/San Francisco) for professional readability\n- Border radius style: Moderate rounding (8px-12px) for modern medical interface",
+    "categoryId": "17582046453730"
+  },
+  "login-info-section": {
+    "contentMarkdown": "**Login Information Section**\n- System Title\n- Professional System Label\n- Credential Entry Instructions",
+    "categoryId": "17582046453732"
+  },
+  "login-logo-container": {
+    "contentMarkdown": "Larger logo container for login screen - 16x16 size to prominently display clinic branding on authentication page",
+    "categoryId": "17582046453730"
+  },
+  "login-logo-image": {
+    "contentMarkdown": "Login page clinic logo - displays full Espaço Casal Monken branding with enhanced visibility for user recognition during authentication",
+    "categoryId": "17582046453730"
+  },
+  "logout-button": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, logs out the current user, removes session data from localStorage, and redirects to login screen. Enhanced styling with hover effects.",
+    "categoryId": "17582046453731"
+  },
+  "main-app": {
+    "contentMarkdown": "\n\nModern corporate dashboard design with clean, professional aesthetics. Features a minimalist layout with subtle gradients, soft shadows, and carefully balanced white space. Primary interface uses card-based components with rounded corners and consistent spacing.\n\n- Theme color: Blue (#3B82F6) for primary actions, Green (#10B981) for success states, Red (#EF4444) for warnings\n- Font: Inter font family for excellent readability and modern appearance\n- Border radius style: Consistent 8px radius for cards, 6px for buttons, 4px for small elements",
+    "categoryId": "17582046453730"
+  },
+  "master-task-form": {
+    "contentMarkdown": "**Master Task Form**\n- Task Title: Single line input, Required\n- Task Category: Dropdown from available categories, Required\n- Priority: Dropdown (Low/Medium/High), Required\n- Frequency: Dropdown (Daily/Weekly/Monthly), Required\n- Week Day: Dropdown (if frequency is weekly), Conditional\n- Month Day: Number input (if frequency is monthly), Conditional\n- Description: Multi-line input, Optional\n- Periods: Multiple checkboxes (Start/End Day/Shift), Required\n- Professional Categories: Multiple checkboxes, Required\n- Required Task: Single checkbox, Optional\n- Submit Button",
+    "categoryId": "Development"
+  },
+  "master-task-manager": {
+    "contentMarkdown": "**Master Task Manager**\n- Header with Title and Add Button\n- Tasks List\n  - Task Cards with Title, Description, Category, Priority\n  - Period Badges, Professional Assignments\n  - Edit and Delete Actions\n- Add/Edit Dialog Form\n  - Basic Info: Title, Category, Priority, Frequency\n  - Period Selection (Multiple)\n  - Professional Category Assignment (Multiple)\n  - Additional Fields: Description, Required Flag",
+    "categoryId": "Content"
+  },
+  "master-task-manager-card": {
+    "contentMarkdown": "**Master Task Manager**\n- Header with Title and Add Button\n- Tasks List\n  - Task Cards with Title, Description, Category, Priority\n  - Period Badges, Professional Assignments\n  - Edit and Delete Actions\n- Add/Edit Dialog Form\n  - Basic Info: Title, Category, Priority, Frequency\n  - Period Selection (Multiple)\n  - Professional Category Assignment (Multiple)\n  - Additional Fields: Description, Estimated Time, Required Flag",
+    "categoryId": "17582046453732"
+  },
+  "nav-admin": {
+    "contentMarkdown": "**Click Event** Navigate to admin panel for managing checklist templates and tasks (admin role only)",
+    "categoryId": "17582046453731"
+  },
+  "nav-checklist": {
+    "contentMarkdown": "**Click Event** Navigate to user's personal daily checklist view",
+    "categoryId": "17582046453731"
+  },
+  "nav-dashboard": {
+    "contentMarkdown": "**Click Event** Navigate to team dashboard view (director role only) - shows team progress monitoring",
+    "categoryId": "17582046453731"
+  },
+  "nav-dashboard-admin": {
+    "contentMarkdown": "**Click Event** Navigate to team dashboard view (admin role) - shows same team progress monitoring functionality as director role",
+    "categoryId": "17582046453731"
+  },
+  "nav-home-btn": {
+    "contentMarkdown": "**Universal Home Button**\nVisible to all users in the header. Navigates back to the main checklist view (home screen) regardless of user role.",
+    "categoryId": "17582046453731"
+  },
+  "password-confirm-button": {
+    "contentMarkdown": "**Click Event** Generates new temporary password for selected user and displays it to admin - password is 'temp123' and user must change on next login",
+    "categoryId": "17582046453731"
+  },
+  "password-input": {
+    "contentMarkdown": "Password input field for user authentication - Required field, password type with demo password demo123",
+    "categoryId": "17582046453733"
+  },
+  "period-selector-container": {
+    "contentMarkdown": "**Period Selection Page**\n\n- Header Section\n    - Clock icon\n    - Title text\n    - User greeting with current time\n- Smart Suggestion Box\n    - Lightbulb icon\n    - Suggestion title\n    - Recommendation message\n    - Accept suggestion button\n- Period Options Grid\n    - Six period cards (start day, start shift morning/afternoon, end shift morning/afternoon, end day)\n        - Period icon\n        - Period name\n        - Period description\n        - Status indicators\n- Action Buttons\n    - Cancel button",
+    "categoryId": "17582046453732"
+  },
+  "period-selector-view": {
+    "contentMarkdown": "**Period Selector View**\n- Header\n    - Title\n    - User Greeting\n    - Current Time\n- Periods Grid\n    - Period Options\n        - Icon\n        - Name\n        - Description\n        - Recommended Badge\n        - Existing Warning\n- Cancel Button\n- Confirmation Dialog",
+    "categoryId": "17582046453732"
+  },
+  "periods-help-text": {
+    "contentMarkdown": "Help text explaining that users can select multiple periods for tasks that need to be performed at different times of the day",
+    "categoryId": "17582046453732"
+  },
+  "professional-category-${category.id}": {
+    "contentMarkdown": "**Professional Category Item**\n\n- Color Indicator (colored circle with category color)\n- Category Details Section\n  - Category Name (truncated on mobile)\n  - Category Key Badge (role identifier)\n- Action Buttons Section\n  - Edit Button (with text on mobile, icon-only on desktop)\n  - Delete Button (with \"Excluir\" text on mobile)\n- Mobile: Actions displayed with full-width buttons\n- Desktop: Compact icon-only buttons",
+    "categoryId": "17582046453732"
+  },
+  "professional-category-form": {
+    "contentMarkdown": "**Professional Category Form**\n- Category Name: Single line input, Required\n- Role Key: Single line input, Required, Lowercase validation\n- Description: Multi-line input, Optional\n- Color Selection: Color picker from predefined palette, Required\n- Submit Button",
+    "categoryId": "17582046453733"
+  },
+  "professional-category-manager-card": {
+    "contentMarkdown": "**Professional Category Manager**\n- Header with Title and Add Button\n- Categories Grid\n  - Category Cards with Name, Description, Role Key\n  - Edit and Delete Actions\n- Add/Edit Dialog Form\n  - Name Field\n  - Role Key Field\n  - Description Field\n  - Color Picker",
+    "categoryId": "17582046453732"
+  },
+  "quick-login-0": {
+    "contentMarkdown": "**Quick Login Button Click**\nWhen user clicks the 'Usar' button next to any debug user:\n- Automatically fill email field with user's email\n- Automatically fill password field with user's password\n- Clear any existing error messages\n- Log the quick login action to console\n- Allow user to immediately click 'Entrar' to login",
+    "categoryId": "17582046453731"
+  },
+  "refresh-page-button": {
+    "contentMarkdown": "**Click Event** When clicked, reloads the entire browser page to refresh the application state and re-initialize Supabase connection after successful database setup",
+    "categoryId": "17582046453731"
+  },
+  "refresh-reports-btn": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, reloads reports for the currently selected date. Shows loading state while fetching data.",
+    "categoryId": "17582046453731"
+  },
+  "reopen-checklist-dialog": {
+    "contentMarkdown": "**Click Event** When user clicks on a finalized checklist period, open reopen dialog asking for justification reason with two options: confirm reopen with reason or cancel back to home",
+    "categoryId": "17582046453731"
+  },
+  "reopen-dialog": {
+    "contentMarkdown": "**Reopen Checklist Flow**\n- Detects when user tries to create duplicate checklist type for same day\n- Requires mandatory reason with minimum 10 characters\n- Creates new checklist instance with reopen tracking\n- Preserves original finalized checklist in history",
+    "categoryId": "17582046453731"
+  },
+  "reopen-dialog-content": {
+    "contentMarkdown": "**Reopen Dialog Content**\n- Warning message about existing finalized checklist\n- Mandatory reason input field\n- Action buttons (Cancel/Reopen)",
+    "categoryId": "17582046453732"
+  },
+  "reports-header-content": {
+    "contentMarkdown": "**Reports Header Responsive Interaction**\n\nAdaptive layout for reports section:\n- Mobile: Full-width date input and button\n- Desktop: Compact inline controls\n- Date selector expands to full width on mobile\n- Button maintains consistent styling across breakpoints",
+    "categoryId": "17582046453731"
+  },
+  "reschedule-info": {
+    "contentMarkdown": "**Reagendamento Information Section**\n- Reschedule icon\n- Explanation text with original date\n- Reason for rescheduling",
+    "categoryId": "17582046453732"
+  },
+  "rescheduled-indicator": {
+    "contentMarkdown": "**Visual Feedback**\nShows when a weekly or monthly task was automatically rescheduled due to no checklist activity on the original scheduled date",
+    "categoryId": "17582046453731"
+  },
+  "reset-checklist": {
+    "contentMarkdown": "**Click Event** Reset all tasks in current day's checklist to uncompleted state",
+    "categoryId": "17582046453731"
+  },
+  "reset-templates-btn": {
+    "contentMarkdown": "**Button Click**\nWhen clicked, clears localStorage and reloads templates with default tasks from mockData, resets selectedTemplate to null, and shows success toast message",
+    "categoryId": "17582046453731"
+  },
+  "role-template-manager-card": {
+    "contentMarkdown": "**Role Template Manager**\n- Header with title and action buttons\n- Templates list showing available templates\n- Template details panel for selected template\n- Task management interface",
+    "categoryId": "17582046453732"
+  },
+  "role-template-manager-section": {
+    "contentMarkdown": "**Role Template Manager Section**\n- Header\n    - Title\n    - Description\n    - New Template Button\n- Templates List\n    - Available Templates\n        - Template Name\n        - Task Count\n        - Role Badge\n        - Delete Button\n- Template Details\n    - Template Info\n        - Name\n        - Last Updated\n        - Role Badge\n        - Add Task Button\n    - Task List\n        - Task Items\n            - Title\n            - Description\n            - Priority Badge\n            - Category Badge\n            - Period Badge\n            - Frequency Badge\n            - Edit Button\n            - Delete Button\n        - Empty State\n- New Template Dialog\n- New Task Dialog\n- Edit Task Form\n- Delete Confirmations",
+    "categoryId": "17582046453732"
+  },
+  "save-task-btn": {
+    "contentMarkdown": "**Button Click**\nWhen clicked, validates task title is filled, creates new task with unique ID, adds to selected template, saves to localStorage, updates UI, closes dialog, and shows success toast",
+    "categoryId": "17582046453731"
+  },
+  "smart-suggestion": {
+    "contentMarkdown": "**Smart Period Suggestion**\n\nIntelligent checklist period recommendation\n- Theme color: Blue gradient background with blue accent button\n- Font: Standard text with emphasis on suggestion title\n- Border radius style: Rounded container with soft gradient",
+    "categoryId": "17582046453730"
+  },
+  "stay-in-checklist-btn": {
+    "contentMarkdown": "**Click Event** Closes cancel dialog and keeps user in current checklist without losing progress",
+    "categoryId": "17582046453731"
+  },
+  "system-configuration-manager-card": {
+    "contentMarkdown": "**System Configuration Mobile Design**\n\nResponsive configuration interface with tabbed layout optimized for mobile devices.\n\n- Theme color: Blue-gray accent with color-coded sections (blue for professional categories, green for task categories, orange for master tasks)\n- Font: Responsive typography with text-lg on desktop, smaller on mobile\n- Border radius style: Consistent rounded-lg for cards, rounded-r-md for info panels",
+    "categoryId": "17582046453730"
+  },
+  "task-category-form": {
+    "contentMarkdown": "**Task Category Form**\n- Category Name: Single line input, Required\n- Description: Multi-line input, Optional\n- Color Selection: Color picker from predefined palette, Required\n- Submit Button",
+    "categoryId": "17582046453733"
+  },
+  "task-category-manager-card": {
+    "contentMarkdown": "**Task Category Manager**\n- Header with Title and Add Button\n- Categories Grid\n  - Category Cards with Name, Description, Color\n  - Edit and Delete Actions\n- Add/Edit Dialog Form\n  - Name Field\n  - Description Field\n  - Color Picker",
+    "categoryId": "17582046453732"
+  },
+  "task-detail-title": {
+    "contentMarkdown": "**Task Title Display**\n- Multi-level task identification system:\n  1. Search in master_tasks by task_id\n  2. Extract from finalReport using regex pattern\n  3. Fallback to template tasks by index\n  4. Final fallback with task ID or \"not identified\" message\n- Display clean task names without technical IDs\n- Console logging for debugging task resolution method",
+    "categoryId": "17582046453732"
+  },
+  "task-notes-section": {
+    "contentMarkdown": "**Task Notes Section**\n- Notes Label\n- Notes Content",
+    "categoryId": "17582046453732"
+  },
+  "task-periods-checkboxes": {
+    "contentMarkdown": "**Multiple Period Selection** Checkbox interface allowing users to assign a single task to multiple checklist periods (start_day, start_shift, end_shift, end_day) for tasks that occur multiple times per day",
+    "categoryId": "17582046453731"
+  },
+  "template-header-actions": {
+    "contentMarkdown": "**Action Buttons Section**\n- Reset Templates Button\n- New Template Dialog Button",
+    "categoryId": "17582046453732"
+  },
+  "universal-logout-btn": {
+    "contentMarkdown": "**Universal Logout Button**\nVisible to all users in the header. Logs out the current user and returns to login screen. Red styling to indicate logout action.",
+    "categoryId": "17582046453731"
+  },
+  "universal-nav-buttons": {
+    "contentMarkdown": "**Universal Navigation Buttons**\n\nNavigation buttons visible to all users\n- Theme color: Standard outline buttons with red accent for logout\n- Font: Standard button font with icon support\n- Border radius style: Rounded buttons with consistent spacing",
+    "categoryId": "17582046453730"
+  },
+  "user-change-password-dialog": {
+    "contentMarkdown": "**Change Password Form**\n\n- Current Password: Text input (password type)\n  - Required for users with existing passwords\n  - Optional for users with temporary passwords (temp-hash)\n  - Validation: Must match stored password_hash in database\n  - Toggle visibility with eye icon\n\n- New Password: Text input (password type)  \n  - Required\n  - Validation: Minimum 6 characters\n  - Must be different from current password\n  - Toggle visibility with eye icon\n  - Placeholder: \"Mínimo 6 caracteres\"\n\n- Confirm New Password: Text input (password type)\n  - Required  \n  - Validation: Must match new password exactly\n  - Toggle visibility with eye icon\n\n- Submit Button: \"Alterar Senha\"\n  - Saves new password to Supabase users.password_hash\n  - Shows loading state during submission\n  - Updates updated_at timestamp",
+    "categoryId": "17582046453733"
+  },
+  "user-item-${user.id}": {
+    "contentMarkdown": "**User Management List Item**\n\n- User Avatar (circular with initials)\n- User Details Section\n  - User Name (truncated on mobile)\n  - User Email (with mail icon)\n  - Role Badge (mobile: below details, desktop: right side)\n- Action Buttons Section\n  - Edit Button (with text on mobile, icon-only on desktop)\n  - Password Reset Button (with \"Senha\" text on mobile)\n  - Delete Button (with \"Excluir\" text on mobile)",
+    "categoryId": "17582046453732"
+  },
+  "user-management-card": {
+    "contentMarkdown": "**Mobile-First Admin Dashboard Design**\n\nModern, responsive design optimized for mobile devices while maintaining desktop functionality.\n\n- Theme color: Blue-gray accent with clean whites and subtle borders\n- Font: System fonts with responsive sizing (text-lg on desktop, smaller on mobile)\n- Border radius style: Consistent rounded-lg for cards, rounded-md for inner elements",
+    "categoryId": "17582046453730"
+  },
+  "user-menu": {
+    "contentMarkdown": "\n\n**Click Event**\nWhen user clicks on avatar, dropdown menu appears with navigation options. Menu provides quick access to main sections and logout functionality with proper visual feedback.",
+    "categoryId": "17582046453731"
+  },
+  "view-checklist-details": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, opens dialog showing detailed view of the checklist including all tasks, completion status, notes, and timing information.",
+    "categoryId": "17582046453731"
+  },
+  "vsCTS9InxDWMj672": {
+    "contentMarkdown": "**Logo and Brand Section**\n\n- Logo Container\n  - Logo Image (10x10 on mobile, 12x12 on desktop)\n  - Flex-shrink-0 to maintain size\n- Brand Information\n  - Company Name (truncated text, responsive font size)\n  - Subtitle (hidden on mobile, visible on desktop)\n  - Min-width-0 and flex-1 for proper truncation",
+    "categoryId": "17582046453732"
+  }
+}
