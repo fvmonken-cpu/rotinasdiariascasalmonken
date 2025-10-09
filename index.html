@@ -1,11 +1,14 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <!-- SpecAI Integration (only load in development) -->
     <script>
-      const script = document.createElement('script');
-      script.src = '/specai_dev.js';
-      document.head.appendChild(script);
+      // Only load specai_dev.js in development environment
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.includes('pinspec')) {
+        const script = document.createElement('script');
+        script.src = '/specai_dev.js';
+        document.head.appendChild(script);
+      }
     </script>
 
     <meta charset="UTF-8" />
