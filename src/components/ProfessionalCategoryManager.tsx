@@ -10,7 +10,10 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Users, Plus, Edit, Trash2, Save, X } from 'lucide-react';
 import { ProfessionalCategory } from '@/types';
 import { toast } from 'sonner';
+import { loadProfessionalCategoriesFromSupabase } from '@/utils/cloudMasterTaskUtils';
+import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 const ProfessionalCategoryManager = ()=>{
+    const { isSupabaseConnected } = useSupabaseAuth();
     const [categories, setCategories] = useState<ProfessionalCategory[]>([]);
     const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState<ProfessionalCategory | null>(null);
@@ -56,22 +59,38 @@ const ProfessionalCategoryManager = ()=>{
     ];
     useEffect(()=>{
         loadCategories();
-    }, []);
-    const loadCategories = ()=>{
-        const savedCategories = localStorage.getItem('professionalCategories');
-        if (savedCategories) {
-            setCategories(JSON.parse(savedCategories));
-        } else {
-            const defaultCategories = createDefaultCategories();
-            setCategories(defaultCategories);
-            localStorage.setItem('professionalCategories', JSON.stringify(defaultCategories));
+    }, [
+        isSupabaseConnected
+    ]);
+    const loadCategories = async ()=>{
+        if (!isSupabaseConnected) {
+            console.log('⚠️ Supabase not connected. Professional categories require cloud operation.');
+            return;
+        }
+        console.log('🔄 Loading professional categories from Supabase...');
+        try {
+            const supabaseCategories = await loadProfessionalCategoriesFromSupabase();
+            if (supabaseCategories.length === 0) {
+                console.log('📝 No categories found in Supabase, creating defaults');
+                const defaultCategories = createDefaultCategories();
+                setCategories(defaultCategories);
+                for (const category of defaultCategories){
+                    await saveCategoryToSupabase(category);
+                }
+                console.log('✅ Default categories created in Supabase');
+            } else {
+                setCategories(supabaseCategories);
+                console.log('✅ Professional categories loaded from Supabase:', supabaseCategories.length);
+            }
+        } catch (error) {
+            console.error('❌ Failed to load categories from Supabase:', error);
         }
     };
     const createDefaultCategories = (): ProfessionalCategory[] =>{
         const now = new Date().toISOString();
         return [
             {
-                id: 'prof-secretary',
+                id: crypto.randomUUID(),
                 name: 'Secretária',
                 description: 'Responsável por tarefas administrativas e de comunicação',
                 roleKey: 'secretary',
@@ -80,7 +99,7 @@ const ProfessionalCategoryManager = ()=>{
                 updatedAt: now
             },
             {
-                id: 'prof-nurse',
+                id: crypto.randomUUID(),
                 name: 'Enfermeira',
                 description: 'Responsável por cuidados médicos e bem-estar dos pacientes',
                 roleKey: 'nurse',
@@ -89,7 +108,7 @@ const ProfessionalCategoryManager = ()=>{
                 updatedAt: now
             },
             {
-                id: 'prof-sdr',
+                id: crypto.randomUUID(),
                 name: 'SDR',
                 description: 'Representante de Desenvolvimento de Vendas',
                 roleKey: 'sdr',
@@ -98,7 +117,7 @@ const ProfessionalCategoryManager = ()=>{
                 updatedAt: now
             },
             {
-                id: 'prof-director',
+                id: crypto.randomUUID(),
                 name: 'Diretor',
                 description: 'Responsável pela gestão estratégica e liderança',
                 roleKey: 'director',
@@ -117,7 +136,47 @@ const ProfessionalCategoryManager = ()=>{
         });
         setEditingCategory(null);
     };
-    const handleAdd = ()=>{
+    const saveCategoryToSupabase = async (category: ProfessionalCategory)=>{
+        if (!isSupabaseConnected) return;
+        try {
+            const { supabase } = await import('@/lib/supabase');
+            const supabaseCategory = {
+                id: category.id,
+                name: category.name,
+                description: category.description,
+                role_key: category.roleKey,
+                color: category.color,
+                created_at: category.createdAt,
+                updated_at: category.updatedAt
+            };
+            console.log('💾 Saving category to Supabase with data:', supabaseCategory);
+            const { error } = await supabase.from('professional_categories').upsert(supabaseCategory);
+            if (error) {
+                console.error('❌ Error saving category to Supabase:', error);
+                toast.error(`Erro ao salvar categoria: ${error.message}`);
+            } else {
+                console.log('✅ Category saved to Supabase:', category.name);
+            }
+        } catch (error) {
+            console.error('❌ Failed to save category to Supabase:', error);
+            toast.error('Falha ao conectar com o banco de dados');
+        }
+    };
+    const deleteCategoryFromSupabase = async (categoryId: string)=>{
+        if (!isSupabaseConnected) return;
+        try {
+            const { supabase } = await import('@/lib/supabase');
+            const { error } = await supabase.from('professional_categories').delete().eq('id', categoryId);
+            if (error) {
+                console.error('❌ Error deleting category from Supabase:', error);
+            } else {
+                console.log('✅ Category deleted from Supabase:', categoryId);
+            }
+        } catch (error) {
+            console.error('❌ Failed to delete category from Supabase:', error);
+        }
+    };
+    const handleAdd = async ()=>{
         if (!newCategory.name.trim()) {
             toast.error('Nome da categoria é obrigatório');
             return;
@@ -131,7 +190,7 @@ const ProfessionalCategoryManager = ()=>{
             return;
         }
         const category: ProfessionalCategory = {
-            id: `prof-${Date.now()}`,
+            id: crypto.randomUUID(),
             name: newCategory.name,
             description: newCategory.description,
             roleKey: newCategory.roleKey,
@@ -139,13 +198,15 @@ const ProfessionalCategoryManager = ()=>{
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString()
         };
+        console.log('💾 Saving category to Supabase:', category.name);
+        await saveCategoryToSupabase(category);
         const updatedCategories = [
             ...categories,
             category
         ];
         setCategories(updatedCategories);
-        localStorage.setItem('professionalCategories', JSON.stringify(updatedCategories));
-        toast.success('Categoria profissional criada com sucesso!');
+        toast.success('✅ Categoria criada com sucesso e salva no Supabase!');
+        console.log('✅ Category saved successfully to Supabase (cloud-only mode)');
         resetForm();
         setIsAddDialogOpen(false);
     };
@@ -159,7 +220,7 @@ const ProfessionalCategoryManager = ()=>{
         });
         setIsAddDialogOpen(true);
     };
-    const handleUpdate = ()=>{
+    const handleUpdate = async ()=>{
         if (!editingCategory) return;
         if (!newCategory.name.trim()) {
             toast.error('Nome da categoria é obrigatório');
@@ -181,24 +242,69 @@ const ProfessionalCategoryManager = ()=>{
             color: newCategory.color,
             updatedAt: new Date().toISOString()
         };
+        console.log('🔄 Updating category in Supabase:', updatedCategory.name);
+        await saveCategoryToSupabase(updatedCategory);
         const updatedCategories = categories.map((cat)=>cat.id === editingCategory.id ? updatedCategory : cat);
         setCategories(updatedCategories);
-        localStorage.setItem('professionalCategories', JSON.stringify(updatedCategories));
-        toast.success('Categoria profissional atualizada com sucesso!');
+        toast.success('✅ Categoria atualizada com sucesso no Supabase!');
+        console.log('✅ Category updated successfully in Supabase (cloud-only mode)');
         resetForm();
         setIsAddDialogOpen(false);
     };
-    const handleDelete = (categoryId: string)=>{
-        const updatedCategories = categories.filter((cat)=>cat.id !== categoryId);
-        setCategories(updatedCategories);
-        localStorage.setItem('professionalCategories', JSON.stringify(updatedCategories));
-        toast.success('Categoria profissional removida com sucesso!');
+    const handleDelete = async (categoryId: string)=>{
+        console.log('🗑️ Attempting to delete category from Supabase:', categoryId);
+        const categoryToDelete = categories.find((cat)=>cat.id === categoryId);
+        if (!categoryToDelete) {
+            toast.error('Categoria não encontrada');
+            return;
+        }
+        try {
+            const { supabase } = await import('@/lib/supabase');
+            const { data: usersWithThisRole, error: usersError } = await supabase.from('users').select('id, name, email').eq('role', categoryToDelete.roleKey);
+            if (usersError) {
+                console.error('❌ Error checking users:', usersError);
+                toast.error('Erro ao verificar usuários vinculados');
+                return;
+            }
+            if (usersWithThisRole && usersWithThisRole.length > 0) {
+                const userNames = usersWithThisRole.map((u)=>u.name).join(', ');
+                toast.error(`❌ Não é possível excluir! Existe(m) ${usersWithThisRole.length} usuário(s) com esta função: ${userNames}`);
+                console.log('🚫 Cannot delete category - users found:', usersWithThisRole);
+                return;
+            }
+            const { data: tasksWithThisRole, error: tasksError } = await supabase.from('master_tasks').select('id, name').contains('assigned_roles', [
+                categoryToDelete.roleKey
+            ]);
+            if (tasksError) {
+                console.error('❌ Error checking tasks:', tasksError);
+                toast.error('Erro ao verificar tarefas vinculadas');
+                return;
+            }
+            if (tasksWithThisRole && tasksWithThisRole.length > 0) {
+                const taskList = tasksWithThisRole.map((t, index)=>`${index + 1}. ${t.name}`).join('\n');
+                toast.error(`❌ Não é possível excluir! Existe(m) ${tasksWithThisRole.length} tarefa(s) vinculadas:\n\n${taskList}\n\nPrimeiro remova esta categoria dessas tarefas.`, {
+                    duration: 8000
+                });
+                console.log('🚫 Cannot delete category - tasks found:', tasksWithThisRole);
+                return;
+            }
+            await deleteCategoryFromSupabase(categoryId);
+            const updatedCategories = categories.filter((cat)=>cat.id !== categoryId);
+            setCategories(updatedCategories);
+            toast.success('✅ Categoria removida com sucesso do Supabase!');
+            console.log('✅ Category deleted successfully from Supabase (cloud-only mode)');
+        } catch (error) {
+            console.error('❌ Failed to validate category deletion:', error);
+            toast.error('Falha ao validar exclusão da categoria');
+        }
     };
     const handleDialogClose = ()=>{
         resetForm();
         setIsAddDialogOpen(false);
     };
-    return (<Card data-spec-id="professional-category-manager-card">
+    return (<>
+      {}
+      <Card data-spec-id="professional-category-manager-card">
       <CardHeader data-spec-id="professional-category-header">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0" data-spec-id="professional-category-header-content">
           <div data-spec-id="professional-category-title-section">
@@ -346,6 +452,7 @@ const ProfessionalCategoryManager = ()=>{
             </p>
           </div>)}
       </CardContent>
-    </Card>);
+    </Card>
+    </>);
 };
 export default ProfessionalCategoryManager;

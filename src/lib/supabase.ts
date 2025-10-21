@@ -130,61 +130,36 @@ const createTables = async () => {
 const seedInitialData = async () => {
   console.log('🌱 Seeding initial data...');
   
-  // Migrate existing localStorage data to Supabase
-  await migrateLocalStorageData();
+  // MIGRAÇÃO DESABILITADA - Causava perda de dados do usuário
+  console.log('🚫 Data migration disabled to prevent data loss');
 };
 
-// Migration function to move localStorage data to Supabase
+// FUNÇÃO DE MIGRAÇÃO DESABILITADA PERMANENTEMENTE 
+// Esta função estava causando perda de dados do usuário
 export const migrateLocalStorageData = async () => {
-  console.log('📦 Starting data migration from localStorage to Supabase...');
-  
-  try {
-    // Migrate users
-    const existingUsers = [
-      { name: 'Sarah Johnson', email: 'sarah@company.com', role: 'director' },
-      { name: 'Mike Chen', email: 'mike@company.com', role: 'secretary' },
-      { name: 'Anna Rodriguez', email: 'anna@company.com', role: 'nurse' },
-      { name: 'David Kim', email: 'david@company.com', role: 'sdr' },
-      { name: 'Admin User', email: 'admin@company.com', role: 'admin' },
-      { name: 'Lisa Wang', email: 'lisa@company.com', role: 'secretary' },
-      { name: 'John Smith', email: 'john@company.com', role: 'nurse' }
-    ];
-
-    // Check if users already exist
-    const { data: existingUsersData } = await supabase.from('users').select('id');
-    
-    if (!existingUsersData || existingUsersData.length === 0) {
-      const { error: usersError } = await supabase.from('users').insert(existingUsers);
-      if (usersError) throw usersError;
-      console.log('✅ Users migrated successfully');
-    }
-
-    // Migrate localStorage checklists if any exist
-    const localChecklists = localStorage.getItem('dailyChecklists');
-    if (localChecklists) {
-      const checklists = JSON.parse(localChecklists);
-      console.log(`📋 Found ${checklists.length} checklists to migrate`);
-      
-      // Transform and migrate checklists
-      for (const checklist of checklists) {
-        await migrateChecklist(checklist);
-      }
-    }
-
-    console.log('✅ Data migration completed successfully!');
-  } catch (error) {
-    console.error('❌ Migration failed:', error);
-    throw error;
-  }
+  console.log('🚫 MIGRATION DISABLED - This function was causing user data loss');
+  console.log('🛡️ Your localStorage data is preserved and safe');
+  return; // Sai imediatamente sem fazer nada
 };
 
 const migrateChecklist = async (localChecklist: any) => {
   try {
+    // Validate and fix template_id - must be a valid UUID or null
+    let templateId = localChecklist.templateId;
+    
+    // Check if template_id is a valid UUID format (8-4-4-4-12 characters)
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    
+    if (!templateId || !uuidRegex.test(templateId)) {
+      console.warn(`⚠️ Invalid template_id "${templateId}" found, setting to null`);
+      templateId = null;
+    }
+    
     // Insert checklist
     const checklistData = {
       id: localChecklist.id,
       user_id: localChecklist.userId,
-      template_id: localChecklist.templateId,
+      template_id: templateId, // Now validated as UUID or null
       date: localChecklist.date,
       period: localChecklist.period,
       shift: localChecklist.shift,

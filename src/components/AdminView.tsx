@@ -4,6 +4,7 @@ import UserManagement from './UserManagement';
 import AdminReports from './AdminReports';
 import SystemConfigurationManager from './SystemConfigurationManager';
 import SupabaseStatus from './SupabaseStatus';
+import DataRecovery from './DataRecovery';
 const AdminView = ()=>{
     return (<div className="space-y-6" data-spec-id="admin-view">
       {}
@@ -24,6 +25,8 @@ const AdminView = ()=>{
 
       {}
       <SupabaseStatus data-spec-id="supabase-status-section"/>
+
+      <DataRecovery data-spec-id="data-recovery-section"/>
 
       {}
       <div className="border-t border-gray-200" data-spec-id="supabase-divider"></div>

@@ -53,7 +53,6 @@ export const SupabaseAuthProvider = ({ children }: AuthProviderProps)=>{
             if (connected) {
                 await initializeDatabase();
                 toast.success('🎉 Supabase database initialized successfully!');
-                await migrateFromLocalStorage();
                 return true;
             } else {
                 console.log('📱 Running in localStorage mode');
@@ -71,24 +70,7 @@ export const SupabaseAuthProvider = ({ children }: AuthProviderProps)=>{
         }
     };
     const migrateFromLocalStorage = async ()=>{
-        try {
-            const localUser = localStorage.getItem('currentUser');
-            const localChecklists = localStorage.getItem('dailyChecklists');
-            if (localUser || localChecklists) {
-                console.log('📦 Migrating localStorage data to Supabase...');
-                await migrateLocalStorageData();
-                localStorage.removeItem('currentUser');
-                localStorage.removeItem('dailyChecklists');
-                localStorage.removeItem('checklistTemplates');
-                localStorage.removeItem('professionalCategories');
-                localStorage.removeItem('taskCategories');
-                localStorage.removeItem('masterTasks');
-                toast.success('📦 Data migrated successfully from localStorage to Supabase!');
-            }
-        } catch (error) {
-            console.error('❌ Migration failed:', error);
-            toast.error('Data migration failed, but Supabase is working');
-        }
+        console.log('🚫 Migration disabled to prevent data loss');
     };
     const login = async (email: string, password: string): Promise<void> =>{
         setIsLoading(true);

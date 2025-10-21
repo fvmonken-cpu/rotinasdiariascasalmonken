@@ -10,7 +10,9 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { FolderPlus, Plus, Edit, Trash2, Save, X } from 'lucide-react';
 import { TaskCategory } from '@/types';
 import { toast } from 'sonner';
+import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 const TaskCategoryManager = ()=>{
+    const { isSupabaseConnected } = useSupabaseAuth();
     const [categories, setCategories] = useState<TaskCategory[]>([]);
     const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState<TaskCategory | null>(null);
@@ -56,21 +58,50 @@ const TaskCategoryManager = ()=>{
     useEffect(()=>{
         loadCategories();
     }, []);
-    const loadCategories = ()=>{
-        const savedCategories = localStorage.getItem('taskCategories');
-        if (savedCategories) {
-            setCategories(JSON.parse(savedCategories));
-        } else {
-            const defaultCategories = createDefaultCategories();
-            setCategories(defaultCategories);
-            localStorage.setItem('taskCategories', JSON.stringify(defaultCategories));
+    const loadCategories = async ()=>{
+        if (!isSupabaseConnected) {
+            console.log('⚠️ Supabase not connected - cloud-only mode requires Supabase');
+            return;
+        }
+        try {
+            const { supabase } = await import('@/lib/supabase');
+            const { data: categoriesData, error } = await supabase.from('task_categories').select('*');
+            if (error) {
+                console.error('❌ Error loading categories from Supabase:', error);
+                const defaultCategories = createDefaultCategories();
+                setCategories(defaultCategories);
+                for (const category of defaultCategories){
+                    await saveCategoryToSupabase(category);
+                }
+                console.log('✅ Default categories created in Supabase');
+            } else if (categoriesData && categoriesData.length > 0) {
+                const categories = categoriesData.map((cat: any)=>({
+                        id: cat.id,
+                        name: cat.name,
+                        description: cat.description,
+                        color: cat.color,
+                        createdAt: cat.created_at,
+                        updatedAt: cat.updated_at
+                    }));
+                setCategories(categories);
+                console.log('✅ Categories loaded from Supabase:', categories.length);
+            } else {
+                const defaultCategories = createDefaultCategories();
+                setCategories(defaultCategories);
+                for (const category of defaultCategories){
+                    await saveCategoryToSupabase(category);
+                }
+                console.log('✅ Default categories created in Supabase');
+            }
+        } catch (error) {
+            console.error('❌ Failed to load categories from Supabase:', error);
         }
     };
     const createDefaultCategories = (): TaskCategory[] =>{
         const now = new Date().toISOString();
         return [
             {
-                id: 'cat-communication',
+                id: crypto.randomUUID(),
                 name: 'Comunicação',
                 description: 'Tarefas relacionadas a comunicação interna e externa',
                 color: '#3B82F6',
@@ -78,7 +109,7 @@ const TaskCategoryManager = ()=>{
                 updatedAt: now
             },
             {
-                id: 'cat-administration',
+                id: crypto.randomUUID(),
                 name: 'Administração',
                 description: 'Tarefas administrativas e burocráticas',
                 color: '#10B981',
@@ -86,7 +117,7 @@ const TaskCategoryManager = ()=>{
                 updatedAt: now
             },
             {
-                id: 'cat-patient-care',
+                id: crypto.randomUUID(),
                 name: 'Cuidado do Paciente',
                 description: 'Tarefas relacionadas ao cuidado direto com pacientes',
                 color: '#EF4444',
@@ -94,7 +125,7 @@ const TaskCategoryManager = ()=>{
                 updatedAt: now
             },
             {
-                id: 'cat-medication',
+                id: crypto.randomUUID(),
                 name: 'Medicação',
                 description: 'Tarefas relacionadas à administração de medicamentos',
                 color: '#8B5CF6',
@@ -102,7 +133,7 @@ const TaskCategoryManager = ()=>{
                 updatedAt: now
             },
             {
-                id: 'cat-documentation',
+                id: crypto.randomUUID(),
                 name: 'Documentação',
                 description: 'Tarefas de registro e documentação',
                 color: '#F59E0B',
@@ -110,7 +141,7 @@ const TaskCategoryManager = ()=>{
                 updatedAt: now
             },
             {
-                id: 'cat-safety',
+                id: crypto.randomUUID(),
                 name: 'Segurança',
                 description: 'Tarefas relacionadas à segurança e protocolos',
                 color: '#06B6D4',
@@ -118,7 +149,7 @@ const TaskCategoryManager = ()=>{
                 updatedAt: now
             },
             {
-                id: 'cat-sales',
+                id: crypto.randomUUID(),
                 name: 'Vendas',
                 description: 'Tarefas relacionadas a vendas e prospecção',
                 color: '#F97316',
@@ -126,7 +157,7 @@ const TaskCategoryManager = ()=>{
                 updatedAt: now
             },
             {
-                id: 'cat-management',
+                id: crypto.randomUUID(),
                 name: 'Gestão',
                 description: 'Tarefas de gerenciamento e liderança',
                 color: '#84CC16',
@@ -143,26 +174,67 @@ const TaskCategoryManager = ()=>{
         });
         setEditingCategory(null);
     };
-    const handleAdd = ()=>{
+    const saveCategoryToSupabase = async (category: TaskCategory)=>{
+        if (!isSupabaseConnected) return;
+        try {
+            const { supabase } = await import('@/lib/supabase');
+            const supabaseCategory = {
+                id: category.id,
+                name: category.name,
+                description: category.description,
+                color: category.color,
+                created_at: category.createdAt,
+                updated_at: category.updatedAt
+            };
+            console.log('💾 Saving category to Supabase with data:', supabaseCategory);
+            const { error } = await supabase.from('task_categories').upsert(supabaseCategory);
+            if (error) {
+                console.error('❌ Error saving category to Supabase:', error);
+                toast.error(`Erro ao salvar categoria: ${error.message}`);
+            } else {
+                console.log('✅ Category saved to Supabase:', category.name);
+            }
+        } catch (error) {
+            console.error('❌ Failed to save category to Supabase:', error);
+            toast.error('Falha ao conectar com o banco de dados');
+        }
+    };
+    const deleteCategoryFromSupabase = async (categoryId: string)=>{
+        if (!isSupabaseConnected) return;
+        try {
+            const { supabase } = await import('@/lib/supabase');
+            const { error } = await supabase.from('task_categories').delete().eq('id', categoryId);
+            if (error) {
+                console.error('❌ Error deleting category from Supabase:', error);
+            } else {
+                console.log('✅ Category deleted from Supabase:', categoryId);
+            }
+        } catch (error) {
+            console.error('❌ Failed to delete category from Supabase:', error);
+        }
+    };
+    const handleAdd = async ()=>{
         if (!newCategory.name.trim()) {
             toast.error('Nome da categoria é obrigatório');
             return;
         }
         const category: TaskCategory = {
-            id: `cat-${Date.now()}`,
+            id: crypto.randomUUID(),
             name: newCategory.name,
             description: newCategory.description,
             color: newCategory.color,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString()
         };
+        console.log('💾 Saving category to Supabase:', category.name);
+        await saveCategoryToSupabase(category);
         const updatedCategories = [
             ...categories,
             category
         ];
         setCategories(updatedCategories);
-        localStorage.setItem('taskCategories', JSON.stringify(updatedCategories));
-        toast.success('Categoria de tarefa criada com sucesso!');
+        toast.success('✅ Categoria criada com sucesso e salva no Supabase!');
+        console.log('✅ Category saved successfully to Supabase (cloud-only mode)');
         resetForm();
         setIsAddDialogOpen(false);
     };
@@ -175,7 +247,7 @@ const TaskCategoryManager = ()=>{
         });
         setIsAddDialogOpen(true);
     };
-    const handleUpdate = ()=>{
+    const handleUpdate = async ()=>{
         if (!editingCategory) return;
         if (!newCategory.name.trim()) {
             toast.error('Nome da categoria é obrigatório');
@@ -188,27 +260,34 @@ const TaskCategoryManager = ()=>{
             color: newCategory.color,
             updatedAt: new Date().toISOString()
         };
+        console.log('🔄 Updating category in Supabase:', updatedCategory.name);
+        await saveCategoryToSupabase(updatedCategory);
         const updatedCategories = categories.map((cat)=>cat.id === editingCategory.id ? updatedCategory : cat);
         setCategories(updatedCategories);
-        localStorage.setItem('taskCategories', JSON.stringify(updatedCategories));
-        toast.success('Categoria de tarefa atualizada com sucesso!');
+        toast.success('✅ Categoria atualizada com sucesso no Supabase!');
+        console.log('✅ Category updated successfully in Supabase (cloud-only mode)');
         resetForm();
         setIsAddDialogOpen(false);
     };
-    const handleDelete = (categoryId: string)=>{
-        const savedTasks = localStorage.getItem('masterTasks');
-        if (savedTasks) {
-            const tasks = JSON.parse(savedTasks);
-            const isUsed = tasks.some((task: any)=>task.categoryId === categoryId);
-            if (isUsed) {
-                toast.error('Esta categoria não pode ser excluída pois está sendo usada por tarefas');
-                return;
+    const handleDelete = async (categoryId: string)=>{
+        if (isSupabaseConnected) {
+            try {
+                const { supabase } = await import('@/lib/supabase');
+                const { data: tasksData, error } = await supabase.from('master_tasks').select('id').eq('category_id', categoryId);
+                if (!error && tasksData && tasksData.length > 0) {
+                    toast.error('Esta categoria não pode ser excluída pois está sendo usada por tarefas');
+                    return;
+                }
+            } catch (error) {
+                console.error('❌ Error checking category usage:', error);
             }
         }
+        console.log('🗑️ Deleting category from Supabase:', categoryId);
+        await deleteCategoryFromSupabase(categoryId);
         const updatedCategories = categories.filter((cat)=>cat.id !== categoryId);
         setCategories(updatedCategories);
-        localStorage.setItem('taskCategories', JSON.stringify(updatedCategories));
-        toast.success('Categoria de tarefa removida com sucesso!');
+        toast.success('✅ Categoria removida com sucesso do Supabase!');
+        console.log('✅ Category deleted successfully from Supabase (cloud-only mode)');
     };
     const handleDialogClose = ()=>{
         resetForm();

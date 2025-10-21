@@ -4,9 +4,10 @@ import AppHeader from './AppHeader';
 import ChecklistView from './ChecklistView';
 import DashboardView from './DashboardView';
 import AdminView from './AdminView';
+import CloudOnlyNotice from './CloudOnlyNotice';
 type ViewType = 'checklist' | 'dashboard' | 'admin';
 const MainApp = ()=>{
-    const { user } = useSupabaseAuth();
+    const { user, isSupabaseConnected } = useSupabaseAuth();
     const [currentView, setCurrentView] = useState<ViewType>(()=>{
         if (user?.role === 'admin') return 'admin';
         return 'checklist';
@@ -39,6 +40,7 @@ const MainApp = ()=>{
       <AppHeader onNavigate={handleNavigate} currentView={currentView} data-spec-id="cPKrkLPNkIglDIpl"/>
       
       <main className="max-w-7xl mx-auto px-4 py-6" data-spec-id="Peeh3HRhT77ruJKi">
+        <CloudOnlyNotice isSupabaseConnected={isSupabaseConnected} data-spec-id="NdBkGHoZjK2TATcQ"/>
         {renderCurrentView()}
       </main>
     </div>);

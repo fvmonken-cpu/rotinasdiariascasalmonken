@@ -12,10 +12,13 @@ import { User } from '@/types';
 import { toast } from 'sonner';
 import { supabase } from '@/lib/supabase';
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+import { ProfessionalCategory } from '@/types';
+import { loadProfessionalCategoriesFromSupabase } from '@/utils/cloudMasterTaskUtils';
 const UserManagement = ()=>{
     console.log('🔧 UserManagement component rendered');
     const { user: currentUser } = useSupabaseAuth();
     const [users, setUsers] = useState<User[]>([]);
+    const [professionalCategories, setProfessionalCategories] = useState<ProfessionalCategory[]>([]);
     const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
     const [editingUser, setEditingUser] = useState<User | null>(null);
@@ -43,8 +46,19 @@ const UserManagement = ()=>{
             toast.error('Falha ao conectar com banco de dados');
         }
     };
+    const loadProfessionalCategories = async ()=>{
+        console.log('🔄 Loading professional categories from Supabase...');
+        try {
+            const categories = await loadProfessionalCategoriesFromSupabase();
+            setProfessionalCategories(categories);
+            console.log('✅ Loaded', categories.length, 'professional categories from Supabase');
+        } catch (error) {
+            console.error('❌ Failed to load professional categories:', error);
+        }
+    };
     useEffect(()=>{
         loadUsers();
+        loadProfessionalCategories();
     }, []);
     useEffect(()=>{
         console.log('📋 Dialog state changed:', {
@@ -144,21 +158,30 @@ const UserManagement = ()=>{
         }
     };
     const getRoleColor = (role: User['role'])=>{
+        const category = professionalCategories.find((cat)=>cat.roleKey === role);
+        if (category && category.color) {
+            return `text-white border-gray-200`;
+        }
         const colors = {
-            director: 'bg-purple-100 text-purple-800 border-purple-200',
-            secretary: 'bg-blue-100 text-blue-800 border-blue-200',
-            nurse: 'bg-green-100 text-green-800 border-green-200',
-            sdr: 'bg-orange-100 text-orange-800 border-orange-200',
             admin: 'bg-red-100 text-red-800 border-red-200'
         };
         return colors[role] || 'bg-gray-100 text-gray-800 border-gray-200';
     };
+    const getRoleStyle = (role: User['role'])=>{
+        const category = professionalCategories.find((cat)=>cat.roleKey === role);
+        if (category && category.color) {
+            return {
+                backgroundColor: category.color
+            };
+        }
+        return {};
+    };
     const getRoleLabel = (role: User['role'])=>{
+        const category = professionalCategories.find((cat)=>cat.roleKey === role);
+        if (category) {
+            return category.name;
+        }
         const labels = {
-            director: 'Diretor(a)',
-            secretary: 'Secretário(a)',
-            nurse: 'Enfermeiro(a)',
-            sdr: 'SDR',
             admin: 'Administrador'
         };
         return labels[role] || role;
@@ -217,10 +240,9 @@ const UserManagement = ()=>{
                       <SelectValue data-spec-id="add-role-value"/>
                     </SelectTrigger>
                     <SelectContent data-spec-id="add-role-options">
-                      <SelectItem value="secretary" data-spec-id="role-secretary">Secretário(a)</SelectItem>
-                      <SelectItem value="nurse" data-spec-id="role-nurse">Enfermeiro(a)</SelectItem>
-                      <SelectItem value="sdr" data-spec-id="role-sdr">SDR</SelectItem>
-                      <SelectItem value="director" data-spec-id="role-director">Diretor(a)</SelectItem>
+                      {professionalCategories.map((category)=>(<SelectItem key={category.id} value={category.roleKey} data-spec-id={`role-${category.roleKey}`}>
+                          {category.name}
+                        </SelectItem>))}
                       <SelectItem value="admin" data-spec-id="role-admin">Administrador</SelectItem>
                     </SelectContent>
                   </Select>
@@ -255,7 +277,7 @@ const UserManagement = ()=>{
                     <span className="text-sm text-gray-600 truncate" data-spec-id="user-email">{user.email}</span>
                   </div>
                   <div className="sm:hidden mt-2" data-spec-id="mobile-role-badge">
-                    <Badge className={getRoleColor(user.role)} data-spec-id="mobile-user-role-badge">
+                    <Badge className={getRoleColor(user.role)} style={getRoleStyle(user.role)} data-spec-id="mobile-user-role-badge">
                       <Shield className="w-3 h-3 mr-1" data-spec-id="mobile-shield-icon"/>
                       {getRoleLabel(user.role)}
                     </Badge>
@@ -264,7 +286,7 @@ const UserManagement = ()=>{
               </div>
 
               <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-3" data-spec-id="user-actions">
-                <Badge className={`hidden sm:flex ${getRoleColor(user.role)}`} data-spec-id="desktop-user-role-badge">
+                <Badge className={`hidden sm:flex ${getRoleColor(user.role)}`} style={getRoleStyle(user.role)} data-spec-id="desktop-user-role-badge">
                   <Shield className="w-3 h-3 mr-1" data-spec-id="desktop-shield-icon"/>
                   {getRoleLabel(user.role)}
                 </Badge>
@@ -311,10 +333,9 @@ const UserManagement = ()=>{
                                 <SelectValue data-spec-id="edit-role-value"/>
                               </SelectTrigger>
                               <SelectContent data-spec-id="edit-role-options">
-                                <SelectItem value="secretary" data-spec-id="edit-role-secretary">Secretário(a)</SelectItem>
-                                <SelectItem value="nurse" data-spec-id="edit-role-nurse">Enfermeiro(a)</SelectItem>
-                                <SelectItem value="sdr" data-spec-id="edit-role-sdr">SDR</SelectItem>
-                                <SelectItem value="director" data-spec-id="edit-role-director">Diretor(a)</SelectItem>
+                                {professionalCategories.map((category)=>(<SelectItem key={category.id} value={category.roleKey} data-spec-id={`edit-role-${category.roleKey}`}>
+                                    {category.name}
+                                  </SelectItem>))}
                                 <SelectItem value="admin" data-spec-id="edit-role-admin">Administrador</SelectItem>
                               </SelectContent>
                             </Select>

@@ -12,7 +12,8 @@ import ReopenChecklistDialog from './ReopenChecklistDialog';
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 import { supabase } from '@/lib/supabase';
 import { mockTemplates } from '@/data/mockData';
-import { generateTemplateForProfession, generateTemplateForProfessionFromSupabase, loadProfessionalCategories } from '@/utils/masterTaskUtils';
+import { generateTemplateForProfessionFromSupabase } from '@/utils/cloudMasterTaskUtils';
+import { generateTemplateForProfession, loadProfessionalCategories } from '@/utils/masterTaskUtils';
 import { DailyChecklist, TaskProgress, ChecklistTemplate, ChecklistPeriod } from '@/types';
 import { filterTasksByPeriodAndFrequency, getTaskRescheduleInfo } from '@/utils/taskFrequencyUtils';
 import { checkAndCleanupChecklists } from '@/utils/checklistCleanup';
@@ -37,11 +38,7 @@ const ChecklistView = ()=>{
     };
     const today = getLocalDateString();
     const generateUUID = ()=>{
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            const r = Math.random() * 16 | 0;
-            const v = c == 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
+        return crypto.randomUUID();
     };
     useEffect(()=>{
         checkAndCleanupChecklists();
@@ -62,6 +59,11 @@ const ChecklistView = ()=>{
                 console.error('❌ Error checking existing checklist:', checkError);
                 return;
             }
+            const { data: duplicateCheck, error: duplicateError } = await supabase.from('daily_checklists').select('id').eq('user_id', checklist.userId).eq('date', checklist.date).eq('period', checklist.period).eq('shift', checklist.shift || '').single();
+            if (duplicateError && duplicateError.code !== 'PGRST116') {
+                console.error('❌ Error checking duplicate checklist:', duplicateError);
+                return;
+            }
             const isValidUUID = (str: string)=>{
                 const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
                 return uuidRegex.test(str);
@@ -69,7 +71,6 @@ const ChecklistView = ()=>{
             const checklistData = {
                 id: checklist.id,
                 user_id: checklist.userId,
-                template_id: isValidUUID(checklist.templateId) ? checklist.templateId : null,
                 date: checklist.date,
                 period: checklist.period,
                 shift: checklist.shift,
@@ -83,24 +84,52 @@ const ChecklistView = ()=>{
                 reopen_count: checklist.reopenCount || 0,
                 reopened_at: checklist.reopenedAt
             };
+            let checklistSaved = false;
             if (existingChecklist) {
                 const { error: updateError } = await supabase.from('daily_checklists').update(checklistData).eq('id', checklist.id);
                 if (updateError) {
                     console.error('❌ Error updating checklist:', updateError);
+                    return;
                 } else {
                     console.log('✅ Checklist updated in Supabase');
+                    checklistSaved = true;
+                }
+            } else if (duplicateCheck) {
+                const { error: updateError } = await supabase.from('daily_checklists').update(checklistData).eq('user_id', checklist.userId).eq('date', checklist.date).eq('period', checklist.period).eq('shift', checklist.shift || '');
+                if (updateError) {
+                    console.error('❌ Error updating duplicate checklist:', updateError);
+                    return;
+                } else {
+                    console.log('✅ Duplicate checklist updated in Supabase');
+                    checklistSaved = true;
                 }
             } else {
                 const { error: insertError } = await supabase.from('daily_checklists').insert([
                     checklistData
                 ]);
                 if (insertError) {
-                    console.error('❌ Error inserting checklist:', insertError);
+                    if (insertError.code === '23505') {
+                        console.warn('⚠️ Checklist already exists (constraint violation), will try to update instead');
+                        const { error: updateError } = await supabase.from('daily_checklists').update(checklistData).eq('user_id', checklist.userId).eq('date', checklist.date).eq('period', checklist.period).eq('shift', checklist.shift || '');
+                        if (updateError) {
+                            console.error('❌ Error updating existing checklist:', updateError);
+                            return;
+                        } else {
+                            console.log('✅ Existing checklist updated in Supabase');
+                            checklistSaved = true;
+                        }
+                    } else {
+                        console.error('❌ Error inserting checklist:', insertError);
+                        return;
+                    }
                 } else {
                     console.log('✅ Checklist created in Supabase');
+                    checklistSaved = true;
                 }
             }
-            await saveTaskProgressToSupabase(checklist);
+            if (checklistSaved) {
+                await saveTaskProgressToSupabase(checklist);
+            }
         } catch (error) {
             console.error('❌ Error saving checklist to Supabase:', error);
         }
@@ -109,9 +138,15 @@ const ChecklistView = ()=>{
         if (!isSupabaseConnected) return;
         try {
             console.log('💾 Saving task progress to Supabase:', checklist.progress.length, 'tasks');
+            const { data: checklistExists, error: checkError } = await supabase.from('daily_checklists').select('id').eq('id', checklist.id).single();
+            if (checkError || !checklistExists) {
+                console.error('❌ Checklist does not exist in database, cannot save task progress:', checkError);
+                return;
+            }
             const { error: deleteError } = await supabase.from('task_progress').delete().eq('checklist_id', checklist.id);
             if (deleteError) {
                 console.error('❌ Error deleting old task progress:', deleteError);
+                return;
             }
             const isValidUUID = (str: string)=>{
                 const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -131,6 +166,17 @@ const ChecklistView = ()=>{
                 const { error: insertError } = await supabase.from('task_progress').insert(taskProgressData);
                 if (insertError) {
                     console.error('❌ Error inserting task progress:', insertError);
+                    if (insertError.code === '23503') {
+                        console.error('❌ Foreign key constraint violation - checklist may not exist properly');
+                        console.log('🔄 Attempting to re-save checklist before task progress...');
+                        await saveChecklistToSupabase(checklist);
+                        const { error: retryError } = await supabase.from('task_progress').insert(taskProgressData);
+                        if (retryError) {
+                            console.error('❌ Error inserting task progress after retry:', retryError);
+                        } else {
+                            console.log('✅ Task progress saved to Supabase after retry');
+                        }
+                    }
                 } else {
                     console.log('✅ Task progress saved to Supabase');
                 }
@@ -141,57 +187,26 @@ const ChecklistView = ()=>{
     };
     const loadTodayChecklist = async (period?: ChecklistPeriod)=>{
         if (!user) return;
-        console.log('Loading checklist for user:', user.name, 'Role:', user.role, 'Period:', period);
-        const savedTemplates = localStorage.getItem('checklistTemplates');
+        console.log('🚀 [SUPABASE-ONLY] Loading checklist for user:', user.name, 'Role:', user.role, 'Period:', period);
+        if (!isSupabaseConnected) {
+            console.error('❌ Supabase not connected. System requires Supabase for cloud operation.');
+            toast.error('Sistema requer conexão com Supabase para funcionar na nuvem.');
+            setIsLoading(false);
+            return;
+        }
         let userTemplate = null;
-        if (savedTemplates) {
-            const templates = JSON.parse(savedTemplates);
-            userTemplate = templates.find((t: ChecklistTemplate)=>t.role === user.role);
-        }
-        if (!userTemplate && isSupabaseConnected) {
-            console.log('🔄 Loading template directly from Supabase master tasks for role:', user.role);
-            try {
-                userTemplate = await generateTemplateForProfessionFromSupabase(user.role, user.role);
-                if (userTemplate) {
-                    console.log('✅ Generated template from Supabase with', userTemplate.tasks.length, 'tasks');
-                }
-            } catch (error) {
-                console.error('❌ Failed to generate template from Supabase:', error);
+        console.log('🔄 Loading template from Supabase master tasks for role:', user.role);
+        try {
+            userTemplate = await generateTemplateForProfessionFromSupabase(user.role, user.role);
+            if (userTemplate && userTemplate.tasks.length > 0) {
+                console.log('✅ Generated template from Supabase with', userTemplate.tasks.length, 'tasks');
+            } else {
+                console.log('⚠️ No tasks found in Supabase for role:', user.role);
+                userTemplate = null;
             }
-        }
-        if (!userTemplate) {
-            const professionalCategories = loadProfessionalCategories();
-            const profession = professionalCategories.find((p)=>p.roleKey === user.role);
-            if (profession) {
-                console.log('📋 Generating template from localStorage data for profession:', profession.name);
-                userTemplate = generateTemplateForProfession(user.role, profession.name);
-            }
-        }
-        if (!userTemplate && isSupabaseConnected) {
-            console.log('🔄 Loading saved template from Supabase for role:', user.role);
-            try {
-                const { data: templates, error } = await supabase.from('checklist_templates').select('*').eq('role', user.role).limit(1);
-                if (error) {
-                    console.error('❌ Error loading template from Supabase:', error);
-                } else if (templates && templates.length > 0) {
-                    const supabaseTemplate = templates[0];
-                    userTemplate = {
-                        id: supabaseTemplate.id,
-                        role: supabaseTemplate.role,
-                        name: supabaseTemplate.name,
-                        tasks: supabaseTemplate.task_ids || [],
-                        createdAt: supabaseTemplate.created_at,
-                        updatedAt: supabaseTemplate.updated_at
-                    };
-                    console.log('✅ Loaded saved template from Supabase:', userTemplate.name);
-                }
-            } catch (error) {
-                console.error('❌ Failed to load template from Supabase:', error);
-            }
-        }
-        if (!userTemplate && !isSupabaseConnected) {
-            console.log('⚠️ Falling back to mock data (Supabase not connected)');
-            userTemplate = mockTemplates.find((t)=>t.role === user.role);
+        } catch (error) {
+            console.error('❌ Failed to generate template from Supabase:', error);
+            userTemplate = null;
         }
         if (!userTemplate) {
             console.log('❌ No template found for role:', user.role);
@@ -200,27 +215,99 @@ const ChecklistView = ()=>{
             setIsLoading(false);
             return;
         }
-        console.log('Found template with', userTemplate.tasks.length, 'total tasks');
+        console.log('✅ Found template with', userTemplate.tasks.length, 'total tasks');
         setTemplate(userTemplate);
-        const savedChecklists = JSON.parse(localStorage.getItem('dailyChecklists') || '[]');
-        let todayChecklist = savedChecklists.find((c: DailyChecklist)=>c.userId === user.id && c.date === today && (!period || (c.period === period.period && (!period.shift || c.shift === period.shift))));
+        console.log('🔄 Loading existing checklist from Supabase...');
+        let todayChecklist = null;
+        try {
+            const { data: existingChecklists, error } = await supabase.from('daily_checklists').select(`
+                    *,
+                    task_progress (*)
+                `).eq('user_id', user.id).eq('date', today).eq('period', period?.period || 'start_day').eq('shift', period?.shift || null);
+            if (error) {
+                console.error('❌ Error loading checklist from Supabase:', error);
+            } else if (existingChecklists && existingChecklists.length > 0) {
+                const supabaseChecklist = existingChecklists[0];
+                const progress = supabaseChecklist.task_progress?.map((tp: any)=>({
+                        id: tp.id,
+                        taskId: tp.task_id,
+                        userId: tp.user_id,
+                        completed: tp.completed,
+                        completedAt: tp.completed_at,
+                        notes: tp.notes,
+                        date: tp.date
+                    })) || [];
+                todayChecklist = {
+                    id: supabaseChecklist.id,
+                    userId: supabaseChecklist.user_id,
+                    templateId: userTemplate.id,
+                    date: supabaseChecklist.date,
+                    period: supabaseChecklist.period,
+                    shift: supabaseChecklist.shift,
+                    progress: progress,
+                    completionRate: supabaseChecklist.completion_rate,
+                    startedAt: supabaseChecklist.started_at,
+                    completedAt: supabaseChecklist.completed_at,
+                    finalizedAt: supabaseChecklist.finalized_at,
+                    isFinalized: supabaseChecklist.is_finalized,
+                    finalReport: supabaseChecklist.final_report,
+                    reopenReason: supabaseChecklist.reopen_reason,
+                    reopenedAt: supabaseChecklist.reopened_at,
+                    reopenCount: supabaseChecklist.reopen_count
+                };
+                console.log('✅ Loaded existing checklist from Supabase:', todayChecklist.id);
+            }
+        } catch (error) {
+            console.error('❌ Failed to load checklist from Supabase:', error);
+        }
         if (!todayChecklist && period) {
+            console.log('🆕 Creating new checklist for period:', period.name);
             const todayDate = new Date(today);
-            const savedChecklists = JSON.parse(localStorage.getItem('dailyChecklists') || '[]');
+            const { data: existingChecklists } = await supabase.from('daily_checklists').select('*').eq('user_id', user.id);
+            const savedChecklists = existingChecklists || [];
             const filteredTasks = filterTasksByPeriodAndFrequency(userTemplate.tasks, period, todayDate, user.id, savedChecklists);
             console.log('Filtered tasks for period', period.name, ':', filteredTasks.length, 'tasks');
-            filteredTasks.forEach((task, index)=>{
-                console.log(`Task ${index + 1}:`, task.id, task.title, 'period:', task.period, 'frequency:', task.frequency);
+            const checklistId = generateUUID();
+            const { error: checklistError } = await supabase.from('daily_checklists').insert({
+                id: checklistId,
+                user_id: user.id,
+                date: today,
+                period: period.period,
+                shift: period.shift,
+                completion_rate: 0,
+                started_at: new Date().toISOString(),
+                is_finalized: false
             });
-            const initialProgress: TaskProgress[] = filteredTasks.map((task)=>({
-                    id: generateUUID(),
+            if (checklistError) {
+                console.error('❌ Error creating checklist in Supabase:', checklistError);
+                toast.error('Erro ao criar checklist no banco de dados');
+                setIsLoading(false);
+                return;
+            }
+            const initialProgress: TaskProgress[] = [];
+            for (const task of filteredTasks){
+                const progressId = generateUUID();
+                const taskProgress = {
+                    id: progressId,
                     taskId: task.id,
                     userId: user.id,
                     completed: false,
                     date: today
-                }));
+                };
+                const { error: progressError } = await supabase.from('task_progress').insert({
+                    id: progressId,
+                    checklist_id: checklistId,
+                    task_id: task.id,
+                    user_id: user.id,
+                    completed: false,
+                    date: today
+                });
+                if (!progressError) {
+                    initialProgress.push(taskProgress);
+                }
+            }
             todayChecklist = {
-                id: generateUUID(),
+                id: checklistId,
                 userId: user.id,
                 templateId: userTemplate.id,
                 date: today,
@@ -231,20 +318,49 @@ const ChecklistView = ()=>{
                 startedAt: new Date().toISOString(),
                 isFinalized: false
             };
-            savedChecklists.push(todayChecklist);
-            localStorage.setItem('dailyChecklists', JSON.stringify(savedChecklists));
-            console.log('Created new checklist for period:', period);
-            await saveChecklistToSupabase(todayChecklist);
+            console.log('✅ Created new checklist in Supabase:', checklistId);
         } else if (!todayChecklist) {
-            const initialProgress: TaskProgress[] = userTemplate.tasks.map((task)=>({
-                    id: generateUUID(),
+            console.log('🆕 Creating default checklist for start_day');
+            const checklistId = generateUUID();
+            const { error: checklistError } = await supabase.from('daily_checklists').insert({
+                id: checklistId,
+                user_id: user.id,
+                date: today,
+                period: 'start_day',
+                completion_rate: 0,
+                started_at: new Date().toISOString(),
+                is_finalized: false
+            });
+            if (checklistError) {
+                console.error('❌ Error creating default checklist:', checklistError);
+                toast.error('Erro ao criar checklist padrão');
+                setIsLoading(false);
+                return;
+            }
+            const initialProgress: TaskProgress[] = [];
+            for (const task of userTemplate.tasks){
+                const progressId = generateUUID();
+                const taskProgress = {
+                    id: progressId,
                     taskId: task.id,
                     userId: user.id,
                     completed: false,
                     date: today
-                }));
+                };
+                const { error: progressError } = await supabase.from('task_progress').insert({
+                    id: progressId,
+                    checklist_id: checklistId,
+                    task_id: task.id,
+                    user_id: user.id,
+                    completed: false,
+                    date: today
+                });
+                if (!progressError) {
+                    initialProgress.push(taskProgress);
+                }
+            }
             todayChecklist = {
-                id: generateUUID(),
+                id: checklistId,
                 userId: user.id,
                 templateId: userTemplate.id,
                 date: today,
@@ -254,19 +370,29 @@ const ChecklistView = ()=>{
                 startedAt: new Date().toISOString(),
                 isFinalized: false
             };
-            savedChecklists.push(todayChecklist);
-            localStorage.setItem('dailyChecklists', JSON.stringify(savedChecklists));
-            console.log('Created new checklist for today');
-            await saveChecklistToSupabase(todayChecklist);
-        } else {
-            console.log('Loaded existing checklist:', todayChecklist);
+            console.log('✅ Created default checklist in Supabase');
         }
         setChecklist(todayChecklist);
         setIsLoading(false);
     };
     const updateTaskProgress = async (taskId: string, completed: boolean, notes?: string)=>{
-        if (!checklist || !template) return;
-        console.log('Updating task:', taskId, 'Completed:', completed, 'Notes:', notes);
+        if (!checklist || !template || !isSupabaseConnected) return;
+        console.log('🔄 [SUPABASE-ONLY] Updating task:', taskId, 'Completed:', completed, 'Notes:', notes);
+        const taskProgress = checklist.progress.find((p)=>p.taskId === taskId);
+        if (!taskProgress) {
+            console.error('❌ Task progress not found for taskId:', taskId);
+            return;
+        }
+        const { error: progressError } = await supabase.from('task_progress').update({
+            completed,
+            completed_at: completed ? new Date().toISOString() : null,
+            notes: notes || null
+        }).eq('id', taskProgress.id);
+        if (progressError) {
+            console.error('❌ Error updating task progress in Supabase:', progressError);
+            toast.error('Erro ao atualizar progresso da tarefa');
+            return;
+        }
         const updatedProgress = checklist.progress.map((p)=>{
             if (p.taskId === taskId) {
                 return {
@@ -281,22 +407,23 @@ const ChecklistView = ()=>{
         const completedTasks = updatedProgress.filter((p)=>p.completed).length;
         const totalTasks = updatedProgress.length;
         const completionRate = Math.round((completedTasks / totalTasks) * 100);
+        const isCompleted = completionRate === 100;
+        const { error: checklistError } = await supabase.from('daily_checklists').update({
+            completion_rate: completionRate,
+            completed_at: isCompleted ? new Date().toISOString() : null
+        }).eq('id', checklist.id);
+        if (checklistError) {
+            console.error('❌ Error updating checklist in Supabase:', checklistError);
+            toast.error('Erro ao atualizar checklist');
+            return;
+        }
         const updatedChecklist = {
             ...checklist,
             progress: updatedProgress,
             completionRate,
-            completedAt: completionRate === 100 ? new Date().toISOString() : undefined
+            completedAt: isCompleted ? new Date().toISOString() : undefined
         };
         setChecklist(updatedChecklist);
-        const savedChecklists = JSON.parse(localStorage.getItem('dailyChecklists') || '[]');
-        const checklistIndex = savedChecklists.findIndex((c: DailyChecklist)=>c.id === checklist.id);
-        if (checklistIndex >= 0) {
-            savedChecklists[checklistIndex] = updatedChecklist;
-        } else {
-            savedChecklists.push(updatedChecklist);
-        }
-        localStorage.setItem('dailyChecklists', JSON.stringify(savedChecklists));
-        await saveChecklistToSupabase(updatedChecklist);
         if (completed) {
             const task = template.tasks.find((t)=>t.id === taskId);
             toast.success(`✅ ${task?.title} completed!`);
@@ -304,47 +431,89 @@ const ChecklistView = ()=>{
         if (completionRate === 100 && checklist.completionRate !== 100) {
             toast.success('🎉 All tasks completed! Great work!');
         }
-        console.log('Checklist updated. Completion rate:', completionRate + '%');
+        console.log('✅ Checklist updated in Supabase. Completion rate:', completionRate + '%');
     };
-    const resetChecklist = ()=>{
-        if (!user || !template || !selectedPeriod) return;
-        const todayDate = new Date(today);
-        const savedChecklists = JSON.parse(localStorage.getItem('dailyChecklists') || '[]');
-        const filteredTasks = filterTasksByPeriodAndFrequency(template.tasks, selectedPeriod, todayDate, user.id, savedChecklists);
-        const resetProgress: TaskProgress[] = filteredTasks.map((task)=>({
-                id: generateUUID(),
-                taskId: task.id,
-                userId: user.id,
-                completed: false,
-                date: today
-            }));
-        const resetChecklist = {
-            ...checklist,
-            progress: resetProgress,
-            completionRate: 0,
-            startedAt: new Date().toISOString(),
-            isFinalized: false
-        };
-        setChecklist(resetChecklist);
-        const checklistIndex = savedChecklists.findIndex((c: DailyChecklist)=>c.id === checklist.id);
-        if (checklistIndex >= 0) {
-            savedChecklists[checklistIndex] = resetChecklist;
-        } else {
-            savedChecklists.push(resetChecklist);
+    const resetChecklist = async ()=>{
+        if (!user || !template || !selectedPeriod || !isSupabaseConnected) return;
+        console.log('🔄 [SUPABASE-ONLY] Resetting checklist in Supabase');
+        try {
+            const { error: deleteProgressError } = await supabase.from('task_progress').delete().eq('checklist_id', checklist.id);
+            if (deleteProgressError) {
+                console.error('❌ Error deleting task progress:', deleteProgressError);
+                toast.error('Erro ao reiniciar checklist');
+                return;
+            }
+            const { data: existingChecklists } = await supabase.from('daily_checklists').select('*').eq('user_id', user.id);
+            const todayDate = new Date(today);
+            const savedChecklists = existingChecklists || [];
+            const filteredTasks = filterTasksByPeriodAndFrequency(template.tasks, selectedPeriod, todayDate, user.id, savedChecklists);
+            const resetProgress: TaskProgress[] = [];
+            for (const task of filteredTasks){
+                const progressId = generateUUID();
+                const taskProgress = {
+                    id: progressId,
+                    taskId: task.id,
+                    userId: user.id,
+                    completed: false,
+                    date: today
+                };
+                const { error: progressError } = await supabase.from('task_progress').insert({
+                    id: progressId,
+                    checklist_id: checklist.id,
+                    task_id: task.id,
+                    user_id: user.id,
+                    completed: false,
+                    date: today
+                });
+                if (!progressError) {
+                    resetProgress.push(taskProgress);
+                }
+            }
+            const { error: updateChecklistError } = await supabase.from('daily_checklists').update({
+                completion_rate: 0,
+                started_at: new Date().toISOString(),
+                is_finalized: false,
+                completed_at: null,
+                finalized_at: null
+            }).eq('id', checklist.id);
+            if (updateChecklistError) {
+                console.error('❌ Error updating checklist:', updateChecklistError);
+                toast.error('Erro ao atualizar checklist');
+                return;
+            }
+            const resetChecklist = {
+                ...checklist,
+                progress: resetProgress,
+                completionRate: 0,
+                startedAt: new Date().toISOString(),
+                isFinalized: false,
+                completedAt: undefined,
+                finalizedAt: undefined
+            };
+            setChecklist(resetChecklist);
+            toast.success('Checklist reiniciado com sucesso');
+            console.log('✅ Checklist reset successfully in Supabase');
+        } catch (error) {
+            console.error('❌ Failed to reset checklist:', error);
+            toast.error('Erro ao reiniciar checklist');
         }
-        localStorage.setItem('dailyChecklists', JSON.stringify(savedChecklists));
-        toast.success('Checklist reiniciado com sucesso');
-        console.log('Checklist reiniciado');
     };
-    const handlePeriodSelected = (period: ChecklistPeriod)=>{
-        if (!user) return;
-        const savedChecklists = JSON.parse(localStorage.getItem('dailyChecklists') || '[]');
-        const existingFinalized = savedChecklists.find((c: DailyChecklist)=>c.userId === user.id && c.date === today && c.period === period.period && (!period.shift || c.shift === period.shift) && c.isFinalized);
-        if (existingFinalized) {
+    const handlePeriodSelected = async (period: ChecklistPeriod)=>{
+        if (!user || !isSupabaseConnected) return;
+        console.log('🔄 [SUPABASE-ONLY] Checking for existing finalized checklist...');
+        const { data: existingChecklists, error } = await supabase.from('daily_checklists').select('*').eq('user_id', user.id).eq('date', today).eq('period', period.period).eq('shift', period.shift || null).eq('is_finalized', true);
+        if (error) {
+            console.error('❌ Error checking existing checklists:', error);
+            toast.error('Erro ao verificar checklists existentes');
+            return;
+        }
+        if (existingChecklists && existingChecklists.length > 0) {
+            console.log('⚠️ Found finalized checklist, showing reopen dialog');
             setPendingPeriod(period);
             setShowReopenDialog(true);
             setShowPeriodSelector(false);
         } else {
+            console.log('✅ No finalized checklist found, proceeding with period selection');
             setSelectedPeriod(period);
             setShowPeriodSelector(false);
             loadTodayChecklist(period);
@@ -354,20 +523,39 @@ const ChecklistView = ()=>{
         console.log('Cancel checklist button clicked');
         setShowCancelDialog(true);
     };
-    const handleConfirmCancelChecklist = ()=>{
-        console.log('Confirmed checklist cancellation');
-        if (checklist) {
-            const savedChecklists = JSON.parse(localStorage.getItem('dailyChecklists') || '[]');
-            const updatedChecklists = savedChecklists.filter((c: DailyChecklist)=>c.id !== checklist.id);
-            localStorage.setItem('dailyChecklists', JSON.stringify(updatedChecklists));
-            console.log('Checklist deleted from storage:', checklist.id);
+    const handleConfirmCancelChecklist = async ()=>{
+        console.log('🗑️ [SUPABASE-ONLY] Confirmed checklist cancellation');
+        if (!checklist || !isSupabaseConnected) return;
+        try {
+            console.log('🗑️ Deleting task progress from Supabase:', checklist.id);
+            const { error: progressError } = await supabase.from('task_progress').delete().eq('checklist_id', checklist.id);
+            if (progressError) {
+                console.error('❌ Error deleting task progress:', progressError);
+                toast.error('Erro ao deletar progresso das tarefas');
+                return;
+            } else {
+                console.log('✅ Task progress deleted from Supabase');
+            }
+            console.log('🗑️ Deleting checklist from Supabase:', checklist.id);
+            const { error: checklistError } = await supabase.from('daily_checklists').delete().eq('id', checklist.id);
+            if (checklistError) {
+                console.error('❌ Error deleting checklist from Supabase:', checklistError);
+                toast.error('Erro ao cancelar checklist no banco de dados');
+                return;
+            } else {
+                console.log('✅ Checklist deleted from Supabase');
+                toast.success('Checklist cancelado e removido completamente.');
+            }
+        } catch (error) {
+            console.error('❌ Failed to delete checklist from Supabase:', error);
+            toast.error('Erro ao cancelar checklist no banco de dados');
+            return;
         }
         setShowCancelDialog(false);
         setShowPeriodSelector(true);
         setChecklist(null);
         setTemplate(null);
         setSelectedPeriod(null);
-        toast.success('Checklist cancelado e removido. Retornando à tela inicial.');
     };
     const handleStayInChecklist = ()=>{
         console.log('User chose to stay in checklist');
@@ -382,14 +570,6 @@ const ChecklistView = ()=>{
             finalReport,
             completedAt: new Date().toISOString()
         };
-        const savedChecklists = JSON.parse(localStorage.getItem('dailyChecklists') || '[]');
-        const checklistIndex = savedChecklists.findIndex((c: DailyChecklist)=>c.id === checklist.id);
-        if (checklistIndex >= 0) {
-            savedChecklists[checklistIndex] = finalizedChecklist;
-        } else {
-            savedChecklists.push(finalizedChecklist);
-        }
-        localStorage.setItem('dailyChecklists', JSON.stringify(savedChecklists));
         await saveChecklistToSupabase(finalizedChecklist);
         setChecklist(finalizedChecklist);
         console.log('Checklist finalized with report:', finalReport);
@@ -406,62 +586,14 @@ const ChecklistView = ()=>{
     };
     const handleReopenChecklist = (reason: string)=>{
         if (!pendingPeriod || !user) return;
-        const savedChecklists = JSON.parse(localStorage.getItem('dailyChecklists') || '[]');
-        const existingCount = savedChecklists.filter((c: DailyChecklist)=>c.userId === user.id && c.date === today && c.period === pendingPeriod.period && (!pendingPeriod.shift || c.shift === pendingPeriod.shift)).length;
         setSelectedPeriod(pendingPeriod);
         setPendingPeriod(null);
         const newChecklistId = generateUUID();
         loadTodayChecklistWithReopenInfo(pendingPeriod, reason, newChecklistId);
     };
     const loadTodayChecklistWithReopenInfo = (period: ChecklistPeriod, reopenReason: string, newId: string)=>{
-        if (!user) return;
-        const savedTemplates = localStorage.getItem('checklistTemplates');
-        let userTemplate = null;
-        if (savedTemplates) {
-            const templates = JSON.parse(savedTemplates);
-            userTemplate = templates.find((t: ChecklistTemplate)=>t.role === user.role);
-        }
-        if (!userTemplate) {
-            const professionalCategories = loadProfessionalCategories();
-            const profession = professionalCategories.find((p)=>p.roleKey === user.role);
-            if (profession) {
-                userTemplate = generateTemplateForProfession(user.role, profession.name);
-            }
-        }
-        if (!userTemplate) {
-            userTemplate = mockTemplates.find((t)=>t.role === user.role);
-        }
-        if (!userTemplate) return;
-        const todayDate = new Date(today);
-        const savedChecklists = JSON.parse(localStorage.getItem('dailyChecklists') || '[]');
-        const filteredTasks = filterTasksByPeriodAndFrequency(userTemplate.tasks, period, todayDate, user.id, savedChecklists);
-        const initialProgress: TaskProgress[] = filteredTasks.map((task)=>({
-                id: generateUUID(),
-                taskId: task.id,
-                userId: user.id,
-                completed: false,
-                date: today
-            }));
-        const reopenedChecklist: DailyChecklist = {
-            id: newId,
-            userId: user.id,
-            templateId: userTemplate.id,
-            date: today,
-            period: period.period,
-            shift: period.shift,
-            progress: initialProgress,
-            completionRate: 0,
-            startedAt: new Date().toISOString(),
-            isFinalized: false,
-            reopenReason,
-            reopenedAt: new Date().toISOString(),
-            reopenCount: (savedChecklists.filter((c: DailyChecklist)=>c.userId === user.id && c.date === today && c.period === period.period && (!period.shift || c.shift === period.shift)).length)
-        };
-        savedChecklists.push(reopenedChecklist);
-        localStorage.setItem('dailyChecklists', JSON.stringify(savedChecklists));
-        setChecklist(reopenedChecklist);
-        setTemplate(userTemplate);
-        console.log('Created reopened checklist:', reopenedChecklist);
+        console.log('🔄 [SUPABASE-ONLY] Loading reopened checklist:', reopenReason);
+        loadTodayChecklist(period);
     };
     const getPeriodLabel = (period: string, shift?: string)=>{
         const labels = {
@@ -624,7 +756,7 @@ const ChecklistView = ()=>{
             return null;
         }
         console.log('Rendering task:', task.id, task.title, 'disabled:', checklist.isFinalized);
-        return (<TaskItem key={task.id} task={task} progress={progressItem} onToggle={updateTaskProgress} disabled={checklist.isFinalized} userId={user?.id} checklistHistory={JSON.parse(localStorage.getItem('dailyChecklists') || '[]')} currentDate={new Date()} data-spec-id="3A2DWFZeND36vHRY"/>);
+        return (<TaskItem key={task.id} task={task} progress={progressItem} onToggle={updateTaskProgress} disabled={checklist.isFinalized} userId={user?.id} checklistHistory={[]} currentDate={new Date()} data-spec-id="3A2DWFZeND36vHRY"/>);
     })}
         </CardContent>
       </Card>

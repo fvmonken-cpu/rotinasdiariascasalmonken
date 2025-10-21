@@ -496,6 +496,24 @@ const ChecklistDetailsView = ({ checklist, user }: {
         </div>
       </div>
 
+      {checklist.finalReport && (<div className="bg-blue-50 p-4 rounded-lg border border-blue-200" data-spec-id="final-comments-section">
+          <h4 className="font-medium text-blue-900 mb-2" data-spec-id="final-comments-title">
+            📝 Comentários Finais do Usuário
+          </h4>
+          <div className="text-sm text-blue-800 whitespace-pre-wrap" data-spec-id="final-comments-content">
+            {(()=>{
+        const lines = checklist.finalReport.split('\n');
+        const observacoesIndex = lines.findIndex((line)=>line.includes('📝 OBSERVAÇÕES FINAIS'));
+        const fimRelatorioIndex = lines.findIndex((line)=>line.includes('=== FIM DO RELATÓRIO ==='));
+        if (observacoesIndex !== -1 && fimRelatorioIndex !== -1) {
+            const comentarios = lines.slice(observacoesIndex + 1, fimRelatorioIndex).filter((line)=>line.trim() !== '').join('\n').trim();
+            return comentarios || 'Nenhum comentário adicionado pelo usuário.';
+        }
+        return 'Nenhum comentário adicionado pelo usuário.';
+    })()}
+          </div>
+        </div>)}
+
       <div className="space-y-3" data-spec-id="tasks-details">
         <h4 className="font-medium text-gray-900" data-spec-id="tasks-title">
           Detalhes das Tarefas ({checklist.progress?.length || 0} tarefas)

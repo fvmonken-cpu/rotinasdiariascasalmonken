@@ -170,7 +170,7 @@ export const generateTemplateForProfessionFromSupabase = async (
     }));
     
     const template: ChecklistTemplate = {
-      id: `template-${professionRoleKey}`,
+      id: crypto.randomUUID(),
       name: `Checklist Diário de ${professionName}`,
       role: professionRoleKey as User['role'],
       tasks: templateTasks,
