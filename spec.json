@@ -59,9 +59,25 @@
     "contentMarkdown": "**User Management Action Buttons**\n\n- Edit Button\n  - Edit Icon (4x4 with flex-shrink-0)\n  - Edit Label (text-xs, hidden on desktop)\n  - Blue outline styling\n- Password Button  \n  - Key Icon (4x4 with flex-shrink-0)\n  - Password Label (\"Senha\" text-xs, hidden on desktop)\n  - Orange color scheme with hover states\n- Delete Button\n  - Trash Icon (4x4 with flex-shrink-0) \n  - Delete Label (\"Excluir\" text-xs, hidden on desktop)\n  - Red color scheme with hover states\n- Conditional rendering for self-deletion prevention",
     "categoryId": "17582046453732"
   },
+  "add-master-task-dialog": {
+    "contentMarkdown": "Modal dialog with comprehensive form layout, organized input fields, proper spacing, and intuitive visual hierarchy for task creation workflow",
+    "categoryId": "17582046453730"
+  },
+  "add-period-start_day": {
+    "contentMarkdown": "**Click Event** When clicked, moves 'Start Day' period from Available list to Assigned list and updates task periods array",
+    "categoryId": "17582046453731"
+  },
+  "add-profession-secretary": {
+    "contentMarkdown": "**Click Event** When clicked, moves selected professional category from Available list to Assigned list and adds to task's assigned professions",
+    "categoryId": "17582046453731"
+  },
   "add-professional-category-content": {
     "contentMarkdown": "**Professional Category Form**\n\n- Nome da Categoria: Single line input\n  - Required\n  - Validation: Non-empty string\n  - Placeholder: \"Ex: Secretária, Enfermeira...\"\n- Chave da Categoria: Single line input\n  - Required\n  - Validation: Lowercase letters only, no spaces, unique\n  - Placeholder: \"Ex: secretary, nurse...\"\n- Descrição: Multi-line textarea\n  - Optional\n  - Placeholder: \"Descreva as responsabilidades desta categoria...\"\n- Cor de Identificação: Color picker grid\n  - Required\n  - 4x4 grid of predefined colors\n  - Visual selection with border highlight\n- Action Buttons (full-width on mobile)\n  - Cancel Button\n  - Save/Update Button",
     "categoryId": "17582046453733"
+  },
+  "add-role-options": {
+    "contentMarkdown": "**User Role Selection Options**\n- Dynamic Professional Categories\n  - Category Name from Supabase\n  - Category Role Key as value\n- Admin Role\n  - Fixed option for system administrators",
+    "categoryId": "Content(17582046453732)"
   },
   "add-role-select": {
     "contentMarkdown": "**Add User Role Selection Form**\n\n- Role: Required dropdown selection\n  - Secretary: Standard user role for administrative tasks\n  - Nurse: Healthcare professional role with medical permissions  \n  - SDR: Sales Development Representative role\n  - Director: Management level access and oversight\n  - Administrator: Full system access and user management capabilities\n  - Validation: Must select one role option\n- Form allows creation of users with any role including multiple administrators",
@@ -111,6 +127,22 @@
     "contentMarkdown": "**Mobile-First Application Header Design**\n\nResponsive header design optimized for mobile devices while maintaining desktop functionality.\n\n- Theme color: Clean white background with subtle gray borders\n- Font: Responsive typography with smaller sizes on mobile (text-lg vs text-xl)\n- Border radius style: Clean borders with subtle shadows on interactive elements",
     "categoryId": "17582046453730"
   },
+  "assigned-periods": {
+    "contentMarkdown": "**Assigned Periods Section**\n- Currently assigned period items\n- Remove buttons (-) for each assigned period\n- Empty state message when no periods assigned",
+    "categoryId": "17582046453732"
+  },
+  "assigned-professions": {
+    "contentMarkdown": "**Assigned Professional Categories Section**\n- Currently assigned category items with color indicators\n- Remove buttons (-) for each assigned category\n- Empty state message when no categories assigned",
+    "categoryId": "17582046453732"
+  },
+  "available-periods": {
+    "contentMarkdown": "**Available Periods Section**\n- Period items (Start Day, Start Shift, End Shift, End Day)\n- Add buttons (+) for each available period",
+    "categoryId": "17582046453732"
+  },
+  "available-professions": {
+    "contentMarkdown": "**Available Professional Categories Section**\n- Professional category items with color indicators\n- Add buttons (+) for each available category\n- Empty state message when all categories assigned",
+    "categoryId": "17582046453732"
+  },
   "cancel-checklist-btn": {
     "contentMarkdown": "**Click Event** Cancel checklist button triggers confirmation dialog asking if user really wants to cancel current checklist progress and return to home screen",
     "categoryId": "17582046453731"
@@ -143,6 +175,18 @@
     "contentMarkdown": "**Checklist Creation Page**\n\n- Period Selection Section\n    - Period selector buttons (Start Day, End Day, Start Shift, End Shift)\n    - Shift options when applicable\n- Active Checklist Section\n    - Checklist header with period info\n    - Task list with checkboxes\n        - Task titles and descriptions\n        - Priority indicators\n        - Completion timestamps\n        - Notes fields\n    - Progress indicator\n    - Action buttons\n        - Finalize checklist\n        - Reset checklist\n        - Cancel checklist\n- Finalization Dialog\n    - Final report textarea\n    - Submit button",
     "categoryId": "17582046453732"
   },
+  "clean-categories-trigger": {
+    "contentMarkdown": "**Click Event** When clicked, opens confirmation dialog to clean only orphaned/duplicate professional categories from inconsistent task, preserving valid categories",
+    "categoryId": "17582046453731"
+  },
+  "clean-confirm-button": {
+    "contentMarkdown": "**Click Event** When clicked, removes ONLY orphaned and duplicate professional categories from task, keeps valid categories, saves to Supabase, re-validates task assignments, and shows detailed feedback about what was cleaned",
+    "categoryId": "17582046453731"
+  },
+  "clear-filters-btn": {
+    "contentMarkdown": "**Click Event** When clicked, clears all applied filters (periods, professional categories, task categories) and shows all tasks",
+    "categoryId": "17582046453731"
+  },
   "clinic-logo-container": {
     "contentMarkdown": "Logo container with clinic branding image - displays Espaço Casal Monken golden logo with proper aspect ratio and clean positioning in header",
     "categoryId": "17582046453730"
@@ -150,6 +194,14 @@
   "clinic-logo-image": {
     "contentMarkdown": "Clinic logo image displaying the complete Espaço Casal Monken branding - golden curved symbol with text arranged in circular format, no cropping or distortion",
     "categoryId": "17582046453730"
+  },
+  "cloud-only-description": {
+    "contentMarkdown": "Displays message explaining that the system works exclusively with Supabase (cloud) and that localStorage has been removed to ensure 100% cloud operation",
+    "categoryId": "content"
+  },
+  "cloud-only-notice": {
+    "contentMarkdown": "Alert banner with amber background and cloud icon that appears when Supabase is not connected, informing users that the system now works exclusively in cloud mode",
+    "categoryId": "design"
   },
   "configuration-tabs-list": {
     "contentMarkdown": "**Responsive Tab Navigation Interaction**\n\nTabs adapt between mobile and desktop layouts:\n- Mobile: Stacked vertically (grid-cols-1) with shortened labels\n- Desktop: Horizontal layout (grid-cols-3) with full labels\n- Tab text: \"Profissionais\", \"Categorias\", \"Tarefas\" on mobile\n- Desktop text: Full descriptive names\n- Auto height adjustment and proper padding",
@@ -194,6 +246,10 @@
   "dashboard-view": {
     "contentMarkdown": "**Team Dashboard Page**\n\n- Header Section\n    - Page title: \"Team Dashboard\"\n    - Description: \"Monitor team progress and completion rates\"\n    - Current date badge\n- Statistics Cards\n    - Total Members count\n    - Completed checklists count\n    - In Progress count\n    - Average Completion percentage\n- Team Progress Section\n    - Role filter tabs (All, Secretary, Nurse, SDR, Director)\n    - Team member cards\n        - User avatar and info\n        - Role badge\n        - Status badge\n        - Progress metrics\n        - Last activity timestamp",
     "categoryId": "17582046453732"
+  },
+  "data-recovery-card": {
+    "contentMarkdown": "Card container for data recovery tools with alert styling and orange accent colors for warning context",
+    "categoryId": "Design"
   },
   "date-input": {
     "contentMarkdown": "**Date Change Event**\nWhen date is changed, automatically loads reports for the selected date. Updates the reports list to show activity for that specific date.",
@@ -255,6 +311,10 @@
     "contentMarkdown": "**Dynamic Task Section Title** Displays 'Tarefas - [Period Name]' when specific period is selected, otherwise shows generic 'Today's Tasks' title",
     "categoryId": "17582046453732"
   },
+  "edit-role-options": {
+    "contentMarkdown": "**User Edit Role Selection**\n- Dynamic Professional Categories\n  - Updated from latest Supabase data\n  - Shows current category names\n- Admin Role\n  - Fixed system administrator option",
+    "categoryId": "Content(17582046453732)"
+  },
   "edit-user-${user.id}": {
     "contentMarkdown": "**Edit User Form**\n\n- Nome Completo: Single line input\n  - Required\n  - Validation: Non-empty string\n  - Placeholder: User's current name\n- Email: Single line email input\n  - Required  \n  - Validation: Valid email format\n  - Placeholder: User's current email\n- Função: Dropdown select\n  - Required\n  - Options: Secretário(a), Enfermeiro(a), SDR, Diretor(a), Administrador\n  - Default: User's current role\n- Action Buttons (responsive layout)\n  - Cancel Button (outline variant)\n  - Save Button (primary variant)",
     "categoryId": "17582046453733"
@@ -273,6 +333,14 @@
   },
   "error-state": {
     "contentMarkdown": "**Error State Display**\n- Error Icon (XCircle)\n- Error Title: \"Erro ao carregar detalhes\"\n- Error Message: Specific error description\n- Retry Button: \"Tentar novamente\"",
+    "categoryId": "17582046453732"
+  },
+  "export-backup-btn": {
+    "contentMarkdown": "Button to export current localStorage data as JSON backup file for download",
+    "categoryId": "Interaction"
+  },
+  "filters-section": {
+    "contentMarkdown": "**Filters Section**\n- Filter header with icon and title\n- Clear filters button\n- Three filter columns: Periods, Professional Categories, Task Categories\n- Filter counters showing selected items",
     "categoryId": "17582046453732"
   },
   "finalization-dialog": {
@@ -294,6 +362,10 @@
   "header-content": {
     "contentMarkdown": "**Responsive Header Layout Interaction**\n\nHeader adapts between mobile and desktop layouts:\n- Mobile: Stacked vertically with full-width buttons\n- Desktop: Horizontal layout with auto-width buttons\n- Smooth transitions between breakpoints at sm (640px)\n- Maintains accessibility across all screen sizes",
     "categoryId": "17582046453731"
+  },
+  "import-backup-btn": {
+    "contentMarkdown": "Button overlay for file input to import backup JSON file and restore data from backup",
+    "categoryId": "Interaction"
   },
   "install-pwa-button": {
     "contentMarkdown": "**Click Event** When clicked, triggers the browser's native PWA installation prompt, allowing users to install the web app as a native mobile application on their device home screen",
@@ -336,8 +408,8 @@
     "categoryId": "Content"
   },
   "master-task-manager-card": {
-    "contentMarkdown": "**Master Task Manager**\n- Header with Title and Add Button\n- Tasks List\n  - Task Cards with Title, Description, Category, Priority\n  - Period Badges, Professional Assignments\n  - Edit and Delete Actions\n- Add/Edit Dialog Form\n  - Basic Info: Title, Category, Priority, Frequency\n  - Period Selection (Multiple)\n  - Professional Category Assignment (Multiple)\n  - Additional Fields: Description, Estimated Time, Required Flag",
-    "categoryId": "17582046453732"
+    "contentMarkdown": "**Master Task Management Form**\n- Task Title: Required, single line input\n  - Validation: Not empty\n- Task Category: Required, dropdown selection\n  - Options: Categories created in Task Category Manager\n- Task Priority: Required, dropdown selection\n  - Options: Low/Medium/High\n- Task Frequency: Required, dropdown selection  \n  - Options: Daily/Weekly/Monthly\n- Week Day: Conditional, dropdown selection\n  - Required when frequency is Weekly\n  - Options: Sunday through Saturday\n- Month Day: Conditional, number input\n  - Required when frequency is Monthly\n  - Range: 1-31\n- Task Description: Optional, multi-line text\n  - Validation: Characters \u003c 500\n- Task Periods: Required, checkbox group\n  - Options: Start of Day/Start of Shift/End of Shift/End of Day\n  - At least one must be selected\n- Professional Categories: Required, checkbox group\n  - Options: Categories created in Professional Category Manager\n  - At least one must be selected\n- Save Button: Saves to both localStorage and Supabase\n- Cancel Button: Closes dialog without saving",
+    "categoryId": "17582046453733"
   },
   "nav-admin": {
     "contentMarkdown": "**Click Event** Navigate to admin panel for managing checklist templates and tasks (admin role only)",
@@ -367,6 +439,10 @@
     "contentMarkdown": "Password input field for user authentication - Required field, password type with demo password demo123",
     "categoryId": "17582046453733"
   },
+  "period-filter-checkbox-start_day": {
+    "contentMarkdown": "**Change Event** When checked/unchecked, toggles 'Start Day' period in filters and updates filtered task display",
+    "categoryId": "17582046453731"
+  },
   "period-selector-container": {
     "contentMarkdown": "**Period Selection Page**\n\n- Header Section\n    - Clock icon\n    - Title text\n    - User greeting with current time\n- Smart Suggestion Box\n    - Lightbulb icon\n    - Suggestion title\n    - Recommendation message\n    - Accept suggestion button\n- Period Options Grid\n    - Six period cards (start day, start shift morning/afternoon, end shift morning/afternoon, end day)\n        - Period icon\n        - Period name\n        - Period description\n        - Status indicators\n- Action Buttons\n    - Cancel button",
     "categoryId": "17582046453732"
@@ -379,6 +455,14 @@
     "contentMarkdown": "Help text explaining that users can select multiple periods for tasks that need to be performed at different times of the day",
     "categoryId": "17582046453732"
   },
+  "profession-badge-destructive": {
+    "contentMarkdown": "Red badge style with warning icon for orphaned/inconsistent professional categories that no longer exist in the system",
+    "categoryId": "17582046453730"
+  },
+  "profession-filter-checkbox-secretary": {
+    "contentMarkdown": "**Change Event** When checked/unchecked, toggles selected professional category in filters and updates filtered task display",
+    "categoryId": "17582046453731"
+  },
   "professional-category-${category.id}": {
     "contentMarkdown": "**Professional Category Item**\n\n- Color Indicator (colored circle with category color)\n- Category Details Section\n  - Category Name (truncated on mobile)\n  - Category Key Badge (role identifier)\n- Action Buttons Section\n  - Edit Button (with text on mobile, icon-only on desktop)\n  - Delete Button (with \"Excluir\" text on mobile)\n- Mobile: Actions displayed with full-width buttons\n- Desktop: Compact icon-only buttons",
     "categoryId": "17582046453732"
@@ -388,8 +472,8 @@
     "categoryId": "17582046453733"
   },
   "professional-category-manager-card": {
-    "contentMarkdown": "**Professional Category Manager**\n- Header with Title and Add Button\n- Categories Grid\n  - Category Cards with Name, Description, Role Key\n  - Edit and Delete Actions\n- Add/Edit Dialog Form\n  - Name Field\n  - Role Key Field\n  - Description Field\n  - Color Picker",
-    "categoryId": "17582046453732"
+    "contentMarkdown": "**Professional Category Management Form**\n- Category Name: Required, text input\n- Category Key: Required, lowercase text validation\n- Description: Optional, multi-line text\n- Color Selection: Required, color picker grid\n- Save/Update Button: Validates all fields and saves to Supabase\n- Delete Validation: Checks for linked users and tasks before allowing deletion",
+    "categoryId": "Development(17582046453733)"
   },
   "quick-login-0": {
     "contentMarkdown": "**Quick Login Button Click**\nWhen user clicks the 'Usar' button next to any debug user:\n- Automatically fill email field with user's email\n- Automatically fill password field with user's password\n- Clear any existing error messages\n- Log the quick login action to console\n- Allow user to immediately click 'Entrar' to login",
@@ -401,6 +485,14 @@
   },
   "refresh-reports-btn": {
     "contentMarkdown": "**Click Event**\nWhen clicked, reloads reports for the currently selected date. Shows loading state while fetching data.",
+    "categoryId": "17582046453731"
+  },
+  "remove-period-start_day": {
+    "contentMarkdown": "**Click Event** When clicked, moves 'Start Day' period from Assigned list to Available list and removes from task periods array (if not the last period)",
+    "categoryId": "17582046453731"
+  },
+  "remove-profession-secretary": {
+    "contentMarkdown": "**Click Event** When clicked, moves selected professional category from Assigned list to Available list and removes from task's assigned professions",
     "categoryId": "17582046453731"
   },
   "reopen-checklist-dialog": {
@@ -435,6 +527,14 @@
     "contentMarkdown": "**Button Click**\nWhen clicked, clears localStorage and reloads templates with default tasks from mockData, resets selectedTemplate to null, and shows success toast message",
     "categoryId": "17582046453731"
   },
+  "restore-data-btn": {
+    "contentMarkdown": "Button to restore found data back to localStorage - only enabled when data is found, triggers page reload after restore",
+    "categoryId": "Interaction"
+  },
+  "restore-default-data-btn": {
+    "contentMarkdown": "Button to restore default system data including professional categories and task categories when no user data is found",
+    "categoryId": "Interaction"
+  },
   "role-template-manager-card": {
     "contentMarkdown": "**Role Template Manager**\n- Header with title and action buttons\n- Templates list showing available templates\n- Template details panel for selected template\n- Task management interface",
     "categoryId": "17582046453732"
@@ -446,6 +546,10 @@
   "save-task-btn": {
     "contentMarkdown": "**Button Click**\nWhen clicked, validates task title is filled, creates new task with unique ID, adds to selected template, saves to localStorage, updates UI, closes dialog, and shows success toast",
     "categoryId": "17582046453731"
+  },
+  "scan-data-btn": {
+    "contentMarkdown": "Button to scan localStorage for lost task data - shows spinning animation when scanning and displays results",
+    "categoryId": "Interaction"
   },
   "smart-suggestion": {
     "contentMarkdown": "**Smart Period Suggestion**\n\nIntelligent checklist period recommendation\n- Theme color: Blue gradient background with blue accent button\n- Font: Standard text with emphasis on suggestion title\n- Border radius style: Rounded container with soft gradient",
@@ -459,13 +563,17 @@
     "contentMarkdown": "**System Configuration Mobile Design**\n\nResponsive configuration interface with tabbed layout optimized for mobile devices.\n\n- Theme color: Blue-gray accent with color-coded sections (blue for professional categories, green for task categories, orange for master tasks)\n- Font: Responsive typography with text-lg on desktop, smaller on mobile\n- Border radius style: Consistent rounded-lg for cards, rounded-r-md for info panels",
     "categoryId": "17582046453730"
   },
+  "task-category-filter-checkbox-reception": {
+    "contentMarkdown": "**Change Event** When checked/unchecked, toggles selected task category in filters and updates filtered task display",
+    "categoryId": "17582046453731"
+  },
   "task-category-form": {
     "contentMarkdown": "**Task Category Form**\n- Category Name: Single line input, Required\n- Description: Multi-line input, Optional\n- Color Selection: Color picker from predefined palette, Required\n- Submit Button",
     "categoryId": "17582046453733"
   },
   "task-category-manager-card": {
-    "contentMarkdown": "**Task Category Manager**\n- Header with Title and Add Button\n- Categories Grid\n  - Category Cards with Name, Description, Color\n  - Edit and Delete Actions\n- Add/Edit Dialog Form\n  - Name Field\n  - Description Field\n  - Color Picker",
-    "categoryId": "17582046453732"
+    "contentMarkdown": "Modern administrative interface design with clean layout, subtle shadows, and professional color scheme using system blue and green accents",
+    "categoryId": "17582046453730"
   },
   "task-detail-title": {
     "contentMarkdown": "**Task Title Display**\n- Multi-level task identification system:\n  1. Search in master_tasks by task_id\n  2. Extract from finalReport using regex pattern\n  3. Fallback to template tasks by index\n  4. Final fallback with task ID or \"not identified\" message\n- Display clean task names without technical IDs\n- Console logging for debugging task resolution method",
