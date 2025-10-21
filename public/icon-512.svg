@@ -1,0 +1,32 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background quadrado azul -->
+  <rect x="0" y="0" width="512" height="512" fill="#2563eb" rx="64"/>
+  
+  <!-- Círculo azul mais claro -->
+  <circle cx="256" cy="256" r="215" fill="#3b82f6"/>
+  
+  <!-- Cruz médica branca -->
+  <rect x="226" y="133" width="60" height="246" fill="white" rx="8"/>
+  <rect x="133" y="226" width="246" height="60" fill="white" rx="8"/>
+  
+  <!-- Símbolos de checklist -->
+  <!-- Item 1 - superior esquerdo -->
+  <circle cx="174" cy="174" r="20" fill="#10b981"/>
+  <path d="m161 174 8 8 16-16" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Item 2 - superior direito -->
+  <circle cx="338" cy="174" r="20" fill="#10b981"/>
+  <path d="m325 174 8 8 16-16" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Item 3 - inferior esquerdo -->
+  <circle cx="174" cy="338" r="20" fill="#10b981"/>
+  <path d="m161 338 8 8 16-16" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Item 4 - inferior direito -->
+  <circle cx="338" cy="338" r="20" fill="#10b981"/>
+  <path d="m325 338 8 8 16-16" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Texto "CM" -->
+  <text x="256" y="280" font-family="Arial, sans-serif" font-size="75" font-weight="bold" 
+        text-anchor="middle" fill="white">CM</text>
+</svg>
