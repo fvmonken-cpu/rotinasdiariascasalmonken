@@ -383,6 +383,10 @@
     "contentMarkdown": "Small text size for service abbreviations. Multiple services separated by commas. Text wraps appropriately within table cell constraints.",
     "categoryId": "17582046453730"
   },
+  "favicon-svg": {
+    "contentMarkdown": "**Favicon - Ícone da Página**\n\nDesign: Silhueta simplificada de mulher grávida\n- Cor: #D2AE6D (dourado Casal Monken)\n- Formato: SVG 32x32px\n- Background: Círculo branco\n- Elementos: Cabeça, corpo com barriga de grávida, braços e pernas\n- Estilo: Minimalista e elegante",
+    "categoryId": "Design"
+  },
   "filters-card": {
     "contentMarkdown": "comprehensive filter panel with search, date range, gender checkboxes, delivery type options, maternity selection, and clear filters button",
     "categoryId": "content"
@@ -555,6 +559,10 @@
     "contentMarkdown": "**Click Event** When user clicks on the MultiSelect dropdown trigger, should log the click event and open the popover with available options. Should toggle popover state and display selection interface.",
     "categoryId": "17582046453731"
   },
+  "name-formatting-system": {
+    "contentMarkdown": "**Sistema de Formatação de Nomes**\n\nFormatação automática em Title Case para:\n- Nome completo da paciente (obrigatório)\n- Nome do companheiro/parceiro (opcional)\n- Nome do bebê (opcional)\n\n**Regras aplicadas:**\n- Primeira palavra sempre maiúscula\n- Última palavra sempre maiúscula\n- Preposições e artigos em minúscula: da, de, do, das, dos, e, em, na, no, nas, nos, etc.\n- Aplicação no onBlur (quando usuário sai do campo)\n- Garantia na submissão do formulário",
+    "categoryId": "Development"
+  },
   "name-input": {
     "contentMarkdown": "**Maternity Name Form Field** - Input type: Single line text - Required: Yes - Validation: Must not be empty - Placeholder: 'Mater Dei Santo Agostinho' - Purpose: Capture the name of the maternity/hospital where births occur",
     "categoryId": "17582046453733"
@@ -587,9 +595,17 @@
     "contentMarkdown": "**Quick Date Filter Button**\nSets date range filter to show patients with due dates in the next 30 days from today automatically",
     "categoryId": "17582046453731"
   },
+  "nome-bebe-input": {
+    "contentMarkdown": "**Formatação do Nome do Bebê**\n\nFormata automaticamente nomes de bebês:\n- Title Case para nomes próprios\n- Campo opcional - permite ficar vazio\n- Formatação aplicada no onBlur",
+    "categoryId": "Interaction"
+  },
+  "nome-companheiro-input": {
+    "contentMarkdown": "**Formatação do Nome do Companheiro**\n\nFormata automaticamente nomes de companheiros/parceiros:\n- Aplica as mesmas regras do nome principal\n- Campo opcional - permite ficar vazio\n- Formatação apenas quando há texto inserido",
+    "categoryId": "Interaction"
+  },
   "nome-completo-input": {
-    "contentMarkdown": "Full name input field - Required field with red asterisk indicator, minimum 2 characters validation.",
-    "categoryId": "17582046453733"
+    "contentMarkdown": "**Formatação Automática do Nome**\n\nQuando o usuário digita no campo nome completo:\n1. Durante digitação: mantém texto original\n2. Ao sair do campo (onBlur): aplica formatação automática\n3. Exemplos de formatação:\n   - 'MARIA DA SILVA' → 'Maria da Silva'\n   - 'joão de oliveira santos' → 'João de Oliveira Santos'\n   - 'ana luisa' → 'Ana Luisa'",
+    "categoryId": "Interaction"
   },
   "normal-without-professionals-card": {
     "contentMarkdown": "**Normal s/ Profissional Stats Card**\n- Count of patients with normal delivery preference but no obstetric nurse or doula assigned\n- Red color theme indicating urgent attention needed\n- Alert triangle icon",
@@ -910,6 +926,10 @@
   "superuser-visibility-restrictions": {
     "contentMarkdown": "**Superuser Visibility Control System**\n\n**For Non-Superusers:**\n- Superuser accounts hidden from user management lists\n- 'superusuario' type hidden from user type management\n- Cannot view, edit, or interact with superuser entities\n- Maintains system security through access restriction\n\n**For Superusers:**\n- Full visibility of all users and types\n- Can manage all entities except:\n  - Cannot delete own account\n  - Cannot modify 'superusuario' type\n  - All other administrative actions permitted",
     "categoryId": "Interaction"
+  },
+  "system-title": {
+    "contentMarkdown": "**Sistema de Identidade Visual**\n\nTítulo da página: \"Sistema Casal Monken\"\n- Theme color: #D2AE6D (dourado)\n- Font: Sistema padrão\n- Border radius style: Arredondado suave\n- Favicon: Silhueta de mulher grávida em SVG\n- Descrição: \"Sistema de Gestão de Pacientes - Espaço Casal Monken\"",
+    "categoryId": "Design"
   },
   "telefone-input": {
     "contentMarkdown": "Phone input field - Required field with automatic formatting to (xx) xxxxx-xxxx mask, validates 11 digits.",
