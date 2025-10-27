@@ -54,9 +54,16 @@ export const canViewCommercialFields = (userType: string): boolean => {
  * Formata as datas das semanas gestacionais para exibição
  */
 export const formatGestationalWeekDate = (date: Date | string | null, weekNumber: number): string => {
-  if (!date) return '-';
+  console.log(`formatGestationalWeekDate - Input: ${date}, Week: ${weekNumber}`);
+  
+  if (!date) {
+    console.log(`formatGestationalWeekDate - Date is null/undefined for week ${weekNumber}`);
+    return '-';
+  }
   
   const dateObj = typeof date === 'string' ? new Date(date) : date;
+  console.log(`formatGestationalWeekDate - Date object created: ${dateObj}`);
+  
   const today = new Date();
   
   const formattedDate = dateObj.toLocaleDateString('pt-BR', {

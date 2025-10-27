@@ -102,9 +102,11 @@ export const addGenerationInfo = (doc: jsPDF, startY: number, activeFilters?: st
   
   let currentY = startY;
   
-  doc.text(`Gerado em: ${brazilTime}`, 40, currentY);
+  // Primeira linha: Data e hora de geração
+  doc.text(`Data e hora de geração: ${brazilTime}`, 40, currentY);
   currentY += 15;
   
+  // Segunda linha: Filtros aplicados
   if (activeFilters && activeFilters.length > 0) {
     doc.text(`Filtros aplicados: ${activeFilters.join(' | ')}`, 40, currentY);
     currentY += 15;
@@ -113,5 +115,6 @@ export const addGenerationInfo = (doc: jsPDF, startY: number, activeFilters?: st
     currentY += 15;
   }
   
+  // Terceira linha em diante: dados da tabela começam aqui
   return currentY + 10; // Retorna a próxima posição Y disponível
 };
