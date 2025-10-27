@@ -21,6 +21,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { formatPhone, isValidPhone } from '@/utils/phoneUtils';
 import { formatCEP, isValidCEP } from '@/utils/cepUtils';
 import { calculateDPP, formatDate, calculateGestationalAge, formatGestationalAge, normalizeDateForDB } from '@/utils/dateUtils';
+import { formatName, formatBabyName, formatPartnerName } from '@/utils/textUtils';
 import { PartoVia, PARTO_VIA_LABELS, OBSTETRA_LABELS } from '@/types/patient';
 import { calculateGestationalWeekDates } from '@/utils/gestationalUtils';
 import CommercialSection from './CommercialSection';
@@ -229,7 +230,7 @@ const NewPatientForm: React.FC<NewPatientFormProps> = ({ onSuccess })=>{
             const gestationalWeekDates = calculateGestationalWeekDates(dppDate);
             console.log('onSubmit - Datas das semanas gestacionais:', gestationalWeekDates);
             const patientData = {
-                full_name: data.nomeCompleto,
+                full_name: formatName(data.nomeCompleto),
                 birth_date: normalizeDateForDB(data.dataNascimento),
                 phone: data.telefone,
                 zip_code: data.cep.replace(/\D/g, ''),
@@ -239,8 +240,8 @@ const NewPatientForm: React.FC<NewPatientFormProps> = ({ onSuccess })=>{
                 neighborhood: data.bairro,
                 city: data.cidade,
                 state: data.estado,
-                partner_name: data.nomeCompanheiro || null,
-                baby_name: data.nomeBebe || null,
+                partner_name: formatPartnerName(data.nomeCompanheiro) || null,
+                baby_name: formatBabyName(data.nomeBebe) || null,
                 estimated_due_date: normalizeDateForDB(data.dpp),
                 current_gestational_age_weeks: gestAge.weeks,
                 current_gestational_age_days: gestAge.days,
@@ -313,7 +314,14 @@ const NewPatientForm: React.FC<NewPatientFormProps> = ({ onSuccess })=>{
                   <Label htmlFor="nomeCompleto" data-spec-id="tY5hTDMODxQh46L7">
                     Nome Completo <span className="text-red-500" data-spec-id="OEC3xPKuBNpmKlZK">*</span>
                   </Label>
-                  <Input id="nomeCompleto" {...register('nomeCompleto')} placeholder="Nome completo da paciente" data-spec-id="nome-completo-input"/>
+                  <Controller name="nomeCompleto" control={control} render={({ field })=>(<Input id="nomeCompleto" placeholder="Nome completo da paciente" value={field.value} onChange={(e)=>{
+            const rawValue = e.target.value;
+            field.onChange(rawValue);
+        }} onBlur={(e)=>{
+            const formattedValue = formatName(e.target.value);
+            field.onChange(formattedValue);
+            field.onBlur();
+        }} data-spec-id="nome-completo-input"/>)} data-spec-id="ovYuxsTIAY7SRRtF"/>
                   {errors.nomeCompleto && (<p className="text-sm text-red-500" data-spec-id="vdTamvsYbNiI11Oo">{errors.nomeCompleto.message}</p>)}
                 </div>
 
@@ -448,12 +456,26 @@ const NewPatientForm: React.FC<NewPatientFormProps> = ({ onSuccess })=>{
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4" data-spec-id="iqOSkCpdQK0RKqNB">
                 <div className="space-y-2" data-spec-id="R1xMWIrtEopI6ji1">
                   <Label htmlFor="nomeCompanheiro" data-spec-id="MlCtIpsXermPAzOK">Nome do(a) Companheiro(a)</Label>
-                  <Input id="nomeCompanheiro" {...register('nomeCompanheiro')} placeholder="Nome do companheiro" data-spec-id="nome-companheiro-input"/>
+                  <Controller name="nomeCompanheiro" control={control} render={({ field })=>(<Input id="nomeCompanheiro" placeholder="Nome do companheiro" value={field.value || ''} onChange={(e)=>{
+            const rawValue = e.target.value;
+            field.onChange(rawValue);
+        }} onBlur={(e)=>{
+            const formattedValue = formatPartnerName(e.target.value);
+            field.onChange(formattedValue);
+            field.onBlur();
+        }} data-spec-id="nome-companheiro-input"/>)} data-spec-id="o7vvxvjnup3wKw7l"/>
                 </div>
 
                 <div className="space-y-2" data-spec-id="BAFnSbRSwep64TSL">
                   <Label htmlFor="nomeBebe" data-spec-id="NXIMTP6g2Iex4kFW">Nome do Bebê</Label>
-                  <Input id="nomeBebe" {...register('nomeBebe')} placeholder="Nome escolhido para o bebê" data-spec-id="nome-bebe-input"/>
+                  <Controller name="nomeBebe" control={control} render={({ field })=>(<Input id="nomeBebe" placeholder="Nome escolhido para o bebê" value={field.value || ''} onChange={(e)=>{
+            const rawValue = e.target.value;
+            field.onChange(rawValue);
+        }} onBlur={(e)=>{
+            const formattedValue = formatBabyName(e.target.value);
+            field.onChange(formattedValue);
+            field.onBlur();
+        }} data-spec-id="nome-bebe-input"/>)} data-spec-id="0rXMW6z29L7njt8x"/>
                 </div>
               </div>
             </div>

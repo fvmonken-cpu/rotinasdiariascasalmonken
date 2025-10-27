@@ -59,7 +59,7 @@ const PatientsView: React.FC<PatientsViewProps> = ({ onNewPatient, onEditPatient
     const [patientForSDREdit, setPatientForSDREdit] = useState<Patient | null>(null);
     const { patients, isLoading, error, refetch, deletePatient, isDeleting, assignObstetricNurse, isAssigningNurse, unassignObstetricNurse, isUnassigningNurse, assignDoula, isAssigningDoula, unassignDoula, isUnassigningDoula } = usePatients(filters);
     const { user } = useAuth();
-    const { canRegisterBirth, canRegisterAnyBirth } = useUserPermissions();
+    const { canRegisterBirth, canRegisterAnyBirth, canViewCommercialFields } = useUserPermissions();
     const sdrEditServices = useSDREditServices();
     React.useEffect(()=>{
         console.log('PatientsView - Filtros atuais:', filters);
@@ -414,15 +414,19 @@ const PatientsView: React.FC<PatientsViewProps> = ({ onNewPatient, onEditPatient
                 'Obstetra',
                 'Enf. Obstétrica',
                 'Doula',
-                'Serviços Extras'
+                'Serviços Extras',
+                'Obs. Gestação'
             ];
+            if (canViewCommercialFields) {
+                headers.push('Condições Comerciais', 'Registros de Pagamento');
+            }
             console.log('Preparando dados...');
             const data = displayedPatients.map((patient, index)=>{
                 console.log(`Processando paciente ${index + 1}:`, patient.full_name);
                 try {
                     const currentGA = calculateGestationalAge(new Date(patient.estimated_due_date));
                     const age = new Date().getFullYear() - new Date(patient.birth_date).getFullYear();
-                    return [
+                    const rowData = [
                         patient.full_name || '-',
                         `${age} anos`,
                         formatPhone(patient.phone) || '-',
@@ -434,12 +438,18 @@ const PatientsView: React.FC<PatientsViewProps> = ({ onNewPatient, onEditPatient
                         patient.obstetrician?.full_name || '-',
                         patient.obstetric_nurse?.full_name || '-',
                         patient.doula?.full_name || '-',
-                        getExtraServices(patient)
+                        getExtraServices(patient),
+                        patient.gestational_observations || '-'
                     ];
+                    if (canViewCommercialFields) {
+                        rowData.push(patient.commercial_conditions || '-', patient.payment_records || '-');
+                    }
+                    return rowData;
                 } catch (rowError) {
                     console.error(`Erro ao processar paciente ${patient.full_name}:`, rowError);
-                    return [
+                    const errorRow = [
                         patient.full_name || '-',
+                        '-',
                         '-',
                         '-',
                         '-',
@@ -452,6 +462,10 @@ const PatientsView: React.FC<PatientsViewProps> = ({ onNewPatient, onEditPatient
                         '-',
                         '-'
                     ];
+                    if (canViewCommercialFields) {
+                        errorRow.push('-', '-');
+                    }
+                    return errorRow;
                 }
             });
             console.log('Dados preparados:', data);
@@ -475,41 +489,52 @@ const PatientsView: React.FC<PatientsViewProps> = ({ onNewPatient, onEditPatient
                 },
                 columnStyles: {
                     0: {
-                        cellWidth: 70
+                        cellWidth: 60
                     },
                     1: {
-                        cellWidth: 40
+                        cellWidth: 35
                     },
                     2: {
-                        cellWidth: 60
+                        cellWidth: 55
                     },
                     3: {
-                        cellWidth: 50
+                        cellWidth: 45
                     },
                     4: {
-                        cellWidth: 50
+                        cellWidth: 45
                     },
                     5: {
-                        cellWidth: 40
+                        cellWidth: 35
                     },
                     6: {
-                        cellWidth: 50
+                        cellWidth: 45
                     },
                     7: {
-                        cellWidth: 60
+                        cellWidth: 50
                     },
                     8: {
-                        cellWidth: 70
-                    },
-                    9: {
-                        cellWidth: 70
-                    },
-                    10: {
                         cellWidth: 60
                     },
+                    9: {
+                        cellWidth: 60
+                    },
+                    10: {
+                        cellWidth: 50
+                    },
                     11: {
-                        cellWidth: 80
-                    }
+                        cellWidth: 70
+                    },
+                    12: {
+                        cellWidth: 70
+                    },
+                    ...(canViewCommercialFields && {
+                        13: {
+                            cellWidth: 80
+                        },
+                        14: {
+                            cellWidth: 80
+                        }
+                    })
                 },
                 margin: {
                     top: tableStartY,
@@ -543,7 +568,7 @@ const PatientsView: React.FC<PatientsViewProps> = ({ onNewPatient, onEditPatient
                 try {
                     const currentGA = calculateGestationalAge(new Date(patient.estimated_due_date));
                     const age = new Date().getFullYear() - new Date(patient.birth_date).getFullYear();
-                    return {
+                    const rowData = {
                         'Nome Completo': patient.full_name,
                         'Data de Nascimento': formatDate(new Date(patient.birth_date)),
                         'Idade': `${age} anos`,
@@ -569,9 +594,14 @@ const PatientsView: React.FC<PatientsViewProps> = ({ onNewPatient, onEditPatient
                         'Serviços Contratados': getExtraServices(patient),
                         'Observações Gestação': patient.gestational_observations || '-'
                     };
+                    if (canViewCommercialFields) {
+                        rowData['Condições Comerciais'] = patient.commercial_conditions || '-';
+                        rowData['Registros de Pagamento'] = patient.payment_records || '-';
+                    }
+                    return rowData;
                 } catch (rowError) {
                     console.error(`Erro ao processar paciente ${patient.full_name} para Excel:`, rowError);
-                    return {
+                    const errorData = {
                         'Nome Completo': patient.full_name || '-',
                         'Data de Nascimento': '-',
                         'Idade': '-',
@@ -597,6 +627,11 @@ const PatientsView: React.FC<PatientsViewProps> = ({ onNewPatient, onEditPatient
                         'Serviços Contratados': '-',
                         'Observações Gestação': '-'
                     };
+                    if (canViewCommercialFields) {
+                        errorData['Condições Comerciais'] = '-';
+                        errorData['Registros de Pagamento'] = '-';
+                    }
+                    return errorData;
                 }
             });
             console.log('Dados do Excel preparados:', data);

@@ -241,7 +241,7 @@ const PostBirthView: React.FC<PostBirthViewProps> = ({ 'data-spec-id': dataSpecI
                 },
                 columnStyles: {
                     0: {
-                        cellWidth: 60
+                        cellWidth: 55
                     },
                     1: {
                         cellWidth: 30
@@ -256,19 +256,19 @@ const PostBirthView: React.FC<PostBirthViewProps> = ({ 'data-spec-id': dataSpecI
                         cellWidth: 35
                     },
                     5: {
-                        cellWidth: 40
+                        cellWidth: 60
                     },
                     6: {
                         cellWidth: 35
                     },
                     7: {
-                        cellWidth: 50
+                        cellWidth: 35
                     },
                     8: {
-                        cellWidth: 60
+                        cellWidth: 50
                     },
                     9: {
-                        cellWidth: 50
+                        cellWidth: 55
                     },
                     10: {
                         cellWidth: 50
@@ -277,8 +277,22 @@ const PostBirthView: React.FC<PostBirthViewProps> = ({ 'data-spec-id': dataSpecI
                         cellWidth: 50
                     },
                     12: {
+                        cellWidth: 50
+                    },
+                    13: {
                         cellWidth: 60
-                    }
+                    },
+                    14: {
+                        cellWidth: 60
+                    },
+                    ...(canViewCommercialFields && {
+                        15: {
+                            cellWidth: 70
+                        },
+                        16: {
+                            cellWidth: 70
+                        }
+                    })
                 }
             });
             console.log('Adicionando rodapé com informações do usuário...');

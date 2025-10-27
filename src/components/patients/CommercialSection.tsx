@@ -20,6 +20,11 @@ interface CommercialSectionProps {
 }
 export default function CommercialSection({ formData, onChange, readOnly = false, 'data-spec-id': specId }: CommercialSectionProps) {
     const { canViewCommercialFields, canEditCommercialFields } = useUserPermissions();
+    console.log('CommercialSection - formData recebido:', formData);
+    console.log('CommercialSection - weeks_20_date:', formData.weeks_20_date);
+    console.log('CommercialSection - weeks_30_date:', formData.weeks_30_date);
+    console.log('CommercialSection - weeks_32_date:', formData.weeks_32_date);
+    console.log('CommercialSection - weeks_36_date:', formData.weeks_36_date);
     if (!canViewCommercialFields) {
         return null;
     }

@@ -21,6 +21,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { formatPhone, isValidPhone } from '@/utils/phoneUtils';
 import { formatCEP, isValidCEP } from '@/utils/cepUtils';
 import { calculateDPP, formatDate, calculateGestationalAge, formatGestationalAge, normalizeDateForDB } from '@/utils/dateUtils';
+import { formatName, formatBabyName, formatPartnerName } from '@/utils/textUtils';
 import { Patient } from '@/types/patient';
 import { usePatientHistory } from '@/hooks/usePatientHistory';
 import { calculateGestationalWeekDates } from '@/utils/gestationalUtils';
@@ -222,7 +223,7 @@ const EditPatientForm: React.FC<EditPatientFormProps> = ({ patient, onSuccess, o
             const gestationalWeekDates = calculateGestationalWeekDates(dppDate);
             console.log('EditForm onSubmit - Datas das semanas gestacionais:', gestationalWeekDates);
             const patientData = {
-                full_name: data.nomeCompleto,
+                full_name: formatName(data.nomeCompleto),
                 birth_date: normalizeDateForDB(data.dataNascimento),
                 phone: data.telefone,
                 zip_code: data.cep.replace(/\D/g, ''),
@@ -232,8 +233,8 @@ const EditPatientForm: React.FC<EditPatientFormProps> = ({ patient, onSuccess, o
                 neighborhood: data.bairro,
                 city: data.cidade,
                 state: data.estado,
-                partner_name: data.nomeCompanheiro || null,
-                baby_name: data.nomeBebe || null,
+                partner_name: formatPartnerName(data.nomeCompanheiro) || null,
+                baby_name: formatBabyName(data.nomeBebe) || null,
                 estimated_due_date: normalizeDateForDB(data.dpp),
                 current_gestational_age_weeks: gestAge.weeks,
                 current_gestational_age_days: gestAge.days,
@@ -387,7 +388,14 @@ const EditPatientForm: React.FC<EditPatientFormProps> = ({ patient, onSuccess, o
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4" data-spec-id="personal-info-grid">
                             <div className="space-y-2" data-spec-id="full-name-field">
                                 <Label htmlFor="nomeCompleto" data-spec-id="tov5aDh8lAdI9us9">Nome Completo *</Label>
-                                <Input id="nomeCompleto" {...register('nomeCompleto')} className={errors.nomeCompleto ? 'border-red-500' : ''} data-spec-id="SyXijkwMmVG5URH3"/>
+                                <Controller name="nomeCompleto" control={control} render={({ field })=>(<Input id="nomeCompleto" value={field.value} onChange={(e)=>{
+            const rawValue = e.target.value;
+            field.onChange(rawValue);
+        }} onBlur={(e)=>{
+            const formattedValue = formatName(e.target.value);
+            field.onChange(formattedValue);
+            field.onBlur();
+        }} className={errors.nomeCompleto ? 'border-red-500' : ''} data-spec-id="SyXijkwMmVG5URH3"/>)} data-spec-id="f7fKcwhv6LLzxIOo"/>
                                 {errors.nomeCompleto && (<p className="text-sm text-red-600" data-spec-id="Ybyp12kZR4gH7eyy">{errors.nomeCompleto.message}</p>)}
                             </div>
 
@@ -410,7 +418,14 @@ const EditPatientForm: React.FC<EditPatientFormProps> = ({ patient, onSuccess, o
 
                             <div className="space-y-2" data-spec-id="partner-field">
                                 <Label htmlFor="nomeCompanheiro" data-spec-id="lr4LTXhrtCu87HYe">Nome do Companheiro</Label>
-                                <Input id="nomeCompanheiro" {...register('nomeCompanheiro')} placeholder="Opcional" data-spec-id="bgURHPJ4jWqFekBK"/>
+                                <Controller name="nomeCompanheiro" control={control} render={({ field })=>(<Input id="nomeCompanheiro" placeholder="Opcional" value={field.value || ''} onChange={(e)=>{
+            const rawValue = e.target.value;
+            field.onChange(rawValue);
+        }} onBlur={(e)=>{
+            const formattedValue = formatPartnerName(e.target.value);
+            field.onChange(formattedValue);
+            field.onBlur();
+        }} data-spec-id="bgURHPJ4jWqFekBK"/>)} data-spec-id="Iy2MTX5H99t9X1kF"/>
                             </div>
                         </div>
                     </CardContent>
@@ -498,7 +513,14 @@ const EditPatientForm: React.FC<EditPatientFormProps> = ({ patient, onSuccess, o
 
                             <div className="space-y-2" data-spec-id="baby-name-field">
                                 <Label htmlFor="nomeBebe" data-spec-id="iYBz0GjGIZRsXxME">Nome do Bebê</Label>
-                                <Input id="nomeBebe" {...register('nomeBebe')} placeholder="Opcional" data-spec-id="bdDAIA4MY3bqT77P"/>
+                                <Controller name="nomeBebe" control={control} render={({ field })=>(<Input id="nomeBebe" placeholder="Opcional" value={field.value || ''} onChange={(e)=>{
+            const rawValue = e.target.value;
+            field.onChange(rawValue);
+        }} onBlur={(e)=>{
+            const formattedValue = formatBabyName(e.target.value);
+            field.onChange(formattedValue);
+            field.onBlur();
+        }} data-spec-id="bdDAIA4MY3bqT77P"/>)} data-spec-id="Jpj0niOQRkNk0gO9"/>
                             </div>
                         </div>
 
