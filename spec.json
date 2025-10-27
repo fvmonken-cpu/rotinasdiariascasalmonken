@@ -1,626 +1,1070 @@
 {
-  "9Bg2588ldPqkptp8": {
-    "contentMarkdown": "User profile header section with light gray background and bottom border, containing user name, role and email",
-    "categoryId": "17582046453730"
-  },
-  "9FPyA6D47wcxTEhi": {
-    "contentMarkdown": "**New User Login Instructions**\n\n- Display: Bold text \"Novo usuário?\"\n- Information: Clear instruction for new users\n- Password Display: Shows temporary password \"temp-hash\" in code format\n- Purpose: Helps new users understand default login credentials\n- Visibility: Always visible on login screen\n- Styling: Blue text color consistent with info section theme",
-    "categoryId": "17582046453733"
-  },
-  "CTI2Hek0NhN7qv6q": {
-    "contentMarkdown": "**Temporary Password Display Code**\n\n- Content: \"temp-hash\"\n- Format: Inline code element\n- Styling: Light blue background (bg-blue-100), padding, rounded corners\n- Purpose: Clearly highlights the temporary password for new users\n- Context: Part of new user login instructions\n- Accessibility: High contrast for easy reading",
-    "categoryId": "17582046453733"
-  },
-  "Cmh3zvBWocXNteZR": {
-    "contentMarkdown": "**Checklist Details View**\n- User Information Section\n- Period and Progress Summary\n- Task Details List\n  - Task Status Icons (completed/incomplete)\n  - Task Names (loaded from master_tasks)\n  - Completion Times\n  - Task Notes (if available)\n- Fallback for Unknown Tasks",
-    "categoryId": "17582046453732"
-  },
-  "F7K3FbstqA2rAXnt": {
-    "contentMarkdown": "**Header Layout Responsive Interaction**\n\nHeader container adapts between mobile and desktop layouts:\n- Mobile: Compressed padding (px-3), smaller logo, truncated title\n- Desktop: Full padding (px-4), full-size elements, complete subtitle\n- Flex management: flex-1 for logo area, flex-shrink-0 for buttons\n- Smart spacing: space-x-1 on mobile, space-x-4 on desktop",
+  "1XdZsiZbgymHC4Bm": {
+    "contentMarkdown": "**Optional Professional Selection** Select component for obstetric nurse present at birth. Includes 'Nenhum' (None) option as first choice to explicitly indicate no professional was present. When 'Nenhum' is selected, sets the field value to undefined to prevent UUID validation errors. Optional field that converts empty selections to null for database compatibility.",
     "categoryId": "17582046453731"
   },
-  "HTKgeZ8JhG2XabYR": {
-    "contentMarkdown": "Container for admin navigation buttons with horizontal spacing between Administração and Sair buttons",
-    "categoryId": "17582046453730"
-  },
-  "IoyQ2wyZTtdejaJN": {
-    "contentMarkdown": "**Gerenciamento de Usuários**\n- Lista de usuários\n- Botão Adicionar Usuário\n- Informações do usuário\n    - Avatar com iniciais\n    - Nome e email\n    - Badge da função\n- Ações do usuário\n    - Botão editar\n    - Botão excluir (não disponível para admin)",
+  "5QswIrRXo89tjBYP": {
+    "contentMarkdown": "**Service Label Correction**\nLabel updated from 'Consulta de amamentação' to 'Consultoria de amamentação' for consistency and accuracy in service naming.",
     "categoryId": "17582046453732"
   },
-  "JAojc8mZGQiYLtw3": {
-    "contentMarkdown": "**User Login Form**\n- Email: Required, email format validation\n- Password: Required, minimum security validation\n- Submit Button: Disabled during loading, shows spinner\n- Error Display: Shows validation and authentication errors",
+  "8Z21Jci8SYMiL8wv": {
+    "contentMarkdown": "**Age Display Badge**\n- Patient age in years\n- Automatically calculated from birth date\n- Format: \"X ano(s)\" with proper pluralization",
+    "categoryId": "17582046453732"
+  },
+  "BV7GeIiVzkDAea7A": {
+    "contentMarkdown": "**Via de Parto Selection Form**\n- Parto Normal: Available option\n- Cesariana: Available option\n- Não Definido: Available option\n- Note: Fórceps option has been removed",
     "categoryId": "17582046453733"
   },
-  "MMwf19abCvTZRIKT": {
-    "contentMarkdown": "**User Login Form**\n\n- Email Address: Single line input\n    - Required\n    - Validation: Valid email format\n- Password: Password input\n    - Required  \n    - Validation: Minimum 6 characters\n- Remember Me: Checkbox\n    - Optional\n- Login Button",
-    "categoryId": "17582046453733"
+  "NK0jYJXhhgnWsDyY": {
+    "contentMarkdown": "**Optional Professional Selection** Select component for doula present at birth. Includes 'Nenhum' (None) option as first choice to explicitly indicate no professional was present. When 'Nenhum' is selected, sets the field value to undefined to prevent UUID validation errors. Optional field that converts empty selections to null for database compatibility.",
+    "categoryId": "17582046453731"
   },
-  "R0WkYV9ctDe6FiGl": {
-    "contentMarkdown": "Display 'Total de Tarefas' as the section title for task count information",
+  "access-total-badge-explanation": {
+    "contentMarkdown": "**'Acesso Total' Badge System**\n\n**Badge Logic:**\n```javascript\n{user.role === 'obstetra' \u0026\u0026 (\n  \u003cBadge variant={user.hasFullAccess ? \"default\" : \"outline\"}\u003e\n    {user.hasFullAccess ? 'Acesso Total' : 'Acesso Restrito'}\n  \u003c/Badge\u003e\n)}\n```\n\n**Badge Meaning:**\n- **'Acesso Total'**: Obstetrician has full access to all patient data\n- **'Acesso Restrito'**: Obstetrician has limited access to patient data\n- Only displayed for users with role 'obstetra'\n- Based on `hasFullAccess` property from AuthContext\n\n**hasFullAccess Determination:**\n- Set in AuthContext during login\n- Logic: `user_type === 'obstetra' || user_type === 'administrativo' || user_type === 'superusuario'`\n- Controls whether obstetrician can see all patients or only assigned ones\n- Different from admin privileges (which control user management)\n\n**Visual Design:**\n- 'Acesso Total': Default badge variant (darker)\n- 'Acesso Restrito': Outline badge variant (lighter)\n- Displayed below user name and role in sidebar\n- Part of user information section",
     "categoryId": "Content"
   },
-  "SHwOqvRpICizw35i": {
-    "contentMarkdown": "**Navigation Buttons Section**\n\n- Universal Navigation Buttons\n  - Home Button (hidden on mobile, visible on desktop)\n  - Logout Button (hidden on mobile, visible on desktop)\n- Role-specific Navigation\n  - Director: Dashboard Button (icon-only on mobile)\n  - Admin: Dashboard + Administration Buttons (icon-only on mobile)\n- User Avatar Dropdown\n  - Smaller size on mobile (9x9 vs 10x10)\n  - Contains all navigation options for mobile users",
-    "categoryId": "17582046453732"
-  },
-  "SwpGcsyWmQqSvy9j": {
-    "contentMarkdown": "User dropdown menu with enhanced visibility styling - white background, gray border, shadow, high z-index to appear above all elements",
+  "actions-cell": {
+    "contentMarkdown": "Compact button group with ghost variant buttons. Edit button with neutral color scheme, cancel button with red text color on hover. Icon-only buttons with appropriate sizing for table cells.",
     "categoryId": "17582046453730"
   },
-  "T7gCnl1ypr03vqOU": {
-    "contentMarkdown": "**User Avatar Dropdown Menu**\n\n- Avatar Display\n  - User Initials in colored background (role-based colors)\n  - Responsive sizing (h-9 w-9 on mobile, h-10 w-10 on desktop)\n  - Hover shadow effect\n- Dropdown Content\n  - User Information (name, role, email)\n  - Home Navigation Option\n  - Change Password Option\n  - Logout Option\n- Mobile Functionality: Primary navigation method on small screens",
+  "actions-header": {
+    "contentMarkdown": "**Actions Column**\n\n- Edit button: appears for birth registrar or superuser\n- Cancel button: appears for birth registrar or superuser\n- Buttons are icon-only with tooltips\n- Edit button uses pencil icon\n- Cancel button uses trash icon with red color",
     "categoryId": "17582046453732"
   },
-  "VVsYRY8WddHZkhyE": {
-    "contentMarkdown": "Menu items container with padding for proper spacing",
-    "categoryId": "17582046453730"
-  },
-  "action-buttons": {
-    "contentMarkdown": "**User Management Action Buttons**\n\n- Edit Button\n  - Edit Icon (4x4 with flex-shrink-0)\n  - Edit Label (text-xs, hidden on desktop)\n  - Blue outline styling\n- Password Button  \n  - Key Icon (4x4 with flex-shrink-0)\n  - Password Label (\"Senha\" text-xs, hidden on desktop)\n  - Orange color scheme with hover states\n- Delete Button\n  - Trash Icon (4x4 with flex-shrink-0) \n  - Delete Label (\"Excluir\" text-xs, hidden on desktop)\n  - Red color scheme with hover states\n- Conditional rendering for self-deletion prevention",
+  "active-stats-card": {
+    "contentMarkdown": "**Gestantes Ativas Stats Card**\n- Total count of active pregnant patients\n- Green color theme\n- Users icon",
     "categoryId": "17582046453732"
   },
-  "add-master-task-dialog": {
-    "contentMarkdown": "Modal dialog with comprehensive form layout, organized input fields, proper spacing, and intuitive visual hierarchy for task creation workflow",
-    "categoryId": "17582046453730"
-  },
-  "add-period-start_day": {
-    "contentMarkdown": "**Click Event** When clicked, moves 'Start Day' period from Available list to Assigned list and updates task periods array",
+  "admin-nurse-edit-button": {
+    "contentMarkdown": "**Click Event**\nWhen clicked by obstetric nurse with admin privileges, opens specialized modal to edit only the obstetric nurse assignment for the patient. This allows admin nurses to manage nurse assignments for any normal delivery patient.",
     "categoryId": "17582046453731"
   },
-  "add-profession-secretary": {
-    "contentMarkdown": "**Click Event** When clicked, moves selected professional category from Available list to Assigned list and adds to task's assigned professions",
-    "categoryId": "17582046453731"
+  "admin-permission-management": {
+    "contentMarkdown": "**Admin Permission Management in User Form**\n\n**Authorization Rules:**\n- Only superusers can manage admin permissions\n- Only 'administrativo' type users can manage admin permissions\n- Users with admin power from other categories CANNOT manage admin permissions\n- Users cannot modify their own admin status through this form\n\n**Form Logic:**\n```javascript\nconst canManageAdmin = currentUser?.is_superuser || (currentUser?.user_type === 'administrativo');\n```\n\n**Checkbox Display:**\n- 'Usuário Administrador' checkbox visible when canManageAdmin is true\n- Alert message explains admin privileges scope\n- Controller component manages form state for is_admin field",
+    "categoryId": "Development"
   },
-  "add-professional-category-content": {
-    "contentMarkdown": "**Professional Category Form**\n\n- Nome da Categoria: Single line input\n  - Required\n  - Validation: Non-empty string\n  - Placeholder: \"Ex: Secretária, Enfermeira...\"\n- Chave da Categoria: Single line input\n  - Required\n  - Validation: Lowercase letters only, no spaces, unique\n  - Placeholder: \"Ex: secretary, nurse...\"\n- Descrição: Multi-line textarea\n  - Optional\n  - Placeholder: \"Descreva as responsabilidades desta categoria...\"\n- Cor de Identificação: Color picker grid\n  - Required\n  - 4x4 grid of predefined colors\n  - Visual selection with border highlight\n- Action Buttons (full-width on mobile)\n  - Cancel Button\n  - Save/Update Button",
-    "categoryId": "17582046453733"
+  "admin-permission-security-enhanced": {
+    "contentMarkdown": "**Enhanced Admin Permission Security System**\n\n**Self-Permission Restriction:**\n- Users cannot modify their own admin privileges\n- Condition: `canEditThisUserAdmin = canManageAdmin \u0026\u0026 user?.id !== currentUser?.id`\n- Self-edit warning displayed when user tries to edit themselves\n- Prevents privilege escalation and accidental self-demotion\n\n**Administrative Type Auto-Admin:**\n- Users with type 'administrativo' automatically have admin privileges\n- Admin checkbox is disabled and checked for administrative types\n- useEffect automatically sets `is_admin: true` when type is changed to 'administrativo'\n- Cannot be unchecked or modified through interface\n\n**Three-State Admin Checkbox:**\n1. **Automatic Admin** (administrativo type): Disabled checkbox, always checked, explanatory text\n2. **Editable Admin** (other types): Normal checkbox for authorized users only\n3. **Self-Edit Warning**: Destructive alert when user attempts to edit own permissions\n\n**Authorization Matrix:**\n- superusuario: Can edit any user's admin privileges (except own)\n- administrativo: Can edit any user's admin privileges (except own, always admin themselves)\n- Other roles: Cannot access admin privilege management",
+    "categoryId": "Development"
   },
-  "add-role-options": {
-    "contentMarkdown": "**User Role Selection Options**\n- Dynamic Professional Categories\n  - Category Name from Supabase\n  - Category Role Key as value\n- Admin Role\n  - Fixed option for system administrators",
-    "categoryId": "Content(17582046453732)"
-  },
-  "add-role-select": {
-    "contentMarkdown": "**Add User Role Selection Form**\n\n- Role: Required dropdown selection\n  - Secretary: Standard user role for administrative tasks\n  - Nurse: Healthcare professional role with medical permissions  \n  - SDR: Sales Development Representative role\n  - Director: Management level access and oversight\n  - Administrator: Full system access and user management capabilities\n  - Validation: Must select one role option\n- Form allows creation of users with any role including multiple administrators",
-    "categoryId": "17582046453733"
-  },
-  "add-task-btn": {
-    "contentMarkdown": "**Button Click**\nWhen clicked, opens a dialog with form to add new task to selected template including title, description, category, priority, period, frequency, and required status",
-    "categoryId": "17582046453731"
-  },
-  "add-template-btn": {
-    "contentMarkdown": "**Click Event**\nWhen clicked, opens dialog to create a new template. Allows selecting template name and role function.",
-    "categoryId": "17582046453731"
-  },
-  "add-user-button": {
-    "contentMarkdown": "**Click Event** Should trigger onClick handler that logs '🔘 Add User button clicked!' to console and calls setIsAddDialogOpen(true) to open the add user modal dialog. The button uses DialogTrigger component from shadcn/ui which should automatically handle the dialog opening behavior.",
-    "categoryId": "17582046453731"
-  },
-  "add-user-dialog-content": {
-    "contentMarkdown": "**Add User Form**\n\n- Nome Completo: Single line input\n  - Required\n  - Validation: Non-empty string\n- Email: Email input\n  - Required\n  - Validation: Valid email format, unique\n- Função: Select dropdown\n  - Required\n  - Options: Secretário(a), Enfermeiro(a), SDR, Diretor(a), Administrador\n- Action Buttons (full-width on mobile)\n  - Cancel Button\n  - Add Button",
-    "categoryId": "17582046453733"
-  },
-  "add-user-form": {
-    "contentMarkdown": "**Adicionar Usuário Form**\n- Nome Completo: Single line input\n  - Required\n  - Validation: Must not be empty\n- Email: Email input\n  - Required\n  - Validation: Valid email format, must be unique\n- Função: Select dropdown\n  - Required\n  - Options: Secretário(a), Enfermeiro(a), SDR, Diretor(a)\n- Adicionar Button",
-    "categoryId": "17582046453733"
-  },
-  "admin-nav-buttons": {
-    "contentMarkdown": "**Admin Navigation Interaction**\n\nRole-specific navigation for admin users:\n- Mobile: Icon-only buttons (Dashboard and Administration)\n- Desktop: Full text labels with icons\n- Spacing: Compressed on mobile (space-x-1), normal on desktop (space-x-2)\n- Visual states: Proper active/inactive button variants",
-    "categoryId": "17582046453731"
-  },
-  "admin-reports-card": {
-    "contentMarkdown": "**Admin Reports Dashboard**\n- Reports Header\n  - Title and Description\n  - Date Selector\n  - Refresh Button\n- User Reports List\n  - Active Users\n  - Deleted Users (marked as \"Excluído\")\n  - Checklist Summary per User\n  - Checklist Details Modal Trigger",
-    "categoryId": "17582046453732"
-  },
-  "admin-reports-section": {
-    "contentMarkdown": "**Admin Reports Section**\n- Date Selector\n    - Label\n    - Date Input\n- Refresh Button\n- User Reports List\n    - User Avatar\n    - User Details\n    - Checklists\n        - Period Label\n        - Completion Badge\n        - Timing Info\n        - Details Button\n- Empty State\n- Checklist Details Dialog\n    - Summary Grid\n    - Tasks Details",
-    "categoryId": "17582046453732"
-  },
-  "admin-view": {
-    "contentMarkdown": "**Admin Panel Page** - Role template selection sidebar - Task management interface for each role - Add, edit, delete task functionality - Template customization with priority, category, time estimation",
-    "categoryId": "17582046453732"
-  },
-  "alYKKJ95qJg20qzR": {
-    "contentMarkdown": "Logout icon in red color scheme for the direct logout button",
-    "categoryId": "17582046453730"
-  },
-  "app-header": {
-    "contentMarkdown": "**Mobile-First Application Header Design**\n\nResponsive header design optimized for mobile devices while maintaining desktop functionality.\n\n- Theme color: Clean white background with subtle gray borders\n- Font: Responsive typography with smaller sizes on mobile (text-lg vs text-xl)\n- Border radius style: Clean borders with subtle shadows on interactive elements",
-    "categoryId": "17582046453730"
-  },
-  "assigned-periods": {
-    "contentMarkdown": "**Assigned Periods Section**\n- Currently assigned period items\n- Remove buttons (-) for each assigned period\n- Empty state message when no periods assigned",
-    "categoryId": "17582046453732"
-  },
-  "assigned-professions": {
-    "contentMarkdown": "**Assigned Professional Categories Section**\n- Currently assigned category items with color indicators\n- Remove buttons (-) for each assigned category\n- Empty state message when no categories assigned",
-    "categoryId": "17582046453732"
-  },
-  "available-periods": {
-    "contentMarkdown": "**Available Periods Section**\n- Period items (Start Day, Start Shift, End Shift, End Day)\n- Add buttons (+) for each available period",
-    "categoryId": "17582046453732"
-  },
-  "available-professions": {
-    "contentMarkdown": "**Available Professional Categories Section**\n- Professional category items with color indicators\n- Add buttons (+) for each available category\n- Empty state message when all categories assigned",
-    "categoryId": "17582046453732"
-  },
-  "cancel-checklist-btn": {
-    "contentMarkdown": "**Click Event** Cancel checklist button triggers confirmation dialog asking if user really wants to cancel current checklist progress and return to home screen",
-    "categoryId": "17582046453731"
-  },
-  "cancel-checklist-dialog": {
-    "contentMarkdown": "**Confirmation Dialog** Shows warning dialog when user wants to cancel checklist with two options: 'Permanecer no Checklist' (stay) or 'Cancelar Checklist' (confirm cancel)",
-    "categoryId": "17582046453731"
-  },
-  "change-password-${user.id}": {
-    "contentMarkdown": "**Change Password Confirmation**\n\n- Confirmation Dialog: AlertDialog component\n  - Title: \"Forçar Troca de Senha\"\n  - Description: Explains temporary password generation\n  - User Name: Bold display of target user\n- Action Buttons\n  - Cancel Button: Standard gray styling\n  - Confirm Button: Orange theme (bg-orange-600 hover:bg-orange-700)\n  - Action: Generates \"temp123\" as temporary password\n- Toast Notification: Success message with new temporary password",
-    "categoryId": "17582046453733"
-  },
-  "change-password-dialog": {
-    "contentMarkdown": "**Admin Force Password Change** Dialog that allows admin to force generate a new temporary password for any user without requiring the old password",
-    "categoryId": "17582046453731"
-  },
-  "checklist-${checklist.id}": {
-    "contentMarkdown": "**Checklist Item Mobile Layout**\n\n- Checklist Period and Completion Badge\n  - Period info with clock icon\n  - Completion percentage badge (compact on mobile)\n- Timing Information\n  - Start time\n  - End time (stacked on mobile, inline on desktop)\n- Action Buttons\n  - Finalized badge (checkmark symbol on mobile, full text on desktop)\n  - Details button (icon-only on mobile, with text on desktop)",
-    "categoryId": "17582046453732"
-  },
-  "checklist-details-dialog": {
-    "contentMarkdown": "**Checklist Details Dialog Error Handling**\nWhen user clicks \"Detalhes\" button and errors occur:\n- Validate user object and role before loading\n- Show error state if user/role is missing\n- Display error boundary for component crashes\n- Provide retry mechanism for failed operations\n- Log detailed error information to console",
-    "categoryId": "17582046453731"
-  },
-  "checklist-details-view": {
-    "contentMarkdown": "**Checklist Details View Content**\n- Checklist Summary Section\n  - User Name\n  - Period Label\n  - Progress Percentage\n  - Start Time\n  - End Time\n  - Status\n- Tasks Details Section\n  - Task List\n  - Task Status Icons\n  - Task Names (with fallback)\n  - Completion Times\n  - Task Notes",
-    "categoryId": "17582046453732"
-  },
-  "checklist-view": {
-    "contentMarkdown": "**Checklist Creation Page**\n\n- Period Selection Section\n    - Period selector buttons (Start Day, End Day, Start Shift, End Shift)\n    - Shift options when applicable\n- Active Checklist Section\n    - Checklist header with period info\n    - Task list with checkboxes\n        - Task titles and descriptions\n        - Priority indicators\n        - Completion timestamps\n        - Notes fields\n    - Progress indicator\n    - Action buttons\n        - Finalize checklist\n        - Reset checklist\n        - Cancel checklist\n- Finalization Dialog\n    - Final report textarea\n    - Submit button",
-    "categoryId": "17582046453732"
-  },
-  "clean-categories-trigger": {
-    "contentMarkdown": "**Click Event** When clicked, opens confirmation dialog to clean only orphaned/duplicate professional categories from inconsistent task, preserving valid categories",
-    "categoryId": "17582046453731"
-  },
-  "clean-confirm-button": {
-    "contentMarkdown": "**Click Event** When clicked, removes ONLY orphaned and duplicate professional categories from task, keeps valid categories, saves to Supabase, re-validates task assignments, and shows detailed feedback about what was cleaned",
-    "categoryId": "17582046453731"
-  },
-  "clear-filters-btn": {
-    "contentMarkdown": "**Click Event** When clicked, clears all applied filters (periods, professional categories, task categories) and shows all tasks",
-    "categoryId": "17582046453731"
-  },
-  "clinic-logo-container": {
-    "contentMarkdown": "Logo container with clinic branding image - displays Espaço Casal Monken golden logo with proper aspect ratio and clean positioning in header",
-    "categoryId": "17582046453730"
-  },
-  "clinic-logo-image": {
-    "contentMarkdown": "Clinic logo image displaying the complete Espaço Casal Monken branding - golden curved symbol with text arranged in circular format, no cropping or distortion",
-    "categoryId": "17582046453730"
-  },
-  "cloud-only-description": {
-    "contentMarkdown": "Displays message explaining that the system works exclusively with Supabase (cloud) and that localStorage has been removed to ensure 100% cloud operation",
-    "categoryId": "content"
-  },
-  "cloud-only-notice": {
-    "contentMarkdown": "Alert banner with amber background and cloud icon that appears when Supabase is not connected, informing users that the system now works exclusively in cloud mode",
-    "categoryId": "design"
-  },
-  "configuration-tabs-list": {
-    "contentMarkdown": "**Responsive Tab Navigation Interaction**\n\nTabs adapt between mobile and desktop layouts:\n- Mobile: Stacked vertically (grid-cols-1) with shortened labels\n- Desktop: Horizontal layout (grid-cols-3) with full labels\n- Tab text: \"Profissionais\", \"Categorias\", \"Tarefas\" on mobile\n- Desktop text: Full descriptive names\n- Auto height adjustment and proper padding",
-    "categoryId": "17582046453731"
-  },
-  "confirm-add-button": {
-    "contentMarkdown": "**Click Event**\nWhen clicked, validates form data and adds new user to the system. Shows success toast and closes dialog",
-    "categoryId": "17582046453731"
-  },
-  "confirm-cancel-checklist-btn": {
-    "contentMarkdown": "**Click Event** Confirms checklist cancellation by permanently deleting checklist from localStorage, clearing all progress, returning to period selection screen, and showing confirmation toast",
-    "categoryId": "17582046453731"
-  },
-  "confirm-delete-task": {
-    "contentMarkdown": "**Click Event**\nWhen clicked, removes the task from the template. Task is permanently deleted and cannot be recovered.",
-    "categoryId": "17582046453731"
-  },
-  "confirm-delete-template": {
-    "contentMarkdown": "**Click Event**\nWhen clicked, permanently deletes the selected template and all its tasks. Action cannot be undone.",
-    "categoryId": "17582046453731"
-  },
-  "confirm-start-btn": {
-    "contentMarkdown": "**Click Event**\nWhen clicked, starts a new checklist for the selected period, replacing any existing checklist. Creates new checklist with appropriate tasks based on period selection.",
-    "categoryId": "17582046453731"
-  },
-  "create-template-btn": {
-    "contentMarkdown": "**Click Event**\nWhen clicked, creates a new empty template with the specified name and role. Template becomes available for task management.",
-    "categoryId": "17582046453731"
-  },
-  "current-period-title": {
-    "contentMarkdown": "**Period Title Display** Shows the current checklist period name (e.g., 'Início do Dia', 'Final do Dia') prominently below user welcome message with clipboard emoji",
-    "categoryId": "17582046453732"
-  },
-  "daily-cleanup-system": {
-    "contentMarkdown": "**Automatic Cleanup** System automatically removes old finalized checklists when day changes, keeping only current day checklists in localStorage",
-    "categoryId": "17582046453733"
-  },
-  "dashboard-icon-admin": {
-    "contentMarkdown": "BarChart3 icon for admin dashboard navigation button with consistent sizing (w-4 h-4) and margin spacing",
-    "categoryId": "17582046453730"
-  },
-  "dashboard-view": {
-    "contentMarkdown": "**Team Dashboard Page**\n\n- Header Section\n    - Page title: \"Team Dashboard\"\n    - Description: \"Monitor team progress and completion rates\"\n    - Current date badge\n- Statistics Cards\n    - Total Members count\n    - Completed checklists count\n    - In Progress count\n    - Average Completion percentage\n- Team Progress Section\n    - Role filter tabs (All, Secretary, Nurse, SDR, Director)\n    - Team member cards\n        - User avatar and info\n        - Role badge\n        - Status badge\n        - Progress metrics\n        - Last activity timestamp",
-    "categoryId": "17582046453732"
-  },
-  "data-recovery-card": {
-    "contentMarkdown": "Card container for data recovery tools with alert styling and orange accent colors for warning context",
+  "admin-privilege-button": {
+    "contentMarkdown": "**Admin Privilege Toggle Button Design**\n\n**Visual Design:**\n- Grant privileges: Indigo color with ShieldPlus icon\n- Remove privileges: Purple color with ShieldMinus icon\n- Ghost button variant with 8x8 size\n- Conditional visibility based on permissions\n- Tooltip explaining the action\n- Color-coded for action type clarity",
     "categoryId": "Design"
   },
-  "date-input": {
-    "contentMarkdown": "**Date Change Event**\nWhen date is changed, automatically loads reports for the selected date. Updates the reports list to show activity for that specific date.",
-    "categoryId": "17582046453731"
+  "admin-privileges-management": {
+    "contentMarkdown": "**Administrative Privileges Management**\n\n**Toggle Admin Privileges Button:**\n- Available to: Superusers and Administrative users\n- Cannot modify: Own privileges, Superuser accounts\n- Visual Indicators:\n  - Indigo ShieldPlus: Grant admin privileges\n  - Purple ShieldMinus: Remove admin privileges\n- Immediate effect with success notification\n- Permissions validated on both client and server side",
+    "categoryId": "Interaction"
   },
-  "delete-confirm-button": {
-    "contentMarkdown": "**Click Event**\nWhen clicked, permanently removes the user from the system. Admin users cannot be deleted. Shows success toast.",
-    "categoryId": "17582046453731"
+  "admin-privileges-toggle": {
+    "contentMarkdown": "**Admin Privileges Management**\n\n**Click Event** - Toggle Admin Privileges Button\nWhen clicked, toggles administrative privileges for the selected user:\n- Grant Admin: Assigns admin privileges (purple shield plus icon)\n- Remove Admin: Revokes admin privileges (indigo shield minus icon)\n- Only available to superusers and administrative users\n- Cannot modify own privileges\n- Cannot modify superuser accounts\n- Immediate effect with success notification",
+    "categoryId": "Interaction"
   },
-  "delete-user-${user.id}": {
-    "contentMarkdown": "**Delete User Confirmation**\n\n- Confirmation Dialog: AlertDialog component\n  - Title: \"Confirmar Exclusão\"\n  - Description: Warning about permanent action\n  - User Name: Bold display of user to be deleted\n- Action Buttons\n  - Cancel Button: Standard gray styling\n  - Delete Button: Red theme (bg-red-600 hover:bg-red-700)\n  - Action: Permanently removes user from system\n- Conditional Display: Hidden for current user (prevents self-deletion)",
-    "categoryId": "17582046453733"
-  },
-  "demo-user-admin": {
-    "contentMarkdown": "**Click Event** Auto-fill login form with admin demo account credentials (admin@company.com / demo123)",
-    "categoryId": "17582046453731"
-  },
-  "demo-user-director": {
-    "contentMarkdown": "**Click Event** Auto-fill login form with director demo account credentials (sarah@company.com / demo123)",
-    "categoryId": "17582046453731"
-  },
-  "demo-user-nurse": {
-    "contentMarkdown": "**Click Event** Auto-fill login form with nurse demo account credentials (anna@company.com / demo123)",
-    "categoryId": "17582046453731"
-  },
-  "demo-user-sdr": {
-    "contentMarkdown": "**Click Event** Auto-fill login form with SDR demo account credentials (david@company.com / demo123)",
-    "categoryId": "17582046453731"
-  },
-  "demo-user-secretary": {
-    "contentMarkdown": "**Click Event** Auto-fill login form with secretary demo account credentials (mike@company.com / demo123)",
-    "categoryId": "17582046453731"
-  },
-  "diagnose-button": {
-    "contentMarkdown": "**Click Event** When clicked, runs comprehensive Supabase connection diagnosis checking environment variables, database connection status, table existence, and data counts, then displays detailed results in a diagnostic alert below",
-    "categoryId": "17582046453731"
-  },
-  "diagnostic-alert": {
-    "contentMarkdown": "**Diagnostic Results Section** - Connection diagnosis summary - Environment configuration status - Database connection status with error details - Table accessibility status for each required table - Data count for existing records",
+  "age-cell": {
+    "contentMarkdown": "**Age Display in Birth Records**\n\n**Frozen Data Concept:**\n- Field: `mother_age_at_birth` (integer)\n- Content: Age of mother at time of birth (frozen value)\n- Format: \"XX anos\" or \"N/A\" if not available\n\n**Important Rules:**\n- NEVER recalculate age dynamically after birth registration\n- Value is set once during birth registration and preserved\n- Ensures historical accuracy regardless of current date\n- Column header: \"Idade no Parto\" (Age at Birth)\n\n**Data Flow:**\n1. Birth Registration: Calculate age at birth moment\n2. Storage: Save calculated age as integer\n3. Display: Show stored age value\n4. Edit: Recalculate only if birth date changes",
     "categoryId": "17582046453732"
   },
-  "direct-logout-btn": {
-    "contentMarkdown": "**Click Event**\nDirect logout button visible only for admin users. When clicked, immediately logs out the user and redirects to login screen. Red styling to indicate logout action.",
+  "assign-nurse-button": {
+    "contentMarkdown": "**Click Event**\nWhen clicked by obstetric nurse user, assigns the current user as the obstetric nurse for the patient. Button is only visible when:\n- User is obstetric nurse without admin privileges\n- Patient is not born\n- Patient has 'normal' delivery type\n- Patient has no obstetric nurse assigned\n- Button shows loading state during assignment",
     "categoryId": "17582046453731"
   },
-  "director-nav-buttons": {
-    "contentMarkdown": "**Director Navigation Interaction**\n\nRole-specific navigation for director users:\n- Mobile: Icon-only buttons with compact padding (px-2)\n- Desktop: Full text labels with normal padding (px-3)\n- Active state: default variant for current view\n- Hover states: proper button styling transitions",
-    "categoryId": "17582046453731"
+  "auth-context-properties-mapping": {
+    "contentMarkdown": "**AuthContext Properties Mapping**\n\n**User Object Structure:**\n```javascript\nuser: {\n  id: string,\n  name: string,\n  email: string,\n  role: UserRole, // 'administrativo', 'superusuario', etc.\n  isAdmin: boolean,\n  hasFullAccess: boolean,\n  has_admin_power: boolean,\n  createdAt: Date,\n  lastLogin: Date\n}\n```\n\n**Key Property Usage:**\n- `role`: Primary role identifier (not user_type)\n- `isAdmin`: Boolean flag for admin privileges\n- `hasFullAccess`: Derived from role type\n- `has_admin_power`: Additional admin capabilities\n\n**Component Integration:**\n- All components must use `currentUser.role` not `currentUser.user_type`\n- Permission checks based on `currentUser.isAdmin` boolean\n- Superuser detection via `currentUser.role === 'superusuario'`",
+    "categoryId": "Development"
   },
-  "dropdown-change-password-button": {
-    "contentMarkdown": "**Click Event**\nOpens change password dialog for the current user, allowing them to modify their own account password by providing current password and new password with confirmation",
-    "categoryId": "17582046453731"
+  "baby-name-input": {
+    "contentMarkdown": "**Baby Name Input** Single line text input for baby's name. Optional field in the birth registration form. Default placeholder 'Nome do bebê (opcional)'. When left empty, system uses existing patient baby_name or defaults to empty string to satisfy database NOT NULL constraint.",
+    "categoryId": "17582046453733"
   },
-  "dropdown-home-button": {
-    "contentMarkdown": "**Dropdown Home Button**\nAlternative home navigation option available in the user avatar dropdown menu. Provides same functionality as header home button.",
-    "categoryId": "17582046453731"
-  },
-  "ePmrL8I9sntcymTK": {
-    "contentMarkdown": "**Dynamic Task Section Title** Displays 'Tarefas - [Period Name]' when specific period is selected, otherwise shows generic 'Today's Tasks' title",
+  "between-34-37-weeks-card": {
+    "contentMarkdown": "**34-37 Semanas Stats Card**\n- Count of patients between 34-37 weeks gestational age\n- Yellow color theme indicating attention needed\n- Clock icon",
     "categoryId": "17582046453732"
   },
-  "edit-role-options": {
-    "contentMarkdown": "**User Edit Role Selection**\n- Dynamic Professional Categories\n  - Updated from latest Supabase data\n  - Shows current category names\n- Admin Role\n  - Fixed system administrator option",
-    "categoryId": "Content(17582046453732)"
+  "birth-date-input": {
+    "contentMarkdown": "**Birth Date Edit Field**\n- Birth Date: Required date input\n  - Required\n  - Validation: Valid date format\n  - When changed: Automatically recalculates gestational age based on original estimated due date\n  - Uses Brazil timezone (-03:00) to avoid timezone calculation errors",
+    "categoryId": "development"
   },
-  "edit-user-${user.id}": {
-    "contentMarkdown": "**Edit User Form**\n\n- Nome Completo: Single line input\n  - Required\n  - Validation: Non-empty string\n  - Placeholder: User's current name\n- Email: Single line email input\n  - Required  \n  - Validation: Valid email format\n  - Placeholder: User's current email\n- Função: Dropdown select\n  - Required\n  - Options: Secretário(a), Enfermeiro(a), SDR, Diretor(a), Administrador\n  - Default: User's current role\n- Action Buttons (responsive layout)\n  - Cancel Button (outline variant)\n  - Save Button (primary variant)",
+  "birth-form": {
+    "contentMarkdown": "**Birth Registration Form** - Birth Date: Required, date picker input with validation - Actual Delivery Type: Required, dropdown with Normal/Cesariana options - Baby Gender: Required, dropdown with Masculino/Feminino options - Baby Name: Optional, text input with fallback handling - Maternity: Required, dropdown populated from maternities table - Obstetric Nurse Present: Optional, dropdown with 'Nenhum' option - Doula Present: Optional, dropdown with 'Nenhum' option - Birth Observations: Optional, multi-line text area - Submit Button: Validates required fields and processes birth registration",
     "categoryId": "17582046453733"
   },
-  "edit-user-dialog-content": {
-    "contentMarkdown": "**Edit User Form**\n\n- Nome Completo: Single line input\n  - Required\n  - Validation: Non-empty string\n  - Pre-filled with current value\n- Email: Email input\n  - Required\n  - Validation: Valid email format, unique\n  - Pre-filled with current value\n- Função: Select dropdown\n  - Required\n  - Options: Secretário(a), Enfermeiro(a), SDR, Diretor(a), Administrador\n  - Pre-selected with current value\n- Action Buttons (full-width on mobile)\n  - Cancel Button\n  - Save Button",
+  "birth-observations-cell": {
+    "contentMarkdown": "**Célula de Observações do Parto**\n- Informações específicas sobre o parto registrado\n- Campo editável no momento do registro de nascimento\n- Diferente das observações da gestação",
+    "categoryId": "17582046453732"
+  },
+  "birth-observations-header": {
+    "contentMarkdown": "**Tabela de Nascimentos - Cabeçalho**\n- Obs. Parto: coluna para observações específicas do parto (renomeada de 'Observações')",
+    "categoryId": "17582046453732"
+  },
+  "born-patient-filters": {
+    "contentMarkdown": "**Click Event**\nWhen clicked on the filter header, the collapsible content expands or collapses with smooth animation. The chevron icon rotates to indicate current state (up when open, down when closed). Active filter count badge appears when filters are applied.",
+    "categoryId": "17582046453731"
+  },
+  "born-patients-query": {
+    "contentMarkdown": "**Born Patients Data Query**\n\n**Selection Strategy:**\n- Select all fields (*) from born_patients table\n- Join with user tables for professional data via FK relationships\n- Do NOT join with maternities table (no FK constraint exists)\n\n**Maternity Data:**\n- Use `maternity` field directly (text field)\n- No join required with maternities table\n- Field contains maternity name as stored text\n\n**Professional Joins:**\n- obstetrician_id → users table\n- pediatrician_id → users table  \n- doula_id → users table\n- obstetric_nurse_id → users table\n- etc.\n\n**Benefits:**\n- No FK constraint violations\n- Faster queries (fewer joins)\n- Historical data always accessible",
     "categoryId": "17582046453733"
   },
-  "edit-user-form": {
-    "contentMarkdown": "**Editar Usuário Form**\n- Nome Completo: Single line input\n  - Required\n  - Validation: Must not be empty\n- Email: Email input\n  - Required\n  - Validation: Valid email format, must be unique\n- Função: Select dropdown\n  - Required\n  - Disabled for admin users\n  - Options: Secretário(a), Enfermeiro(a), SDR, Diretor(a), Administrador\n- Salvar Button",
+  "born-patients-table": {
+    "contentMarkdown": "**Nascimentos Table Section**\n\n- Nome da Mãe\n- Idade no Parto\n- CEP\n- Data Parto\n- IG Parto\n- Via de Parto\n- Sexo Bebê\n- Nome do Bebê\n- Maternidade\n- Obstetra\n- EO Presente\n- Doula Presente\n- Serviços Extras\n- Observações\n- Condições Comerciais (only for users with commercial permissions)\n- Registros de Pagamento (only for users with commercial permissions)\n- Ações\n    - Edit Button\n    - Cancel Button",
+    "categoryId": "17582046453732"
+  },
+  "calculated-ga": {
+    "contentMarkdown": "**Birth Gestational Age Calculator** Automatically calculates and displays the exact gestational age at birth when a birth date is selected. Uses the patient's DPP (estimated due date) as reference point, calculating: IG = 40 weeks - (DPP - birth date). Shows real-time updates as user selects different birth dates.",
+    "categoryId": "17582046453732"
+  },
+  "cancel-birth-button": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, opens cancel birth confirmation modal. Only visible to users who registered the birth or superusers. Permanently deletes birth record and reactivates patient.",
+    "categoryId": "17582046453731"
+  },
+  "cancel-birth-modal": {
+    "contentMarkdown": "Warning-themed modal with red accent colors. Alert component with warning triangle icon. Destructive red button for confirmation action. Clear visual hierarchy emphasizing the warning nature of the action.",
+    "categoryId": "17582046453730"
+  },
+  "cancel-birth-{patient.id}": {
+    "contentMarkdown": "**Permission Check**\nCancel button appears only for:\n- Users with admin power (has_admin_power or is_admin)\n- User who originally created the birth record (created_by field)\n- Obstetrician responsible for the patient (obstetrician_id)\n\nWhen clicked, opens CancelBirthModal for deleting birth record and reactivating patient.",
+    "categoryId": "17582046453731"
+  },
+  "cancel-button": {
+    "contentMarkdown": "**Edit Cancellation**\n\nCancels the editing process when clicked:\n- Closes the edit modal without saving\n- Discards any unsaved changes\n- Returns to the patient list view\n- No confirmation dialog required",
+    "categoryId": "17582046453731"
+  },
+  "cep-input": {
+    "contentMarkdown": "**Busca Automática de Endereço por CEP**\n\nQuando usuário digita CEP válido:\n- Automaticamente formata CEP com máscara (00000-000)\n- Faz busca na API de CEP (ViaCEP)\n- Preenche automaticamente campos: Logradouro, Bairro, Cidade, Estado\n- Exibe loading spinner durante busca\n- Mostra toast de sucesso quando endereço é preenchido\n- Remove erros de validação dos campos preenchidos automaticamente\n- Exibe mensagem de erro se CEP for inválido",
+    "categoryId": "17582046453731"
+  },
+  "cesariana": {
+    "contentMarkdown": "**Interação Condicional por Via de Parto**\n\nQuando usuário seleciona \"Cesariana\" na via de parto:\n- Automaticamente desabilita campo Enfermeira Obstétrica\n- Automaticamente desabilita campo Doula\n- Automaticamente desabilita checkbox Curso de Preparo para o Parto\n- Limpa valores previamente selecionados nos campos desabilitados\n- Exibe alerta explicativo sobre os campos desabilitados\n- Mostra ícones de cadeado nos campos desabilitados com tooltip explicativo",
+    "categoryId": "17582046453731"
+  },
+  "change-password-form": {
+    "contentMarkdown": "**Change Password Form**\n\n- Current Password: Required field, password input\n  - Validation: Must be provided\n- New Password: Required field, password input\n  - Validation: Minimum 3 characters\n- Confirm New Password: Required field, password input\n  - Validation: Must match new password\n- Form Validation: Client-side validation with error display\n- Submit Button: Disabled during processing\n- Cancel Button: Returns to previous view\n- Error Handling: Display validation and server errors",
+    "categoryId": "Development"
+  },
+  "clear-filters-button": {
+    "contentMarkdown": "**Botão Limpar Filtros**\nQuando clicado, remove todos os filtros aplicados e volta ao estado inicial mostrando todas as pacientes.",
+    "categoryId": "17582046453731"
+  },
+  "commercial-conditions-input": {
+    "contentMarkdown": "**Text Input Event** Multi-line textarea for entering commercial conditions and agreements. Updates form data in real-time. Disabled state shows gray background when user lacks edit permissions. Placeholder text guides user input.",
+    "categoryId": "17582046453731"
+  },
+  "commercial-conditions-textarea": {
+    "contentMarkdown": "**Text Input Event** Multi-line textarea for commercial conditions in SDR modal. Updates commercial data state in real-time. Can be disabled based on user permissions. Shows gray background when read-only.",
+    "categoryId": "17582046453731"
+  },
+  "commercial-section": {
+    "contentMarkdown": "**Commercial Information Section**\n- Section Title: \"Informações Comerciais\"\n- Access Badge: \"Acesso Restrito\"\n- Commercial Conditions Field\n- Payment Records Field  \n- Gestational Week Dates Display\n    - 20 Weeks Date\n    - 30 Weeks Date\n    - 32 Weeks Date\n    - 36 Weeks Date\n- Permission Notice (when read-only)",
+    "categoryId": "17582046453732"
+  },
+  "confirmation-input": {
+    "contentMarkdown": "requires exact text match 'EXCLUIR DEFINITIVAMENTE' in uppercase to enable permanent deletion confirmation button",
+    "categoryId": "interaction"
+  },
+  "consultora-amamentacao-field": {
+    "contentMarkdown": "**Conditional Field Display**\nConsultora de Amamentação selection field appears only when the \"Consultoria de Amamentação\" checkbox is checked. Field is hidden and cleared when checkbox is unchecked.",
+    "categoryId": "17582046453731"
+  },
+  "consultora-amamentacao-select": {
+    "contentMarkdown": "**Consultora de Amamentação Selection**\n- Consultora selection: Required when checkbox is checked\n- Validation: Must select a professional from available consultoras\n- Options populated from users with type 'consultora_amamentacao'",
     "categoryId": "17582046453733"
+  },
+  "controls-section": {
+    "contentMarkdown": "**Controls Section**\n- Search input field\n- Sort dropdown menu\n    - Sort by removal date option\n    - Sort by name option\n- Export dropdown menu\n    - Export to PDF option\n    - Export to Excel option",
+    "categoryId": "17582046453732"
+  },
+  "create-type-button": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, opens new user type modal form allowing creation of new user type with display name, technical name and description. Button is always visible in the user types tab header.",
+    "categoryId": "Interaction"
+  },
+  "create-user-button": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, opens new user modal form allowing creation of new user with email, full name, display name, password, user type selection and admin permissions. Button is always visible in the user management tab header.",
+    "categoryId": "Interaction"
+  },
+  "creation-message": {
+    "contentMarkdown": "Display patient creation log message showing the patient name and indicating they were registered in the system by the authenticated user.",
+    "categoryId": "content"
+  },
+  "current-ga-value": {
+    "contentMarkdown": "**Current Gestational Age Display** - Shows the patient's current gestational age calculated using the standardized calculateGestationalAge function from dateUtils. - Uses timezone-safe date parsing and consistent calculation methodology. - Displays in format 'X semanas e Y dias' with accurate weeks and days components. - Now synchronized with PatientCard calculations to prevent discrepancies.",
+    "categoryId": "17582046453732"
+  },
+  "curso-preparo-parto-checkbox": {
+    "contentMarkdown": "Birth preparation course checkbox - Disabled when cesarean birth route is selected, shows lock icon tooltip explaining conditional logic.",
+    "categoryId": "17582046453731"
+  },
+  "data-nascimento-input": {
+    "contentMarkdown": "**Date Input Change Event**\nWhen birth date is entered, automatically calculate and display patient's current age in years next to the input field using a badge component.",
+    "categoryId": "17582046453731"
+  },
+  "deactivate-action-{maternity.id}": {
+    "contentMarkdown": "**Deactivate Maternity Dialog Action**\nWhen clicked, deactivates the maternity and automatically closes the dialog.\n\n- Wrapped in AlertDialogAction to ensure dialog closes\n- Calls deactivateMaternity function\n- Orange styling for distinction from delete action\n- Disabled during operation to prevent double-clicks",
+    "categoryId": "17582046453731"
+  },
+  "deactivate-button-{maternity.id}": {
+    "contentMarkdown": "**Deactivate Maternity Action**\nSafely removes maternity from active list while preserving historical data.\n\n- Orange styling (bg-orange-50, border-orange-200, text-orange-700)\n- Disabled during deactivation process\n- Calls deactivateMaternity function\n- Preserves all birth records and references",
+    "categoryId": "17582046453731"
+  },
+  "delete-button": {
+    "contentMarkdown": "**Click Event - User Role Restrictions**\nDelete/Remove button is completely hidden for all obstetric nurse users (enfermeira_obstetrica), regardless of admin privileges. Only visible for users with delete permissions.",
+    "categoryId": "17582046453731"
+  },
+  "delete-button-01234": {
+    "contentMarkdown": "**Delete Maternity Action** Click event that opens a confirmation dialog before deleting a maternity. Includes safety measures: confirmation dialog with maternity name, warning about irreversible action, cancel/confirm options. Button is disabled during deletion process and styled with red colors to indicate destructive action.",
+    "categoryId": "17582046453731"
+  },
+  "delete-button-mobile": {
+    "contentMarkdown": "**Click Event**\nOpen delete confirmation modal when clicked on mobile",
+    "categoryId": "17582046453731"
+  },
+  "delete-button-{maternity.id}": {
+    "contentMarkdown": "**Maternity Management Dialog Trigger**\nWhen clicked, opens management dialog with options to deactivate or permanently delete maternity.\n\n- Shows trash icon\n- Disabled during deletion operations\n- Opens AlertDialog with management options",
+    "categoryId": "17582046453731"
+  },
+  "delete-confirm-01234": {
+    "contentMarkdown": "**Delete Confirmation Action** Final confirmation button in the deletion dialog. When clicked, permanently removes the maternity from the database. Styled with red background (bg-red-600 hover:bg-red-700) to emphasize destructive nature. Triggers the deleteMaternity mutation and shows success/error toast notifications.",
+    "categoryId": "17582046453731"
+  },
+  "delete-confirm-{maternity.id}": {
+    "contentMarkdown": "**Delete Maternity Permanently**\nSafely removes maternity from the system without foreign key constraints.\n\n**Simplified Logic:**\n- No need to check for birth record dependencies\n- Birth records store maternity name as text, not FK reference\n- Direct deletion without cascading concerns\n- Automatic dialog close after action",
+    "categoryId": "17582046453731"
+  },
+  "delete-user-button": {
+    "contentMarkdown": "**Click Event**\nWhen delete button is clicked, opens confirmation modal requiring user to confirm permanent deletion of user account.",
+    "categoryId": "Interaction"
+  },
+  "delete-user-modal": {
+    "contentMarkdown": "**Click Event**\nWhen delete user button is clicked, opens confirmation modal showing user details and warning that action cannot be undone. User must confirm deletion to proceed.",
+    "categoryId": "Interaction"
+  },
+  "delivery-type-content": {
+    "contentMarkdown": "**Available Options**\n- Normal delivery option\n- Cesariana delivery option\n\nForceps option removed as it's not a valid standalone delivery type category.",
+    "categoryId": "17582046453732"
+  },
+  "delivery-type-multi-select": {
+    "contentMarkdown": "**Multi-Select Delivery Type Filter**\nAllows selection of multiple delivery types (Normal, Cesariana, Não Definido) to filter patients with any of the selected delivery preferences.",
+    "categoryId": "17582046453731"
+  },
+  "delivery-type-select": {
+    "contentMarkdown": "**Delivery Type Options**\n- Normal\n- Cesariana\n\nOnly these two options are available as valid delivery types for birth records.",
+    "categoryId": "17582046453732"
+  },
+  "desktop-section-logo": {
+    "contentMarkdown": "Desktop section logo displayed to the left of the page title, sized at h-16 for desktop viewing",
+    "categoryId": "17582046453730"
+  },
+  "doula-assign-unassign-buttons": {
+    "contentMarkdown": "**Doula Assignment Interaction**\n\nFor doula users viewing patient cards:\n\n**Vincular (Link) Button**\n- Appears when: patient is not born, delivery type is 'normal', and no doula assigned\n- Action: assigns the logged-in doula to the patient\n- Color: green with green border\n- Loading state: shows 'Vinculando...' text\n- Logs action in patient history with display names\n\n**Desvincular (Unlink) Button** \n- Appears when: patient is not born, delivery type is 'normal', and current user is the assigned doula\n- Action: removes doula assignment from patient\n- Color: red with red border  \n- Loading state: shows 'Desvinculando...' text\n- Logs action in patient history with display names\n\n**Restriction**: Doulas cannot modify assignments when another doula is assigned to the patient",
+    "categoryId": "17582046453731"
+  },
+  "doula-birth-panel-restrictions": {
+    "contentMarkdown": "**Doula Birth Panel Access Control**\n\nFor users with 'doula' role in the birth panel:\n\n**Data Filtering**\n- Only display births where the logged-in doula was present (doula_present_id matches user ID)\n- Automatic filtering applied at database query level\n- No access to births where other doulas were present or no doula was present\n\n**Filter Restrictions**  \n- Only two filter categories available:\n  - Search field (mother name or baby name)\n  - Birth date range (from and to date fields)\n- All other filters hidden: baby gender, maternity, obstetrician, obstetric nurse present, doula present, delivery type\n- Clear filters button only clears the allowed filters\n\n**Access Control Logic**\n- Query modified to include .eq('doula_present_id', userId) when userRole === 'doula'\n- Filter component receives isDoula prop to conditionally render filter options\n- Maintains all other functionality (view, search, date filtering) while restricting data scope",
+    "categoryId": "17582046453731"
+  },
+  "doula-multi-select": {
+    "contentMarkdown": "**Multi-Select Doula Filter**\nAllows selection of multiple doulas to view patients from different doulas at once. Supports multi-professional filtering.",
+    "categoryId": "17582046453731"
+  },
+  "doula-patient-panel": {
+    "contentMarkdown": "**Doula Patient Panel**\n\n- **Filtered Views**: Only displays patients with 'normal' or 'undefined' delivery types\n- **Statistics Cards**:\n  - Active patients (normal/undefined delivery types)\n  - 34-36 weeks gestational age\n  - 37+ weeks gestational age  \n  - Normal without assigned doula (replaces professional card)\n  - Patients under doula's responsibility\n- **Delivery Type Filter**: 'Cesariana' option hidden from dropdown\n- **Grid View Cards**: 'Register Birth' and 'Remove' buttons hidden\n- **Details Modal**: 'Register Birth' and 'Edit' buttons hidden\n- **New Patient Button**: Hidden for doula users\n- **Panel Description**: 'Acompanhe as gestantes com parto normal.'",
+    "categoryId": "17582046453733"
+  },
+  "doula-select": {
+    "contentMarkdown": "**Doula Filter**\n- Filter by specific doula\n- Shows all doulas from users table\n- \"Todas\" option to show all patients",
+    "categoryId": "17582046453733"
+  },
+  "dpp-input": {
+    "contentMarkdown": "DPP (Expected delivery date) input - Required date picker with automatic gestational age calculation display in badge format showing weeks and days.",
+    "categoryId": "17582046453733"
+  },
+  "due-date-from-input": {
+    "contentMarkdown": "**DPP Date Range Filter - From**\n- Date input for filtering patients from specific due date\n- Works in conjunction with \"to\" date for range filtering",
+    "categoryId": "17582046453733"
+  },
+  "due-date-text": {
+    "contentMarkdown": "**DPP Display Fix**\nFixed issue where DPP (Data Provável do Parto) was not displaying in patient cards. Now properly converts string date to Date object before formatting, showing correctly formatted date (DD/MM/YYYY) for estimated delivery date.",
+    "categoryId": "17582046453732"
+  },
+  "due-date-to-input": {
+    "contentMarkdown": "**DPP Date Range Filter - To**\n- Date input for filtering patients up to specific due date\n- Works in conjunction with \"from\" date for range filtering",
+    "categoryId": "17582046453733"
+  },
+  "edit-birth-button": {
+    "contentMarkdown": "**Click Event**\nWhen clicked, opens edit birth modal with current birth data pre-filled. Only visible to users who registered the birth or superusers.",
+    "categoryId": "17582046453731"
+  },
+  "edit-birth-commercial-section": {
+    "contentMarkdown": "Commercial information section in birth edit modal. Display-only view of frozen commercial data from time of birth registration. Shows conditions, payment records, and gestational week dates with read-only styling. Only visible to authorized user types with restricted access indicator.",
+    "categoryId": "17582046453730"
+  },
+  "edit-birth-form": {
+    "contentMarkdown": "**Edit Birth Form**\n\n- Birth Date: Required, date input, validation: valid date\n- Delivery Type: Required, selection (Normal/Cesariana/Fórceps)\n- Gestational Age Weeks: Required, number input, validation: 20-45 weeks\n- Gestational Age Days: Optional, number input, validation: 0-6 days\n- Baby Name: Required, text input, validation: not empty\n- Baby Gender: Required, selection (Masculino/Feminino)\n- Maternity: Required, selection from available maternities\n- Obstetrician Present: Optional, selection from obstetricians\n- Obstetric Nurse Present: Optional, selection from nurses\n- Doula Present: Optional, selection from doulas\n- Birth Observations: Optional, multi-line text, validation: max 500 characters\n- Save Changes Button",
+    "categoryId": "17582046453733"
+  },
+  "edit-birth-modal": {
+    "contentMarkdown": "**Edit Birth Modal Form**\n\n**Data Initialization Logic:**\n- birth_date: Direct from birthData\n- gestational_age: Calculated from birth_date and estimated_due_date\n- delivery_type: Direct from birthData\n- baby_name: Direct from birthData\n- baby_gender: Direct from birthData\n- maternity_id: **Lookup ID by name** from birthData.maternity field\n- professional IDs: Direct from birthData\n- birth_observations: Direct from birthData\n\n**Maternity Selection Fix:**\n1. Find maternity in available list by name match\n2. Use found maternity's ID for form selection\n3. Handles cases where maternity name doesn't match any active maternity\n\n**Dependencies:**\n- Requires maternities list to be loaded\n- Re-initializes when maternities data changes",
+    "categoryId": "17582046453733"
+  },
+  "edit-birth-{patient.id}": {
+    "contentMarkdown": "**Permission Check**\nEdit button appears only for:\n- Users with admin power (has_admin_power or is_admin)\n- User who originally created the birth record (created_by field)\n- Obstetrician responsible for the patient (obstetrician_id)\n\nWhen clicked, opens EditBirthModal for modifying birth record details.",
+    "categoryId": "17582046453731"
+  },
+  "edit-button": {
+    "contentMarkdown": "**Edit Button Interaction**\n\nOnly visible for users with editing permissions (not visible for obstetric nurses and doulas). When clicked, opens patient edit form.",
+    "categoryId": "17582046453731"
+  },
+  "edit-button-mobile": {
+    "contentMarkdown": "**Click Event**\nOpen edit modal for patient when clicked on mobile",
+    "categoryId": "17582046453731"
+  },
+  "edit-modal-overlay": {
+    "contentMarkdown": "**Edit Modal Design**\n\nOverlay modal for patient editing with:\n- Semi-transparent black background (bg-opacity-50)\n- Centered modal container\n- Maximum width of 4xl (56rem)\n- Maximum height of 90vh with scroll\n- High z-index (50) for proper layering\n- Responsive padding and sizing",
+    "categoryId": "17582046453730"
+  },
+  "edit-patient-button": {
+    "contentMarkdown": "**Edit Patient Trigger**\n\nButton in patient details modal that:\n- Only appears for authorized users (Admin, SuperUser, or relevant Obstetrician)\n- Opens the edit form for the selected patient\n- Closes the details modal when clicked\n- Shows edit icon with \"Editar\" text\n- Uses outline variant styling",
+    "categoryId": "17582046453731"
+  },
+  "edit-patient-commercial-section": {
+    "contentMarkdown": "**Commercial Information Edit Form**\n- Commercial Conditions: Multi-line text input\n  - Optional\n  - Validation: Free text for commercial terms\n- Payment Records: Multi-line text input  \n  - Optional\n  - Validation: Free text for payment details\n- Gestational Week Dates: Auto-calculated display fields\n  - 20 Weeks Date: Based on DPP\n  - 30 Weeks Date: Based on DPP\n  - 32 Weeks Date: Based on DPP\n  - 36 Weeks Date: Based on DPP\n- Submit Button: Updates commercial data with patient",
+    "categoryId": "17582046453733"
+  },
+  "edit-patient-form": {
+    "contentMarkdown": "**Patient Edit Form**\n\n- Full Name: Required, single line input\n- Birth Date: Required, date input with age display\n- Phone: Required, formatted input (31) 99999-9999\n- Partner Name: Optional, single line input\n- ZIP Code: Required, auto-fill address\n- Street: Required, single line input\n- Number: Optional, single line input\n- Complement: Optional, single line input\n- Neighborhood: Required, single line input\n- City: Required, single line input\n- State: Required, single line input\n- Due Date (DPP): Required, date input with gestational age\n- Baby Name: Optional, single line input\n- Delivery Type: Required, dropdown (Normal/Cesariana/Não Definido)\n- Obstetrician: Required, dropdown selection\n- Obstetric Nurse: Optional, dropdown (if normal delivery)\n- Doula: Optional, dropdown (if normal delivery)\n- Nutritionist: Optional, dropdown\n- Lactation Consultant: Optional, dropdown\n- Pelvic Physiotherapist: Optional, dropdown\n- Services checkboxes for each contracted service\n- Submit Button: Save Changes\n- Cancel Button",
+    "categoryId": "17582046453733"
+  },
+  "edit-type-button": {
+    "contentMarkdown": "**Click Event**\nWhen edit button is clicked for a user type, opens edit user type modal pre-filled with current data including active/inactive status toggle.",
+    "categoryId": "Interaction"
+  },
+  "edit-user-button": {
+    "contentMarkdown": "**Click Event** \nWhen edit button is clicked for a user, opens edit user modal pre-filled with current user data allowing modification of all fields except password is optional.",
+    "categoryId": "Interaction"
   },
   "email-input": {
-    "contentMarkdown": "**Email Field Error Recovery**\nWhen login fails due to incorrect password:\n- Preserve email field value using localStorage backup system\n- Clear only password field\n- Show error message with toast notification\n- Multiple timeout recovery mechanisms (50ms, 150ms, 300ms)\n- State monitoring to detect and restore email if zeroed",
+    "contentMarkdown": "Email input field with automatic validation and clear error messages. Required field with red asterisk indicator.",
+    "categoryId": "17582046453733"
+  },
+  "enfermeira-select": {
+    "contentMarkdown": "Obstetric nurse selection dropdown - Disabled with gray styling when cesarean birth route is selected, shows lock icon tooltip explaining why it's disabled.",
     "categoryId": "17582046453731"
   },
-  "error-state": {
-    "contentMarkdown": "**Error State Display**\n- Error Icon (XCircle)\n- Error Title: \"Erro ao carregar detalhes\"\n- Error Message: Specific error description\n- Retry Button: \"Tentar novamente\"",
+  "export-button": {
+    "contentMarkdown": "**Click Event** When clicked, opens dropdown menu with export options: 'Exportar PDF' (generates PDF report with key patient data) and 'Exportar Excel' (generates Excel spreadsheet with complete patient information). Both options trigger file download and log progress to console.",
+    "categoryId": "17582046453731"
+  },
+  "export-card": {
+    "contentMarkdown": "**Export Section**\n\n- Export PDF Button\n- Export Excel Button\n\nOnly visible for SDR, obstetrician, and admin users.",
     "categoryId": "17582046453732"
   },
-  "export-backup-btn": {
-    "contentMarkdown": "Button to export current localStorage data as JSON backup file for download",
+  "export-dropdown": {
+    "contentMarkdown": "**Click Event**\nWhen user clicks on export dropdown, show menu with options to export current filtered data to PDF or Excel format",
+    "categoryId": "17582046453731"
+  },
+  "export-excel": {
+    "contentMarkdown": "**Click Event** When clicked, generates and downloads an Excel spreadsheet containing comprehensive removed patients data including all patient information, professional assignments, service status, and removal details. File is saved as 'pacientes-removidas.xlsx'.",
+    "categoryId": "17582046453731"
+  },
+  "export-excel-button": {
+    "contentMarkdown": "**Click Event**\nGenerates and downloads an Excel file of birth records with applied filters. Button is hidden for specific user roles who don't have export permissions. Shows disabled state when no data is available.",
+    "categoryId": "17582046453731"
+  },
+  "export-pdf": {
+    "contentMarkdown": "**Click Event** When clicked, generates and downloads a PDF report containing removed patients data with clinic branding. PDF features: logo header, generation info, data table with columns (Name, Age, Phone, Baby, Status, Obstetrician, Removal Date, Removed By, Reason), and copyright footer. File saved as 'pacientes-removidas.pdf'.",
+    "categoryId": "17582046453731"
+  },
+  "export-pdf-button": {
+    "contentMarkdown": "**Click Event** When clicked, generates and downloads a PDF report containing birth records with applied filters. PDF includes: clinic logo in header, generation timestamp, filter information, data table, and copyright footer with user responsibility disclaimer. File saved with appropriate name based on data type.",
+    "categoryId": "17582046453731"
+  },
+  "extra-services-header": {
+    "contentMarkdown": "**Extra Services Column**\n\n- Column header: Serviços Extras\n- Displays contracted services list\n    - Birth preparation course (Prep. Parto)\n    - Newborn care course (Cuidados RN)\n    - Pelvic physiotherapy (Fisiot. Pélvica)\n    - Breastfeeding workshop (Workshop Amamentação)\n    - Pediatric consultation (Consulta Pediátrica)\n    - Nutritional monitoring (Acompanhamento Nutricional)\n- Shows hyphen (-) when no services contracted",
+    "categoryId": "17582046453732"
+  },
+  "extra-services-text": {
+    "contentMarkdown": "Small text size for service abbreviations. Multiple services separated by commas. Text wraps appropriately within table cell constraints.",
+    "categoryId": "17582046453730"
+  },
+  "filters-card": {
+    "contentMarkdown": "comprehensive filter panel with search, date range, gender checkboxes, delivery type options, maternity selection, and clear filters button",
+    "categoryId": "content"
+  },
+  "filters-grid": {
+    "contentMarkdown": "**Enhanced Filter Layout**\n- Three-row layout: Search, Main filters (4 columns), Date filters\n- Removed pediatrician filter\n- Added delivery type, obstetric nurse, doula, and date range filters\n- \"Próximos 30 dias\" quick action button",
+    "categoryId": "17582046453731"
+  },
+  "filters-header": {
+    "contentMarkdown": "**Click Event**\nWhen clicked anywhere on the filter header area, toggles the collapsible filter section open/closed. Prevents event propagation for the clear button to avoid accidental toggling. Shows appropriate chevron icon (up when open, down when closed).",
+    "categoryId": "17582046453731"
+  },
+  "ga-calculation-info": {
+    "contentMarkdown": "**Gestational Age Calculation Info**\n\nInformational text explaining automatic calculation:\n\n\"* A idade gestacional é calculada automaticamente baseada na Data Provável do Parto (DPP) original da paciente.\"\n\n- Style: Small text, gray color, italic\n- Purpose: Clarify that GA fields are auto-calculated and not editable",
+    "categoryId": "content"
+  },
+  "ga-cell": {
+    "contentMarkdown": "**Gestational Age Display in Birth Records**\n\n**Frozen Data Concept:**\n- Fields: `birth_gestational_age_weeks`, `birth_gestational_age_days`\n- Content: Gestational age at moment of birth (frozen values)\n- Format: \"XXsXXd\" (weeks and days)\n\n**Important Rules:**\n- NEVER recalculate GA dynamically after birth registration\n- Values are set once during birth registration and preserved\n- Calculated based on registration GA + days difference to birth\n- Ensures medical accuracy for historical records\n\n**Calculation Logic:**\n1. Take registration GA (weeks + days)\n2. Add days elapsed from registration to birth\n3. Convert total days back to weeks + days\n4. Store final values permanently",
+    "categoryId": "17582046453732"
+  },
+  "ga-days-display": {
+    "contentMarkdown": "**Gestational Age Days Display Field**\n\nRead-only input field showing calculated gestational age days.\n\n- Background: Light gray (bg-gray-50)\n- Cursor: Not allowed (cursor-not-allowed)\n- Value: Automatically calculated, cannot be manually edited\n- Label indicates automatic calculation",
+    "categoryId": "design"
+  },
+  "ga-weeks-display": {
+    "contentMarkdown": "**Gestational Age Display Field**\n\nRead-only input field showing calculated gestational age in weeks.\n\n- Background: Light gray (bg-gray-50)\n- Cursor: Not allowed (cursor-not-allowed)\n- Value: Automatically calculated, cannot be manually edited\n- Label indicates automatic calculation",
+    "categoryId": "design"
+  },
+  "gender-badge-${patient.id}": {
+    "contentMarkdown": "Gender indicator badge with custom colors: #bfddf3 background for masculine, #eedae5 background for feminine, both using black text and matching border colors.",
+    "categoryId": "17582046453730"
+  },
+  "gestational-age-cell": {
+    "contentMarkdown": "displays accurate gestational age at time of removal using saved data from removal_gestational_age_weeks and removal_gestational_age_days fields, or '-' if data not available",
+    "categoryId": "content"
+  },
+  "gestational-age-header": {
+    "contentMarkdown": "displays 'IG na Remoção' as column header for gestational age at removal",
+    "categoryId": "content"
+  },
+  "gestational-observations-cell": {
+    "contentMarkdown": "**Célula de Observações da Gestação**\n- Dados médicos congelados no momento do nascimento\n- Transferidos automaticamente do cadastro da gestante\n- Exibidos conforme permissões do usuário",
+    "categoryId": "17582046453732"
+  },
+  "gestational-observations-header": {
+    "contentMarkdown": "**Tabela de Nascimentos - Cabeçalho**\n- Obs. Gestação: coluna para observações da gestação transferidas do cadastro da paciente",
+    "categoryId": "17582046453732"
+  },
+  "grid-view-button": {
+    "contentMarkdown": "**Botão Visualização em Grade**\nQuando clicado, altera a visualização das pacientes para layout em grade com múltiplas colunas.",
+    "categoryId": "17582046453731"
+  },
+  "hamburger-button": {
+    "contentMarkdown": "Mobile-only hamburger menu button that opens/closes the sidebar navigation. Three horizontal lines icon.",
     "categoryId": "Interaction"
   },
-  "filters-section": {
-    "contentMarkdown": "**Filters Section**\n- Filter header with icon and title\n- Clear filters button\n- Three filter columns: Periods, Professional Categories, Task Categories\n- Filter counters showing selected items",
+  "lactation-consultant-birth-panel": {
+    "contentMarkdown": "**Lactation Consultant Birth Panel Restrictions**\n\n**Data Filtering**\n- Only births from patients who contracted breastfeeding consultancy (breastfeeding_workshop === 'contratado')\n- No additional professional presence filtering required\n- Automatic filtering applied at database query level\n\n**Available Filters**\n- Search field (mother name or baby name)\n- Birth date range (from and to date fields)\n- All other filters hidden (baby gender, maternity, obstetrician, nurses, doulas, delivery type)\n\n**Export Restrictions**\n- No PDF export button\n- No Excel export button\n- Export functionality completely hidden\n\n**Action Restrictions**\n- No edit birth data capability\n- No cancel/delete birth records\n- Read-only access to all birth information\n- View-only table with all birth details\n\n**Interface Features**\n- Full birth history table display\n- Search functionality maintained\n- Date filtering maintained\n- All other controls and actions removed",
+    "categoryId": "17582046453731"
+  },
+  "lactation-consultant-field": {
+    "contentMarkdown": "**Conditional Lactation Consultant Display**\nLactation consultant information only displays when both conditions are met: patient has assigned lactation consultant AND breastfeeding workshop service is contracted (breastfeeding_workshop === 'contratado'). Maintains data relevance in modal display.",
+    "categoryId": "17582046453731"
+  },
+  "lactation-consultant-menu-restrictions": {
+    "contentMarkdown": "**Lactation Consultant Sidebar Menu**\n\n- Gestantes\n- Nascimentos",
     "categoryId": "17582046453732"
   },
-  "finalization-dialog": {
-    "contentMarkdown": "**Checklist Finalization Flow**\n- Validates all required tasks are completed\n- Collects optional final observations\n- Generates comprehensive final report\n- Saves checklist as finalized and immutable",
+  "lactation-consultant-patient-panel": {
+    "contentMarkdown": "**Lactation Consultant Patient Panel Restrictions**\n\n**Data Access**\n- View only patients who contracted breastfeeding consultancy (breastfeeding_workshop === 'contratado')\n- No delivery type restrictions (can see normal, cesarean, or undefined)\n- Access to both grid and list view modes\n- Can view patient details in modal\n\n**Action Restrictions**\n- No edit capabilities for any patient data\n- No delete/remove patient buttons\n- No birth registration buttons\n- No assign/unassign professional buttons\n- Only \"View Details\" button available\n- **No \"New Patient\" button** - lactation consultants cannot register new patients\n\n**Statistics Display (Custom Cards)**\n- **Active patients count**: Only those with breastfeeding consultancy contracted\n- **32-37 weeks count**: Custom range (32-36 weeks) instead of standard 34-36 weeks\n- **Over 37 weeks count**: Standard calculation but filtered to consultancy patients\n- **\"Normal without professionals\" card**: Hidden/removed for lactation consultants\n- **Grid layout**: 3-column layout (lg:grid-cols-3) due to removed card\n\n**Interface Adaptations**\n- Page subtitle: \"Acompanhe as gestantes com consultoria de amamentação.\"\n- All editing actions hidden from cards and table views\n- Patient details modal shows no edit or birth registration options\n- Statistics cards adapted for consultancy-specific workflow\n- Gestational age filtering respects 32-37 week range for this user type",
     "categoryId": "17582046453731"
   },
-  "finalization-dialog-content": {
-    "contentMarkdown": "**Finalization Dialog Content**\n- Progress summary card\n- Required tasks validation\n- Final observations textarea\n- Action buttons (Cancel/Finalize)",
-    "categoryId": "17582046453732"
+  "lactation-consultant-statistics-cards": {
+    "contentMarkdown": "**Lactation Consultant Statistics Cards Design**\n\n**Card Layout**\n- 3-column grid layout for large screens (lg:grid-cols-3)\n- Responsive 2-column for medium screens (md:grid-cols-2)\n- Single column for mobile (grid-cols-1)\n\n**Card 1: Active Patients**\n- Title: \"Gestantes Ativas\"\n- Count: Total patients with breastfeeding consultancy\n- Color: Green theme (text-green-600, bg-green-100)\n- Icon: Users icon\n- Action: \"Ver\" button to show all active patients\n\n**Card 2: 32-37 Weeks Range**\n- Title: \"32-36 Semanas\" (custom range for lactation consultants)\n- Count: Patients between 32-37 weeks gestational age with consultancy\n- Color: Yellow theme (text-yellow-600, bg-yellow-100)\n- Icon: Clock icon\n- Action: \"Ver\" button with filter activation\n\n**Card 3: 37+ Weeks**\n- Title: \"37+ Semanas\"\n- Count: Patients over 37 weeks gestational age with consultancy\n- Color: Orange theme (text-orange-600, bg-orange-100)\n- Icon: AlertCircle icon\n- Action: \"Ver\" button with filter activation\n\n**Removed Cards**\n- \"Normal s/ Profissional\" card completely hidden\n- No \"My Patients\" responsibility card (not applicable)\n\n**Interactive Elements**\n- Each card maintains hover effects and button states\n- Filter buttons integrate with existing gestational age filtering\n- Visual feedback for active/selected filters",
+    "categoryId": "17582046453730"
   },
-  "finalization-success-redirect": {
-    "contentMarkdown": "**Auto Redirect** After successful checklist finalization, automatically return to home screen after 5 seconds with countdown toast notification",
-    "categoryId": "17582046453731"
-  },
-  "finalize-checklist": {
-    "contentMarkdown": "**Finalize Checklist Button**\nOpens finalization dialog to generate final report and mark checklist as complete. Only available when checklist is not already finalized.",
-    "categoryId": "17582046453731"
-  },
-  "header-content": {
-    "contentMarkdown": "**Responsive Header Layout Interaction**\n\nHeader adapts between mobile and desktop layouts:\n- Mobile: Stacked vertically with full-width buttons\n- Desktop: Horizontal layout with auto-width buttons\n- Smooth transitions between breakpoints at sm (640px)\n- Maintains accessibility across all screen sizes",
-    "categoryId": "17582046453731"
-  },
-  "import-backup-btn": {
-    "contentMarkdown": "Button overlay for file input to import backup JSON file and restore data from backup",
-    "categoryId": "Interaction"
-  },
-  "install-pwa-button": {
-    "contentMarkdown": "**Click Event** When clicked, triggers the browser's native PWA installation prompt, allowing users to install the web app as a native mobile application on their device home screen",
+  "list-view-button": {
+    "contentMarkdown": "**Botão Visualização em Lista**\nQuando clicado, altera a visualização das pacientes para layout em lista com uma coluna.",
     "categoryId": "17582046453731"
   },
   "login-button": {
-    "contentMarkdown": "**Login Button Click**\nWhen user clicks login button with invalid credentials, the system should:\n- Preserve the email field value\n- Clear only the password field\n- Show error message below form\n- Display toast notification with error\n- Keep form accessible for retry\n- Log detailed debug information to console",
+    "contentMarkdown": "Primary button with #D2AE6D background color. Shows loading spinner during authentication process and handles form submission with proper validation.",
     "categoryId": "17582046453731"
   },
   "login-container": {
-    "contentMarkdown": "Professional healthcare checklist management system with clean, modern design\n\n- Theme color: Blue gradient (#3B82F6 primary, #1E40AF secondary) with cyan accents\n- Font: System fonts (Inter/San Francisco) for professional readability\n- Border radius style: Moderate rounding (8px-12px) for modern medical interface",
+    "contentMarkdown": "Clean medical interface with professional styling, using primary color #D2AE6D for branding elements. Responsive design centered on screen with gray background.",
     "categoryId": "17582046453730"
   },
-  "login-info-section": {
-    "contentMarkdown": "**Login Information Section**\n- System Title\n- Professional System Label\n- Credential Entry Instructions",
-    "categoryId": "17582046453732"
-  },
-  "login-logo-container": {
-    "contentMarkdown": "Larger logo container for login screen - 16x16 size to prominently display clinic branding on authentication page",
-    "categoryId": "17582046453730"
-  },
-  "login-logo-image": {
-    "contentMarkdown": "Login page clinic logo - displays full Espaço Casal Monken branding with enhanced visibility for user recognition during authentication",
+  "login-logo": {
+    "contentMarkdown": "Casal Monken clinic logo displayed at the top of the login card above the title, sized appropriately for both mobile (h-16) and desktop (h-20) viewing",
     "categoryId": "17582046453730"
   },
   "logout-button": {
-    "contentMarkdown": "**Click Event**\nWhen clicked, logs out the current user, removes session data from localStorage, and redirects to login screen. Enhanced styling with hover effects.",
+    "contentMarkdown": "Logout button that clears user session and returns to login screen. Red styling to indicate potentially destructive action.",
     "categoryId": "17582046453731"
   },
-  "main-app": {
-    "contentMarkdown": "\n\nModern corporate dashboard design with clean, professional aesthetics. Features a minimalist layout with subtle gradients, soft shadows, and carefully balanced white space. Primary interface uses card-based components with rounded corners and consistent spacing.\n\n- Theme color: Blue (#3B82F6) for primary actions, Green (#10B981) for success states, Red (#EF4444) for warnings\n- Font: Inter font family for excellent readability and modern appearance\n- Border radius style: Consistent 8px radius for cards, 6px for buttons, 4px for small elements",
+  "main-layout": {
+    "contentMarkdown": "Responsive layout that adapts to desktop and mobile. Desktop shows fixed sidebar, mobile uses hamburger menu with overlay sidebar. Mobile header includes app title and menu toggle.",
+    "categoryId": "Design"
+  },
+  "manage-maternities-button": {
+    "contentMarkdown": "**Click Event** When clicked, this button closes the birth registration modal and navigates to the maternities management page, allowing users to add, edit, or manage maternity hospitals before returning to complete the birth registration.",
+    "categoryId": "17582046453731"
+  },
+  "maternities-table": {
+    "contentMarkdown": "**Maternities Management Table** - Name: Full maternity name - Status: Active/Inactive badge - Created Date: Formatted creation date - Actions: Edit and Delete buttons for each maternity - Delete action includes confirmation dialog for safety - Edit action opens the maternity form modal",
+    "categoryId": "17582046453732"
+  },
+  "maternity-cell": {
+    "contentMarkdown": "**Maternity Display in Birth Records Table**\n\n**Data Structure:**\n- Field: `patient.maternity` (text field)\n- Content: Direct maternity name (e.g., \"Hospital das Clínicas\")\n- Format: Simple string, not object\n\n**Display Logic:**\n- Show: `patient.maternity || '-'`\n- No object property access (not `.name` or `.city`)\n- Fallback: Show \"-\" if no maternity recorded\n\n**Migration Impact:**\n- Old structure: `patient.maternity.name` (object property)\n- New structure: `patient.maternity` (direct text)\n- Change ensures proper display after FK removal",
+    "categoryId": "17582046453732"
+  },
+  "maternity-field": {
+    "contentMarkdown": "**Birth Record Maternity Field**\n\n**Database Structure:**\n- `maternity_id`: Always NULL (legacy field)\n- `maternity`: Text field containing maternity name\n\n**Data Flow:**\n1. Registration: Look up maternity name by ID, store as text\n2. Editing: Look up maternity name by ID, update text field\n3. Filtering: Filter by text field directly\n4. Display: Show stored text value\n\n**Benefits:**\n- Eliminates FK constraints\n- Preserves historical data\n- Allows safe maternity deletion",
+    "categoryId": "17582046453733"
+  },
+  "maternity-form": {
+    "contentMarkdown": "**Maternity Form** - Name: Required, single line input with example placeholder - Active Status: Optional, only visible when editing existing maternity - Submit Button: Create/Update based on context - Cancel Button: Close form without saving",
+    "categoryId": "17582046453733"
+  },
+  "maternity-form-modal": {
+    "contentMarkdown": "form for creating/editing maternity with fields: name (required), city, state, address, phone, active status toggle",
+    "categoryId": "development"
+  },
+  "maternity-header": {
+    "contentMarkdown": "**Maternity Selection Section** - Label for maternity field (required) - 'Gerenciar' button to access maternity management - Dropdown selection for available maternities - Error message display if required field is not filled",
+    "categoryId": "17582046453732"
+  },
+  "maternity-label": {
+    "contentMarkdown": "**Maternity Selection Field** - Label: 'Maternidade *' (required field indicator) - Dropdown: Shows all active maternities by name only - Validation: Required field for birth registration - No additional maternity management access from this context",
+    "categoryId": "17582046453732"
+  },
+  "maternity-select": {
+    "contentMarkdown": "**Maternity Filter Multi-Select**\n\n**Data Source:**\n- Options: Created from active maternities\n- Label: Maternity name (e.g., \"Hospital das Clínicas\")\n- Value: Maternity name (not ID) to match born_patients.maternity field\n\n**Filtering Logic:**\n- Filters born_patients by maternity field (text)\n- Uses name-based matching instead of ID-based\n- Supports multiple maternity selection",
+    "categoryId": "17582046453733"
+  },
+  "medical-observations-header": {
+    "contentMarkdown": "**Medical Observations Section**\n\n- Medical Observations Title\n- Stethoscope Icon\n- Readonly Notice (for non-obstetricians)\n- Observations Label\n- Observations Textarea (editable only by obstetricians)",
+    "categoryId": "17582046453732"
+  },
+  "medical-team-content": {
+    "contentMarkdown": "**Conditional Professional Display Logic**\nDisplays medical team members based on contracted service status:\n- Obstetrician: Always shown when assigned\n- Obstetric Nurse: Always shown when assigned  \n- Doula: Always shown when assigned\n- Pediatrician: Only shown if pediatric_consultation === 'contratado'\n- Nutritionist: Only shown if nutritional_monitoring === 'contratado'\n- Lactation Consultant: Only shown if breastfeeding_workshop === 'contratado'\n- Pelvic Physiotherapist: Only shown if pelvic_physiotherapy === 'contratado'\n\nThis ensures modal displays only relevant professional information based on contracted services.",
+    "categoryId": "17582046453731"
+  },
+  "menu-maternities": {
+    "contentMarkdown": "**Maternity Management Access** Click event that navigates to the maternity management page. Available for administrative users (administrativo), superusers (superusuario), and system admins (isAdmin = true). Allows full CRUD operations on maternity hospitals where births occur.",
+    "categoryId": "17582046453731"
+  },
+  "menu-patients": {
+    "contentMarkdown": "**Gestantes Menu Item**\n- Menu label simplified from \"Gestantes em Acompanhamento\" to \"Gestantes\"\n- Shows active pregnant patients management",
+    "categoryId": "17582046453732"
+  },
+  "menu-removed-patients": {
+    "contentMarkdown": "**Navigation Menu Interaction**\nRemoved patients menu item is only visible to admin users, superusers, and obstetricians with admin power. When clicked, navigates to removed patients view.",
+    "categoryId": "17582046453731"
+  },
+  "mobile-actions-dropdown": {
+    "contentMarkdown": "Mobile-only dropdown menu with three dots icon containing secondary actions to save space on small screens.",
+    "categoryId": "Interaction"
+  },
+  "mobile-section-logo": {
+    "contentMarkdown": "Mobile section logo displayed above the page title in center alignment, sized at h-12 for mobile viewing",
     "categoryId": "17582046453730"
   },
-  "master-task-form": {
-    "contentMarkdown": "**Master Task Form**\n- Task Title: Single line input, Required\n- Task Category: Dropdown from available categories, Required\n- Priority: Dropdown (Low/Medium/High), Required\n- Frequency: Dropdown (Daily/Weekly/Monthly), Required\n- Week Day: Dropdown (if frequency is weekly), Conditional\n- Month Day: Number input (if frequency is monthly), Conditional\n- Description: Multi-line input, Optional\n- Periods: Multiple checkboxes (Start/End Day/Shift), Required\n- Professional Categories: Multiple checkboxes, Required\n- Required Task: Single checkbox, Optional\n- Submit Button",
+  "multi-select-content": {
+    "contentMarkdown": "**Selection Event** When user clicks on an option within the opened popover, should toggle the selection state and update the filter values. Should call onChange callback with new selected values array.",
+    "categoryId": "17582046453731"
+  },
+  "multi-select-trigger": {
+    "contentMarkdown": "**Click Event** When user clicks on the MultiSelect dropdown trigger, should log the click event and open the popover with available options. Should toggle popover state and display selection interface.",
+    "categoryId": "17582046453731"
+  },
+  "name-input": {
+    "contentMarkdown": "**Maternity Name Form Field** - Input type: Single line text - Required: Yes - Validation: Must not be empty - Placeholder: 'Mater Dei Santo Agostinho' - Purpose: Capture the name of the maternity/hospital where births occur",
+    "categoryId": "17582046453733"
+  },
+  "navigation-menu": {
+    "contentMarkdown": "Dynamic navigation menu with role-based visibility. Menu items include: Lista de Pacientes, Cadastrar Paciente, Registrar Nascimento, Arquivo Pós-Parto, Relatórios, Gestão de Usuários.",
+    "categoryId": "17582046453732"
+  },
+  "new-maternity-button": {
+    "contentMarkdown": "when clicked opens form modal to create new maternity - only visible to obstetricians and admins",
+    "categoryId": "interaction"
+  },
+  "new-patient-button": {
+    "contentMarkdown": "**Botão Nova Paciente**\nQuando clicado, navega para o formulário de cadastro de nova paciente.",
+    "categoryId": "17582046453731"
+  },
+  "new-patient-commercial-section": {
+    "contentMarkdown": "**Commercial Information Form Section**\n- Conditions Combined: Multi-line text input\n  - Optional\n  - Validation: Free text for commercial terms and agreements\n- Payment Records: Multi-line text input\n  - Optional\n  - Validation: Free text for payment history and details\n- Gestational Week Dates: Read-only display fields\n  - 20 Weeks Date: Auto-calculated from DPP\n  - 30 Weeks Date: Auto-calculated from DPP\n  - 32 Weeks Date: Auto-calculated from DPP\n  - 36 Weeks Date: Auto-calculated from DPP\n- Visibility: Only for superuser, admin, obstetrician, and SDR user types\n- Submit Button: Includes commercial data in patient creation",
+    "categoryId": "17582046453733"
+  },
+  "new-patient-form": {
+    "contentMarkdown": "**Formulário de Nova Paciente**\n\n- Dados Pessoais\n  - Nome Completo\n  - Data de Nascimento\n  - Data Provável do Parto (DPP)\n  - Telefone\n- Endereço Residencial\n  - CEP (busca automática)\n  - Logradouro\n  - Número\n  - Complemento\n  - Bairro\n  - Cidade\n  - Estado\n- Dados Adicionais\n  - Nome do Companheiro\n  - Nome do Bebê\n- Dados Obstétricos\n  - Via de Parto Pretendida\n  - Obstetra Responsável\n  - Enfermeira Obstétrica\n  - Doula\n- Serviços Contratados\n  - Consulta de Amamentação\n  - Curso de Cuidados com Recém-nascido\n  - Consulta Pediátrica\n  - Acompanhamento Nutricional\n  - Fisioterapia Pélvica\n  - Curso de Preparo para o Parto",
+    "categoryId": "17582046453732"
+  },
+  "new-patient-medical-observations": {
+    "contentMarkdown": "**Medical Observations Form**\n\n- Gestational Observations: Multi-line text input\n  - Optional\n  - Editable only by obstetricians\n  - Validation: Free text, max length reasonable for database storage",
+    "categoryId": "17582046453733"
+  },
+  "next-30-days-button": {
+    "contentMarkdown": "**Quick Date Filter Button**\nSets date range filter to show patients with due dates in the next 30 days from today automatically",
+    "categoryId": "17582046453731"
+  },
+  "nome-completo-input": {
+    "contentMarkdown": "Full name input field - Required field with red asterisk indicator, minimum 2 characters validation.",
+    "categoryId": "17582046453733"
+  },
+  "normal-without-professionals-card": {
+    "contentMarkdown": "**Normal s/ Profissional Stats Card**\n- Count of patients with normal delivery preference but no obstetric nurse or doula assigned\n- Red color theme indicating urgent attention needed\n- Alert triangle icon",
+    "categoryId": "17582046453732"
+  },
+  "nutritionist-field": {
+    "contentMarkdown": "**Conditional Nutritionist Display**\nNutritionist information only displays when both conditions are met: patient has assigned nutritionist AND nutritional monitoring service is contracted (nutritional_monitoring === 'contratado'). Ensures only relevant professional information is shown.",
+    "categoryId": "17582046453731"
+  },
+  "obstetric-nurse-access-control": {
+    "contentMarkdown": "**Obstetric Nurse Access Control System**\n\n**Role Detection:**\n- Role identifier: `user.role === 'enfermeira_obstetrica'`\n- Icon: Heart symbol in sidebar\n- Badge: No special badges by default\n- Menu isolation: Separate logic branch in getMenuItems()\n\n**Permission Structure:**\n- **View Access**: Can view patient lists, birth records, removed patients\n- **No Create**: Cannot create new patients\n- **No Register**: Cannot register births\n- **No Reports**: Cannot access reporting system\n- **No Admin Panels**: Cannot access maternities or user management\n\n**Future Admin Extension:**\n- Placeholder for `user.isAdmin` enhanced permissions\n- Will add additional menu items for admin nurses\n- Current implementation: Basic nurse permissions only\n\n**Security Implementation:**\n- Early return prevents access to other role menus\n- Role-specific logic prevents privilege escalation\n- Menu items filtered through show property",
     "categoryId": "Development"
   },
-  "master-task-manager": {
-    "contentMarkdown": "**Master Task Manager**\n- Header with Title and Add Button\n- Tasks List\n  - Task Cards with Title, Description, Category, Priority\n  - Period Badges, Professional Assignments\n  - Edit and Delete Actions\n- Add/Edit Dialog Form\n  - Basic Info: Title, Category, Priority, Frequency\n  - Period Selection (Multiple)\n  - Professional Category Assignment (Multiple)\n  - Additional Fields: Description, Required Flag",
+  "obstetric-nurse-action-restrictions": {
+    "contentMarkdown": "**Obstetric Nurse Action Button Restrictions**\n\n**PatientCard Restrictions:**\n- **Register Birth Button**: Hidden (`!isObstetricNurse` condition)\n- **Remove Button**: Hidden (`!isObstetricNurse` condition)\n- **View Details Button**: Always visible (only action available)\n\n**PatientDetailsModal Restrictions:**\n- **Edit Button**: Hidden (`!isObstetricNurse` condition in canEdit)\n- **Register Birth Button**: Hidden (`!isObstetricNurse` condition in canRegisterBirthForPatient)\n- **Modal Content**: All patient information remains visible\n\n**Available Actions:**\n- ✅ **View Details**: Can open and view all patient information\n- ❌ **Edit Patient**: Cannot modify patient data\n- ❌ **Register Birth**: Cannot register birth events\n- ❌ **Remove Patient**: Cannot remove patients from system\n\n**User Role Detection:**\n```javascript\nconst isObstetricNurse = user?.role === 'enfermeira_obstetrica';\n```",
+    "categoryId": "Interaction"
+  },
+  "obstetric-nurse-edit-modal": {
+    "contentMarkdown": "**Obstetric Nurse Assignment Modal**\n\n- Patient name: Display only, shows patient being edited\n- Delivery type: Display only, shows patient's preferred delivery method\n- Obstetric Nurse dropdown: Required selection from active obstetric nurses\n  - Includes \"None\" option to remove assignment\n  - Shows current assignment as selected value\n- Cancel button: Closes modal without changes\n- Save button: Updates patient record with new nurse assignment",
+    "categoryId": "17582046453733"
+  },
+  "obstetric-nurse-filter-dropdown": {
+    "contentMarkdown": "**Obstetric Nurse Delivery Type Filter**\n\n**Filter Options Logic:**\n```javascript\noptions={user?.role === 'enfermeira_obstetrica' ? [\n  { value: 'normal', label: 'Parto Normal' },\n  { value: 'nao_definido', label: 'Não Definido' }\n] : [\n  { value: 'normal', label: 'Parto Normal' },\n  { value: 'cesariana', label: 'Cesariana' },\n  { value: 'nao_definido', label: 'Não Definido' }\n]}\n```\n\n**Visibility Rules:**\n- **Obstetric Nurses**: Only see 'Normal' and 'Não Definido' options\n- **Other Users**: See all three options including 'Cesariana'\n- **Behavior**: Same MultiSelect component with conditional options\n\n**Functional Impact:**\n- Prevents nurses from accidentally filtering for cesarean deliveries\n- Maintains consistency with their data access permissions\n- Filter values work normally with existing filter system",
+    "categoryId": "Interaction"
+  },
+  "obstetric-nurse-menu-restrictions": {
+    "contentMarkdown": "**Obstetric Nurse Sidebar Menu**\n\n**Restricted Menu Items:**\n- Gestantes (Patients)\n- Nascimentos (Births)\n- Pacientes Removidas (Removed Patients)\n\n**Excluded Menu Items:**\n- Cadastrar Paciente (Create Patient)\n- Registrar Nascimento (Register Birth)\n- Relatórios (Reports)\n- Maternidades (Maternities)\n- Gestão de Usuários (User Management)\n\n**Menu Logic:**\n```javascript\nif (user.role === 'enfermeira_obstetrica') {\n  // Show only: patients, post-birth, removed-patients\n  // Early return to prevent other menu items\n}\n```\n\n**Special Conditions:**\n- Removed Patients: Only shown if `canViewRemovedPatients` is true\n- Admin Permissions: Future enhancement for nurses with admin flag\n- Role-Based Isolation: Completely separate menu logic from other user types",
     "categoryId": "Content"
   },
-  "master-task-manager-card": {
-    "contentMarkdown": "**Master Task Management Form**\n- Task Title: Required, single line input\n  - Validation: Not empty\n- Task Category: Required, dropdown selection\n  - Options: Categories created in Task Category Manager\n- Task Priority: Required, dropdown selection\n  - Options: Low/Medium/High\n- Task Frequency: Required, dropdown selection  \n  - Options: Daily/Weekly/Monthly\n- Week Day: Conditional, dropdown selection\n  - Required when frequency is Weekly\n  - Options: Sunday through Saturday\n- Month Day: Conditional, number input\n  - Required when frequency is Monthly\n  - Range: 1-31\n- Task Description: Optional, multi-line text\n  - Validation: Characters \u003c 500\n- Task Periods: Required, checkbox group\n  - Options: Start of Day/Start of Shift/End of Shift/End of Day\n  - At least one must be selected\n- Professional Categories: Required, checkbox group\n  - Options: Categories created in Professional Category Manager\n  - At least one must be selected\n- Save Button: Saves to both localStorage and Supabase\n- Cancel Button: Closes dialog without saving",
+  "obstetric-nurse-multi-select": {
+    "contentMarkdown": "**Multi-Select Obstetric Nurse Filter**\nAllows selection of multiple obstetric nurses to view patients from different nurses simultaneously. Enables filtering across multiple professionals.",
+    "categoryId": "17582046453731"
+  },
+  "obstetric-nurse-my-patients-card": {
+    "contentMarkdown": "**\"Sob Minha Responsabilidade\" Card Functionality**\n\n**Card Button Action:**\n```javascript\nonClick={() =\u003e {\n  handleClearFilters();\n  setFilters(prev =\u003e ({\n    ...prev,\n    status: 'ativas',\n    obstetricNurse: [user?.id || '']\n  }));\n}}\n```\n\n**Interaction Flow:**\n1. **Clear Filters**: Reset all existing filters to default\n2. **Set Status**: Ensure viewing active patients only\n3. **Set Nurse Filter**: Filter to current user's assigned patients\n4. **Update View**: Automatically refresh patient list\n\n**Visual States:**\n- **Button Variant**: \"outline\" (not highlighted by default)\n- **Icon**: Eye icon with \"Ver\" text\n- **Color Theme**: Blue (matches card theme)\n\n**Data Source:**\n- **Count**: `stats.myPatients` from filtered active patients\n- **Filter**: `obstetric_nurse_id === user?.id`\n- **Scope**: Only normal/not-defined delivery types (pre-filtered)",
+    "categoryId": "Interaction"
+  },
+  "obstetric-nurse-patient-filtering": {
+    "contentMarkdown": "**Obstetric Nurse Patient Data Filtering**\n\n**Base Data Filter:**\n```javascript\nif (user?.role === 'enfermeira_obstetrica') {\n  filteredPatients = filteredPatients.filter((p) =\u003e \n    p.preferred_delivery_type === 'normal' || p.preferred_delivery_type === 'nao_definido'\n  );\n}\n```\n\n**Visibility Rules:**\n- **Normal Delivery**: Can see patients with preferred_delivery_type = 'normal'\n- **Not Defined**: Can see patients with preferred_delivery_type = 'nao_definido'\n- **Cesarean**: CANNOT see patients with preferred_delivery_type = 'cesariana'\n\n**Stats Calculation:**\n- Active patients counted only from normal/not-defined deliveries\n- Gestational age statistics apply to filtered dataset\n- \"Normal s/ EO Atribuída\" counts normal deliveries without obstetric nurse\n- \"Sob Minha Responsabilidade\" counts patients assigned to current nurse\n\n**Filter Options:**\n- Delivery type dropdown excludes 'cesariana' option\n- Only shows: 'Parto Normal' and 'Não Definido'\n- All other filters work normally on the pre-filtered dataset",
+    "categoryId": "Development"
+  },
+  "obstetric-nurse-removed-patients-access": {
+    "contentMarkdown": "**Obstetric Nurse - Removed Patients Access**\n\n**Permission Logic Update:**\n```javascript\nconst canViewRemovedPatients = isAdmin || isAdministrative || isSuperUser || \n                              (isObstetrician \u0026\u0026 hasAdminPower) || isObstetricNurse;\n```\n\n**Access Rights:**\n- **Enfermeiras Obstétricas**: Now have access to removed patients view\n- **Role Identifier**: `user.role === 'enfermeira_obstetrica'`\n- **Menu Display**: \"Pacientes Removidas\" appears in sidebar\n- **View Access**: Can see list of soft-deleted patients\n\n**Permission Categories:**\n1. **isAdmin**: Users with admin flag (any role)\n2. **isAdministrative**: Administrative type users\n3. **isSuperUser**: Superuser accounts\n4. **isObstetrician + hasAdminPower**: Obstetricians with admin power\n5. **isObstetricNurse**: All obstetric nurses (NEW)\n\n**Business Justification:**\n- Obstetric nurses need to track patient care continuity\n- Essential for maintaining complete patient history visibility\n- Supports clinical workflow and patient safety protocols",
+    "categoryId": "Development"
+  },
+  "obstetric-nurse-select": {
+    "contentMarkdown": "**Enfermeira Obstetra Filter**\n- Filter by specific obstetric nurse\n- Shows all obstetric nurses from users table\n- \"Todas\" option to show all patients",
     "categoryId": "17582046453733"
   },
-  "nav-admin": {
-    "contentMarkdown": "**Click Event** Navigate to admin panel for managing checklist templates and tasks (admin role only)",
+  "obstetric-nurse-stats-cards": {
+    "contentMarkdown": "**Obstetric Nurse Dashboard Cards**\n\n**Modified Cards:**\n1. **First Card**: \"Parto Normal/Não Def.\" (instead of \"Gestantes Ativas\")\n2. **Fourth Card**: \"Normal s/ EO Atribuída\" (instead of \"Normal s/ Profissional\")\n\n**New Card (5th):**\n- **Title**: \"Sob Minha Responsabilidade\"\n- **Color**: Blue theme (bg-blue-100, text-blue-600)\n- **Count**: Patients where obstetric_nurse_id = current user ID\n- **Action**: Filter to show only assigned patients\n\n**Grid Layout:**\n- **Other users**: lg:grid-cols-4 (4 columns)\n- **Obstetric nurses**: lg:grid-cols-5 (5 columns)\n- Responsive: Always 1 col mobile, 2 cols tablet\n\n**Card Logic:**\n- Stats calculated from pre-filtered data (normal/not-defined only)\n- All gestational age calculations apply to filtered dataset\n- \"Ver\" buttons work with existing filter system",
+    "categoryId": "Content"
+  },
+  "obstetrician-multi-select": {
+    "contentMarkdown": "**Multi-Select Obstetrician Filter**\nAllows selection of multiple obstetricians simultaneously to view patients from different doctors at once. Shows selected count or names when multiple items selected.",
     "categoryId": "17582046453731"
   },
-  "nav-checklist": {
-    "contentMarkdown": "**Click Event** Navigate to user's personal daily checklist view",
-    "categoryId": "17582046453731"
+  "obstetrician-select-trigger": {
+    "contentMarkdown": "**Médico Obstetra Filter**\n- Filter by specific obstetrician\n- Shows all obstetricians from users table\n- \"Todos\" option to show all patients",
+    "categoryId": "17582046453733"
   },
-  "nav-dashboard": {
-    "contentMarkdown": "**Click Event** Navigate to team dashboard view (director role only) - shows team progress monitoring",
-    "categoryId": "17582046453731"
+  "over-37-weeks-card": {
+    "contentMarkdown": "**37+ Semanas Stats Card**\n- Count of patients with 37 weeks or more gestational age\n- Orange color theme indicating high priority\n- Alert circle icon",
+    "categoryId": "17582046453732"
   },
-  "nav-dashboard-admin": {
-    "contentMarkdown": "**Click Event** Navigate to team dashboard view (admin role) - shows same team progress monitoring functionality as director role",
-    "categoryId": "17582046453731"
+  "page-title": {
+    "contentMarkdown": "**Page Title - Nascimentos** Main page title displaying 'Nascimentos' (Births) for the post-birth records section. Previously named 'Arquivo Pós-Parto', now renamed for clarity. Includes subtitle explaining it shows 'Histórico de pacientes que já deram à luz' (History of patients who have given birth).",
+    "categoryId": "17582046453732"
   },
-  "nav-home-btn": {
-    "contentMarkdown": "**Universal Home Button**\nVisible to all users in the header. Navigates back to the main checklist view (home screen) regardless of user role.",
-    "categoryId": "17582046453731"
-  },
-  "password-confirm-button": {
-    "contentMarkdown": "**Click Event** Generates new temporary password for selected user and displays it to admin - password is 'temp123' and user must change on next login",
-    "categoryId": "17582046453731"
+  "password-change-system": {
+    "contentMarkdown": "**Universal Password Change System**\n\n**Self Password Change:**\n- All users can change their own password\n- Green KeyRound button in user management table\n- 'Alterar Senha' button in sidebar for all users\n- Dedicated ChangePasswordView component\n\n**Admin Password Reset:**\n- Admins can reset other users' passwords (blue KeyRound)\n- Superusers can reset any user's password\n- Cannot reset own password through admin function\n- Separate visual distinction (green vs blue icons)",
+    "categoryId": "Development"
   },
   "password-input": {
-    "contentMarkdown": "Password input field for user authentication - Required field, password type with demo password demo123",
+    "contentMarkdown": "Password input field with minimum length validation. Required field with red asterisk indicator and secure input masking.",
     "categoryId": "17582046453733"
   },
-  "period-filter-checkbox-start_day": {
-    "contentMarkdown": "**Change Event** When checked/unchecked, toggles 'Start Day' period in filters and updates filtered task display",
-    "categoryId": "17582046453731"
+  "patient-card": {
+    "contentMarkdown": "Display patient information card with name, baby name, delivery type indicators, professional assignment status, DPP, gestational age, contact info, address, medical team, contracted services, and registration date/time. Only show status badge for patients who have already given birth.",
+    "categoryId": "content"
   },
-  "period-selector-container": {
-    "contentMarkdown": "**Period Selection Page**\n\n- Header Section\n    - Clock icon\n    - Title text\n    - User greeting with current time\n- Smart Suggestion Box\n    - Lightbulb icon\n    - Suggestion title\n    - Recommendation message\n    - Accept suggestion button\n- Period Options Grid\n    - Six period cards (start day, start shift morning/afternoon, end shift morning/afternoon, end day)\n        - Period icon\n        - Period name\n        - Period description\n        - Status indicators\n- Action Buttons\n    - Cancel button",
-    "categoryId": "17582046453732"
-  },
-  "period-selector-view": {
-    "contentMarkdown": "**Period Selector View**\n- Header\n    - Title\n    - User Greeting\n    - Current Time\n- Periods Grid\n    - Period Options\n        - Icon\n        - Name\n        - Description\n        - Recommended Badge\n        - Existing Warning\n- Cancel Button\n- Confirmation Dialog",
-    "categoryId": "17582046453732"
-  },
-  "periods-help-text": {
-    "contentMarkdown": "Help text explaining that users can select multiple periods for tasks that need to be performed at different times of the day",
-    "categoryId": "17582046453732"
-  },
-  "profession-badge-destructive": {
-    "contentMarkdown": "Red badge style with warning icon for orphaned/inconsistent professional categories that no longer exist in the system",
+  "patient-details-commercial-section": {
+    "contentMarkdown": "Commercial information display section in patient details modal. Shows read-only view of commercial conditions, payment records, and calculated gestational week dates. Features orange theme with restricted access styling. Only visible to authorized user types.",
     "categoryId": "17582046453730"
   },
-  "profession-filter-checkbox-secretary": {
-    "contentMarkdown": "**Change Event** When checked/unchecked, toggles selected professional category in filters and updates filtered task display",
-    "categoryId": "17582046453731"
-  },
-  "professional-category-${category.id}": {
-    "contentMarkdown": "**Professional Category Item**\n\n- Color Indicator (colored circle with category color)\n- Category Details Section\n  - Category Name (truncated on mobile)\n  - Category Key Badge (role identifier)\n- Action Buttons Section\n  - Edit Button (with text on mobile, icon-only on desktop)\n  - Delete Button (with \"Excluir\" text on mobile)\n- Mobile: Actions displayed with full-width buttons\n- Desktop: Compact icon-only buttons",
+  "patient-details-modal": {
+    "contentMarkdown": "**Patient Details Modal**\n\n- Modal Header\n    - Patient Name and Status Badge\n    - Edit Button (with permissions)\n- Patient Information Grid\n    - Personal Information Card\n    - Address Card\n    - Pregnancy Information Card\n    - Medical Team Card\n    - Services Contracted Card\n- Patient History Section\n    - Full-width History Component",
     "categoryId": "17582046453732"
   },
-  "professional-category-form": {
-    "contentMarkdown": "**Professional Category Form**\n- Category Name: Single line input, Required\n- Role Key: Single line input, Required, Lowercase validation\n- Description: Multi-line input, Optional\n- Color Selection: Color picker from predefined palette, Required\n- Submit Button",
+  "patient-details-modal-instance": {
+    "contentMarkdown": "**Patient Details Modal Display**\nModal dialog triggered by 'Ver Detalhes' button that displays complete patient information. Automatically calculates patient age and current gestational age. Shows service status with colored badges. Responsive design with scroll capability for mobile devices. Closes on backdrop click or close button.",
+    "categoryId": "17582046453731"
+  },
+  "patient-dpp-value": {
+    "contentMarkdown": "**Patient DPP Display** Shows the estimated due date (Data Provável do Parto) extracted from the patient's record. Uses timezone-safe date parsing by explicitly constructing date from year/month/day components to avoid timezone conversion issues that could show incorrect dates.",
+    "categoryId": "17582046453732"
+  },
+  "patient-filters-card": {
+    "contentMarkdown": "**Filtros de Pacientes**\n- Campo de busca\n  - Busca por nome da paciente ou bebê\n  - Ícone de lupa\n- Filtros de seleção\n  - Status (Todas, Gestantes Ativas, Pós-Parto)\n  - Obstetra\n  - Pediatra\n- Controles\n  - Botão limpar filtros (aparece quando há filtros ativos)",
+    "categoryId": "17582046453732"
+  },
+  "patient-form": {
+    "contentMarkdown": "**Formulário de Cadastro de Paciente**\n\n- Nome Completo: Required, mínimo 2 caracteres\n- Data de Nascimento: Required, formato de data\n- Data Provável do Parto (DPP): Required, formato de data\n- Telefone: Required, validação de formato brasileiro\n- CEP: Required, validação de formato, busca automática de endereço\n- Logradouro: Required, preenchimento automático via CEP\n- Número: Optional\n- Complemento: Optional\n- Bairro: Required, preenchimento automático via CEP\n- Cidade: Required, preenchimento automático via CEP\n- Estado: Required, preenchimento automático via CEP\n- Nome do Companheiro: Optional\n- Nome do Bebê: Optional\n- Via de Parto Pretendida: Required, opções: Normal/Cesariana/Fórceps/Não Definido\n- Obstetra Responsável: Required, dropdown dinâmico do Supabase\n- Enfermeira Obstétrica: Optional, dropdown dinâmico, desabilitado para cesariana\n- Doula: Optional, dropdown dinâmico, desabilitado para cesariana\n- Serviços Contratados: Optional, múltiplas checkboxes\n- Botão Cadastrar Paciente",
     "categoryId": "17582046453733"
   },
-  "professional-category-manager-card": {
-    "contentMarkdown": "**Professional Category Management Form**\n- Category Name: Required, text input\n- Category Key: Required, lowercase text validation\n- Description: Optional, multi-line text\n- Color Selection: Required, color picker grid\n- Save/Update Button: Validates all fields and saves to Supabase\n- Delete Validation: Checks for linked users and tasks before allowing deletion",
-    "categoryId": "Development(17582046453733)"
+  "patient-history-display": {
+    "contentMarkdown": "**Patient History Logging Standards**\n\nAll patient history entries must use display names instead of technical IDs for better readability:\n\n- User names: Store full names (e.g., \"Enfermeira Ana Silva\") instead of UUIDs\n- Professional assignments: Store professional names (e.g., \"Dr. João Silva\") instead of user IDs  \n- Delivery types: Store display labels (e.g., \"Normal\", \"Cesariana\") instead of codes\n- Gender values: Store display labels (e.g., \"Masculino\", \"Feminino\") instead of codes\n- Boolean values: Store \"Sim\"/\"Não\" instead of true/false\n- Null/empty values: Store \"Não informado\" instead of null\n- Dates: Format as Brazilian date format (DD/MM/YYYY) instead of ISO format\n\nHistory entries include _user_name and _user_type for audit trail tracking.",
+    "categoryId": "17582046453733"
   },
-  "quick-login-0": {
-    "contentMarkdown": "**Quick Login Button Click**\nWhen user clicks the 'Usar' button next to any debug user:\n- Automatically fill email field with user's email\n- Automatically fill password field with user's password\n- Clear any existing error messages\n- Log the quick login action to console\n- Allow user to immediately click 'Entrar' to login",
-    "categoryId": "17582046453731"
-  },
-  "refresh-page-button": {
-    "contentMarkdown": "**Click Event** When clicked, reloads the entire browser page to refresh the application state and re-initialize Supabase connection after successful database setup",
-    "categoryId": "17582046453731"
-  },
-  "refresh-reports-btn": {
-    "contentMarkdown": "**Click Event**\nWhen clicked, reloads reports for the currently selected date. Shows loading state while fetching data.",
-    "categoryId": "17582046453731"
-  },
-  "remove-period-start_day": {
-    "contentMarkdown": "**Click Event** When clicked, moves 'Start Day' period from Assigned list to Available list and removes from task periods array (if not the last period)",
-    "categoryId": "17582046453731"
-  },
-  "remove-profession-secretary": {
-    "contentMarkdown": "**Click Event** When clicked, moves selected professional category from Assigned list to Available list and removes from task's assigned professions",
-    "categoryId": "17582046453731"
-  },
-  "reopen-checklist-dialog": {
-    "contentMarkdown": "**Click Event** When user clicks on a finalized checklist period, open reopen dialog asking for justification reason with two options: confirm reopen with reason or cancel back to home",
-    "categoryId": "17582046453731"
-  },
-  "reopen-dialog": {
-    "contentMarkdown": "**Reopen Checklist Flow**\n- Detects when user tries to create duplicate checklist type for same day\n- Requires mandatory reason with minimum 10 characters\n- Creates new checklist instance with reopen tracking\n- Preserves original finalized checklist in history",
-    "categoryId": "17582046453731"
-  },
-  "reopen-dialog-content": {
-    "contentMarkdown": "**Reopen Dialog Content**\n- Warning message about existing finalized checklist\n- Mandatory reason input field\n- Action buttons (Cancel/Reopen)",
+  "patient-history-section": {
+    "contentMarkdown": "**Patient History Section**\n\n- History Title\n- History Entry Cards\n    - Date and Time\n    - Action Type (Update/Create)\n    - User Name and Type Badge\n    - Changed Fields List\n        - Field Label\n        - Old Value (Red)\n        - New Value (Green)\n- Empty State Message",
     "categoryId": "17582046453732"
   },
-  "reports-header-content": {
-    "contentMarkdown": "**Reports Header Responsive Interaction**\n\nAdaptive layout for reports section:\n- Mobile: Full-width date input and button\n- Desktop: Compact inline controls\n- Date selector expands to full width on mobile\n- Button maintains consistent styling across breakpoints",
-    "categoryId": "17582046453731"
+  "patient-info-section": {
+    "contentMarkdown": "read-only display of patient information including name, phone, due date, current gestational age, preferred delivery type, and obstetrician",
+    "categoryId": "content"
   },
-  "reschedule-info": {
-    "contentMarkdown": "**Reagendamento Information Section**\n- Reschedule icon\n- Explanation text with original date\n- Reason for rescheduling",
+  "patients-grid": {
+    "contentMarkdown": "Responsive grid layout: mobile shows 1 column, tablet 2 columns, desktop 3 columns for patient cards.",
+    "categoryId": "Design"
+  },
+  "patients-table": {
+    "contentMarkdown": "**Patients Data Table**\n- 20 columns showing complete patient information\n- Scrollable horizontal layout\n- Action buttons for edit, register birth, and delete\n- Service status shown as Yes/No for clarity",
     "categoryId": "17582046453732"
   },
-  "rescheduled-indicator": {
-    "contentMarkdown": "**Visual Feedback**\nShows when a weekly or monthly task was automatically rescheduled due to no checklist activity on the original scheduled date",
+  "patients-table-view": {
+    "contentMarkdown": "**Edit Button Interaction**\nThe edit button in each table row triggers the same patient editing functionality as the grid view, opening a modal form with pre-filled patient information for editing.",
     "categoryId": "17582046453731"
   },
-  "reset-checklist": {
-    "contentMarkdown": "**Click Event** Reset all tasks in current day's checklist to uncompleted state",
+  "patients-view": {
+    "contentMarkdown": "**Patient Management Panel for Obstetric Nurse Users (enfermeira_obstetrica)**\n\n- Page title displays different subtitle based on user role:\n  - For obstetric nurses: \"Confira as gestantes ativas na equipe.\"\n  - For other users: \"Gerencie todas as pacientes do sistema\"\n- New Patient button is hidden for obstetric nurses\n- Only displays patients with 'normal' or 'undefined' delivery types for obstetric nurses\n- Statistics cards show filtered data for obstetric nurse role\n- Contains additional \"Sob Minha Responsabilidade\" card showing patients under nurse's care",
+    "categoryId": "17582046453733"
+  },
+  "payment-records-input": {
+    "contentMarkdown": "**Text Input Event** Multi-line textarea for recording payment information and transaction details. Updates form data in real-time. Disabled state shows gray background when user lacks edit permissions. Placeholder text guides user input.",
     "categoryId": "17582046453731"
   },
-  "reset-templates-btn": {
-    "contentMarkdown": "**Button Click**\nWhen clicked, clears localStorage and reloads templates with default tasks from mockData, resets selectedTemplate to null, and shows success toast message",
+  "payment-records-textarea": {
+    "contentMarkdown": "**Text Input Event** Multi-line textarea for payment records in SDR modal. Updates commercial data state in real-time. Can be disabled based on user permissions. Shows gray background when read-only.",
     "categoryId": "17582046453731"
   },
-  "restore-data-btn": {
-    "contentMarkdown": "Button to restore found data back to localStorage - only enabled when data is found, triggers page reload after restore",
+  "pdf-export-footer": {
+    "contentMarkdown": "PDF document footer containing copyright notice: 'Copyright Espaço Casal Monken. Dados sigilosos. O usuário responsável pela geração deste documento é também responsável pelo correto uso do mesmo.' Text is centered and appears on all pages with page numbering on the right side.",
+    "categoryId": "17582046453730"
+  },
+  "pdf-export-header": {
+    "contentMarkdown": "PDF document header featuring Casal Monken clinic logo positioned on the left side with document title beside it. Logo dimensions optimized for print quality at 100x40 pixels. Includes fallback handling if logo fails to load.",
+    "categoryId": "17582046453730"
+  },
+  "pediatra-field": {
+    "contentMarkdown": "**Conditional Pediatrician Field**\nPediatrician selection field appears only when 'Consulta pediátrica' checkbox is checked. Field is hidden and cleared when checkbox is unchecked. Required when visible.",
+    "categoryId": "17582046453731"
+  },
+  "pediatra-select": {
+    "contentMarkdown": "**Pediatrician Selection**\n- Required when 'Consulta pediátrica' is checked\n- Options populated from users with type 'pediatra'\n- Includes 'Nenhum selecionado' option\n- Automatically cleared when parent checkbox unchecked",
+    "categoryId": "17582046453733"
+  },
+  "pediatrician-field": {
+    "contentMarkdown": "**Conditional Pediatrician Display**\nPediatrician information only displays when both conditions are met: patient has assigned pediatrician AND pediatric consultation service is contracted (pediatric_consultation === 'contratado'). Prevents showing irrelevant professional assignments.",
+    "categoryId": "17582046453731"
+  },
+  "pelvic-physiotherapist-field": {
+    "contentMarkdown": "**Conditional Pelvic Physiotherapist Display**\nPelvic physiotherapist information only displays when both conditions are met: patient has assigned pelvic physiotherapist AND pelvic physiotherapy service is contracted (pelvic_physiotherapy === 'contratado'). Ensures modal shows only contracted professional services.",
+    "categoryId": "17582046453731"
+  },
+  "permanent-delete-button": {
+    "contentMarkdown": "when clicked by superuser opens confirmation modal for permanent deletion from database - only visible to superusers",
+    "categoryId": "interaction"
+  },
+  "permanent-delete-modal": {
+    "contentMarkdown": "displays warning modal requiring exact text confirmation 'EXCLUIR DEFINITIVAMENTE' before allowing permanent database deletion",
+    "categoryId": "interaction"
+  },
+  "register-birth-button": {
+    "contentMarkdown": "Responsive button - shows icon with text on desktop, icon only with tooltip on mobile",
+    "categoryId": "17582046453730"
+  },
+  "register-birth-modal": {
+    "contentMarkdown": "**Registro de Nascimento Form**\n\n- Data do Parto: Date input\n  - Required\n  - Validation: Must be valid date\n- Via de Parto Real: Select dropdown\n  - Required\n  - Options: Normal, Cesariana\n- Sexo do Bebê: Select dropdown\n  - Required  \n  - Options: Masculino, Feminino\n- Nome do Bebê: Text input\n  - Optional\n  - No validation rules\n- Maternidade: Select dropdown\n  - Required\n  - Options: List of available maternities\n- Enfermeira Obstétrica Presente: Select dropdown\n  - Optional\n  - Options: List of obstetric nurses + 'Nenhum'\n- Doula Presente: Select dropdown\n  - Optional\n  - Options: List of doulas + 'Nenhum'\n- Observações sobre o Parto: Textarea\n  - Optional\n  - Multi-line text input\n- Submit Button: Registrar Nascimento",
+    "categoryId": "17582046453733"
+  },
+  "registration-date-badge": {
+    "contentMarkdown": "Display patient registration date and time in Brazilian format (DD/MM/YY HH:MM) with user plus icon to indicate when the patient was registered in the system.",
+    "categoryId": "content"
+  },
+  "registration-date-cell": {
+    "contentMarkdown": "displays formatted patient registration date from created_at field",
+    "categoryId": "content"
+  },
+  "registration-date-header": {
+    "contentMarkdown": "displays 'Data Cadastro' as column header for patient registration date",
+    "categoryId": "content"
+  },
+  "remove-patient-modal": {
+    "contentMarkdown": "**Modal Interaction**\nWhen user clicks remove/delete button on patient card or table, modal opens asking for confirmation and optional removal reason. User can cancel or confirm removal, which performs soft deletion and moves patient to removed patients section.",
+    "categoryId": "17582046453731"
+  },
+  "removed-patients-table": {
+    "contentMarkdown": "**Removed Patients Table**\n- Name column\n- Age column\n- Phone column\n- DPP column\n- Delivery type column\n- Obstetrician column\n- Nurse column\n- Doula column\n- Pediatrician column\n- Address column\n- Baby name column\n- Partner column\n- Birth prep column\n- Newborn care column\n- Breastfeeding column\n- Nutrition column\n- Physiotherapy column\n- Pediatric consultation column\n- Status column\n- Removal date column\n- Removed by column\n- Reason column",
+    "categoryId": "17582046453732"
+  },
+  "removed-patients-view": {
+    "contentMarkdown": "**Pacientes Removidas Section**\n- Page title and description\n- Search input\n- Count badge\n- Results table\n    - Patient name and birth date\n    - Baby name\n    - Status badge\n    - Obstetrician\n    - Removal date\n    - Removed by user\n    - Removal reason",
+    "categoryId": "17582046453732"
+  },
+  "reset-password-button": {
+    "contentMarkdown": "**Click Event**\nWhen reset password button is clicked, immediately resets user password to default 'mudar1234!' and shows success notification.",
     "categoryId": "Interaction"
   },
-  "restore-default-data-btn": {
-    "contentMarkdown": "Button to restore default system data including professional categories and task categories when no user data is found",
+  "results-count": {
+    "contentMarkdown": "**Dynamic Results Counter**\nDisplays count of currently filtered and displayed patients (not total database count). Updates automatically when filters, sorting, or gestational age criteria change. Shows 'X resultado(s)' format to keep users informed of active filter results.",
+    "categoryId": "17582046453732"
+  },
+  "save-button": {
+    "contentMarkdown": "**Click Event**\nValidates form data and updates birth record in database. Shows loading state during submission. Closes modal and refreshes data on success.",
+    "categoryId": "17582046453731"
+  },
+  "sdr-birth-panel": {
+    "contentMarkdown": "**SDR Birth Panel Permissions**\n\n**Data Access**\n- View all registered births without restrictions\n- Full access to birth history and patient information\n- Complete table display with all birth details\n\n**Filter Access**\n- **Full filter access** - All filter options available:\n  - Search field (mother/baby name)\n  - Birth date range (from/to)\n  - Baby gender selection\n  - Maternity selection\n  - Obstetrician selection\n  - Obstetric nurse present selection\n  - Doula present selection\n  - Delivery type selection\n\n**Export Capabilities**\n- **PDF export enabled** - Can generate PDF reports\n- **Excel export enabled** - Can export to spreadsheet\n- Full access to data export functionality\n\n**Action Restrictions**\n- **Cannot edit birth records** - Edit buttons hidden/disabled\n- **Cannot cancel/delete births** - Cancel buttons hidden/disabled\n- **Read-only access** to all birth information\n- No modification capabilities for birth data\n\n**Interface Features**\n- Standard birth table with all columns visible\n- Full pagination and sorting capabilities\n- Complete birth history access\n- Statistics and summary information available",
+    "categoryId": "17582046453731"
+  },
+  "sdr-patient-panel": {
+    "contentMarkdown": "**SDR Patient Panel Permissions**\n\n**Data Access**\n- View all pregnant patients (no filtering restrictions)\n- Full access to patient details in both grid and list views\n- Can view patient details modal with complete information\n\n**Action Capabilities**\n- **Cannot register new patients** - \"New Patient\" button hidden\n- **Cannot register births** - \"Register Birth\" button hidden from cards, table, and details modal\n- **Can remove patients** - Must provide justification when removing\n- **Can edit services only** - Special edit modal limited to contracted services fields\n\n**Service Editing Modal**\n- Title: \"Editar Serviços Contratados\"\n- Checkbox controls for:\n  - Preparação para o Parto\n  - Cuidados com o Recém-nascido\n  - Consultoria de Amamentação\n  - Acompanhamento Nutricional\n  - Fisioterapia Pélvica\n  - Consulta Pediátrica\n- All changes logged in patient history with SDR attribution\n- Success message: \"Serviços atualizados com sucesso\"\n\n**History Logging**\n- All service changes tracked in patient_history table\n- User attribution: _user_name: 'SDR', _user_type: 'sdr'\n- Changed fields, old values, and new values properly recorded\n- Automatic timestamp and user ID association",
+    "categoryId": "17582046453731"
+  },
+  "sdr-sidebar-menu": {
+    "contentMarkdown": "**SDR Sidebar Menu**\n\n- Gestantes\n- Nascimentos\n- Pacientes Removidas\n- Relatórios",
+    "categoryId": "17582046453732"
+  },
+  "search-input": {
+    "contentMarkdown": "**Search Event** Search functionality filters maternities by name only. As user types, the table updates in real-time to show only maternities whose names contain the search term (case-insensitive).",
+    "categoryId": "17582046453731"
+  },
+  "services-badges": {
+    "contentMarkdown": "**Service Status Badges**\nShows contracted services as secondary badges. Only displays services with 'contratado' status. Provides quick visual identification of patient's service portfolio.",
+    "categoryId": "17582046453732"
+  },
+  "services-section": {
+    "contentMarkdown": "**Patient Services Section**\nDisplays contracted services as badges including: Preparação Parto, Cuidados RN, Consultoria Amamentação, Nutrição, Fisioterapia, Cons. Pediatria. Shows 'Nenhum serviço contratado' when no services selected.",
+    "categoryId": "17582046453732"
+  },
+  "sidebar": {
+    "contentMarkdown": "In mobile view, sidebar slides in from left with dark overlay. Close button in header or clicking overlay closes sidebar. Desktop shows permanently visible sidebar.",
     "categoryId": "Interaction"
   },
-  "role-template-manager-card": {
-    "contentMarkdown": "**Role Template Manager**\n- Header with title and action buttons\n- Templates list showing available templates\n- Template details panel for selected template\n- Task management interface",
-    "categoryId": "17582046453732"
+  "sidebar-logo": {
+    "contentMarkdown": "Compact Casal Monken clinic logo in the sidebar header above the title text, sized at h-12 for both mobile and desktop views",
+    "categoryId": "17582046453730"
   },
-  "role-template-manager-section": {
-    "contentMarkdown": "**Role Template Manager Section**\n- Header\n    - Title\n    - Description\n    - New Template Button\n- Templates List\n    - Available Templates\n        - Template Name\n        - Task Count\n        - Role Badge\n        - Delete Button\n- Template Details\n    - Template Info\n        - Name\n        - Last Updated\n        - Role Badge\n        - Add Task Button\n    - Task List\n        - Task Items\n            - Title\n            - Description\n            - Priority Badge\n            - Category Badge\n            - Period Badge\n            - Frequency Badge\n            - Edit Button\n            - Delete Button\n        - Empty State\n- New Template Dialog\n- New Task Dialog\n- Edit Task Form\n- Delete Confirmations",
-    "categoryId": "17582046453732"
+  "soft-delete-user": {
+    "contentMarkdown": "**User Soft Delete System**\n\n**Data Integrity Protection:**\n- Users are marked as deleted (deleted_at timestamp) instead of permanent deletion\n- Deleted users are filtered out of all user queries\n- Active patient associations are removed (set to NULL)\n- Historical birth records remain completely unchanged\n- System preserves data integrity and audit trail\n\n**Affected Data:**\n- Patients (active only): Professional associations removed\n- Born Patients: No changes (frozen historical data)\n- User record: Marked as deleted with timestamp and deleted_by reference",
+    "categoryId": "Development"
   },
-  "save-task-btn": {
-    "contentMarkdown": "**Button Click**\nWhen clicked, validates task title is filled, creates new task with unique ID, adds to selected template, saves to localStorage, updates UI, closes dialog, and shows success toast",
+  "sort-button": {
+    "contentMarkdown": "**Click Event** When clicked, opens dropdown menu with sorting options: 'Por Data de Remoção' (sorts by removal date, newest first) and 'Por Nome (A-Z)' (sorts alphabetically by full name). Selection updates table display order and logs action to console.",
     "categoryId": "17582046453731"
   },
-  "scan-data-btn": {
-    "contentMarkdown": "Button to scan localStorage for lost task data - shows spinning animation when scanning and displays results",
+  "sort-by-date": {
+    "contentMarkdown": "**Click Event** When clicked, sorts the removed patients table by removal date in descending order (newest removals first). Updates table display and logs action to console.",
+    "categoryId": "17582046453731"
+  },
+  "sort-by-name": {
+    "contentMarkdown": "**Click Event** When clicked, sorts the removed patients table alphabetically by patient full name in ascending order (A-Z). Updates table display and logs action to console.",
+    "categoryId": "17582046453731"
+  },
+  "sort-content": {
+    "contentMarkdown": "**Sort Dropdown Z-Index Enhancement**\nDropdown menu content with elevated z-index (z-[100]) ensuring sort options appear above all other interface elements. Right-aligned positioning relative to trigger button. Contains four sorting options with directional icons for clear user guidance.",
+    "categoryId": "17582046453730"
+  },
+  "sort-dropdown": {
+    "contentMarkdown": "**Click Event**\nWhen user clicks on sort dropdown, show menu with options to sort by removal date (most recent first) or alphabetically by name",
+    "categoryId": "17582046453731"
+  },
+  "sort-registration-asc": {
+    "contentMarkdown": "**Click Event**\nSort patients by registration date from oldest to newest",
+    "categoryId": "17582046453731"
+  },
+  "sort-registration-desc": {
+    "contentMarkdown": "**Click Event**\nSort patients by registration date from newest to oldest",
+    "categoryId": "17582046453731"
+  },
+  "stats-cards": {
+    "contentMarkdown": "**Stats Cards Section**\n\n- Active Patients Card\n    - Active Patients Count\n    - Users Icon\n    - View Button (Clear All Filters)\n- 34-36 Weeks Card\n    - Patients Count in 34-36 Week Range\n    - Clock Icon\n    - View Button (Filter 34-36 Weeks)\n- 37+ Weeks Card\n    - Patients Count 37+ Weeks\n    - Alert Circle Icon\n    - View Button (Filter 37+ Weeks)\n- Normal Without Professional Card\n    - Patients Count Normal Delivery Missing Professionals\n    - Alert Triangle Icon\n    - View Button (Filter Normal Without Professionals)",
+    "categoryId": "17582046453732"
+  },
+  "submit-button": {
+    "contentMarkdown": "Submit button to register new patient - Shows loading spinner during form submission, validates all required fields before allowing submission.",
+    "categoryId": "17582046453731"
+  },
+  "super-type-filtering-complete": {
+    "contentMarkdown": "**Complete Super Type Filtering System**\n\n**User Types Table Filter:**\n- Filter condition: `!userType.name.includes('super')`\n- Catches all variations: 'superuser', 'superusuario', 'super_admin'\n- No special protection UI needed (types completely hidden)\n- Simplified action buttons for all visible types\n\n**User Creation Form Filter:**\n- Filter condition: `!type.name.includes('super') \u0026\u0026 type.is_active !== false`\n- Prevents selection of super types in dropdown\n- Maintains active status filtering\n- Ensures clean user creation interface\n\n**Database Independence:**\n- Works regardless of exact super type naming in database\n- Future-proof against naming variations\n- Consistent behavior across all super-related types",
+    "categoryId": "Content"
+  },
+  "superuser-creation": {
+    "contentMarkdown": "**Superuser Account Creation**\n\n**Forced Account Creation:**\n- Email: super@casalmonken.com\n- Password: 123\n- User Type: superusuario\n- Full Admin Privileges: true\n- Cannot be deleted or modified by other users\n- Complete system access including all user management functions\n\n**Database Migration:**\n- Creates 'superusuario' user type if not exists\n- Creates 'administrativo' user type if not exists\n- Inserts superuser account with encrypted password\n- Ensures single point of system administration",
+    "categoryId": "Development"
+  },
+  "superuser-protection-system": {
+    "contentMarkdown": "**Superuser Protection System**\n\n**Status Protection:**\n- Superuser accounts CANNOT be deactivated\n- canToggleStatus() returns false for all superuser accounts\n- No status toggle button appears for superuser entries\n- Prevents system lockout scenarios\n\n**Self-Protection:**\n- Users cannot delete their own accounts\n- Users cannot deactivate their own accounts\n- Prevents accidental self-lockout\n- Ensures system administrative continuity",
     "categoryId": "Interaction"
   },
-  "smart-suggestion": {
-    "contentMarkdown": "**Smart Period Suggestion**\n\nIntelligent checklist period recommendation\n- Theme color: Blue gradient background with blue accent button\n- Font: Standard text with emphasis on suggestion title\n- Border radius style: Rounded container with soft gradient",
-    "categoryId": "17582046453730"
+  "superuser-self-edit-restriction": {
+    "contentMarkdown": "**Superuser Self-Edit Security Restriction**\n\n**Edit Button Restriction:**\n- Condition: `!(user.is_superuser \u0026\u0026 user.id === currentUser?.id)`\n- Superuser cannot see edit button for their own account\n- Other users can still be edited by superuser\n- Superuser accounts can be edited by other superusers\n\n**Available Actions for Superuser (Self):**\n1. **Change Password**: Green KeyRound icon, \"Alterar minha senha\" tooltip\n2. **View Information**: Can see their own data in the user table\n3. **No Edit Access**: Edit button completely hidden\n4. **No Status Toggle**: Already protected by !user.is_superuser condition\n5. **No Delete Access**: Already protected by !user.is_superuser condition\n\n**Security Rationale:**\n- Prevents accidental modification of critical superuser account\n- Maintains system integrity by protecting the primary admin account\n- Forces superuser changes to be made through controlled processes\n- Allows password changes for normal security maintenance\n\n**Button Matrix for Superuser (Self):**\n- Edit (✏️): ❌ Hidden\n- Toggle Status (👤❌/✅): ❌ Already hidden\n- Change Password (🔑): ✅ Visible (green)\n- Admin Privileges (🛡️): ❌ Already hidden\n- Delete (🗑️): ❌ Already hidden",
+    "categoryId": "Development"
   },
-  "stay-in-checklist-btn": {
-    "contentMarkdown": "**Click Event** Closes cancel dialog and keeps user in current checklist without losing progress",
-    "categoryId": "17582046453731"
+  "superuser-status-protection": {
+    "contentMarkdown": "**Enhanced Superuser Status Protection**\n\n**Status Toggle Restrictions:**\n- Superuser accounts have NO status toggle button\n- Button completely hidden for is_superuser = true\n- Prevents accidental system lockout scenarios\n- Visual indication: Missing toggle button shows protection\n\n**Self-Protection Rules:**\n- No user can delete their own account\n- No user can deactivate their own account\n- Password reset separated: blue for others, green for self\n- Maintains administrative continuity and prevents lockouts",
+    "categoryId": "Interaction"
   },
-  "system-configuration-manager-card": {
-    "contentMarkdown": "**System Configuration Mobile Design**\n\nResponsive configuration interface with tabbed layout optimized for mobile devices.\n\n- Theme color: Blue-gray accent with color-coded sections (blue for professional categories, green for task categories, orange for master tasks)\n- Font: Responsive typography with text-lg on desktop, smaller on mobile\n- Border radius style: Consistent rounded-lg for cards, rounded-r-md for info panels",
-    "categoryId": "17582046453730"
+  "superuser-type-exclusion": {
+    "contentMarkdown": "**Superuser Type Exclusion System**\n\n**User Creation Form:**\n- 'superusuario' type filtered from dropdown options\n- Filter condition: `type.name !== 'superusuario'`\n- Prevents creation of new superuser accounts via interface\n- Only existing superuser can be created through database migration\n\n**Protection Logic:**\n- Superuser type cannot be selected in user forms\n- Maintains system security by limiting superuser creation\n- Ensures controlled access to highest privilege level\n- Superuser accounts can only be created by system administrators",
+    "categoryId": "Development"
   },
-  "task-category-filter-checkbox-reception": {
-    "contentMarkdown": "**Change Event** When checked/unchecked, toggles selected task category in filters and updates filtered task display",
-    "categoryId": "17582046453731"
+  "superuser-type-hidden": {
+    "contentMarkdown": "**User Types Management Panel**\n\n**Filtered Display:**\n- 'superusuario' type completely hidden from types table\n- Filter condition: `userTypes.filter(userType =\u003e userType.name !== 'superusuario')`\n- No special protection badges needed (type not shown)\n- Simplified action buttons (edit and toggle status for all visible types)\n\n**Table Columns:**\n- Nome Interno (Internal Name)\n- Nome de Exibição (Display Name) \n- Descrição (Description)\n- Status (Active/Inactive)\n- Ações (Edit and Toggle Status buttons)",
+    "categoryId": "Content"
   },
-  "task-category-form": {
-    "contentMarkdown": "**Task Category Form**\n- Category Name: Single line input, Required\n- Description: Multi-line input, Optional\n- Color Selection: Color picker from predefined palette, Required\n- Submit Button",
+  "superuser-visibility-restrictions": {
+    "contentMarkdown": "**Superuser Visibility Control System**\n\n**For Non-Superusers:**\n- Superuser accounts hidden from user management lists\n- 'superusuario' type hidden from user type management\n- Cannot view, edit, or interact with superuser entities\n- Maintains system security through access restriction\n\n**For Superusers:**\n- Full visibility of all users and types\n- Can manage all entities except:\n  - Cannot delete own account\n  - Cannot modify 'superusuario' type\n  - All other administrative actions permitted",
+    "categoryId": "Interaction"
+  },
+  "telefone-input": {
+    "contentMarkdown": "Phone input field - Required field with automatic formatting to (xx) xxxxx-xxxx mask, validates 11 digits.",
     "categoryId": "17582046453733"
   },
-  "task-category-manager-card": {
-    "contentMarkdown": "Modern administrative interface design with clean layout, subtle shadows, and professional color scheme using system blue and green accents",
-    "categoryId": "17582046453730"
+  "test-excel-button": {
+    "contentMarkdown": "when clicked should generate and download an Excel file containing detailed removed patients data",
+    "categoryId": "interaction"
   },
-  "task-detail-title": {
-    "contentMarkdown": "**Task Title Display**\n- Multi-level task identification system:\n  1. Search in master_tasks by task_id\n  2. Extract from finalReport using regex pattern\n  3. Fallback to template tasks by index\n  4. Final fallback with task ID or \"not identified\" message\n- Display clean task names without technical IDs\n- Console logging for debugging task resolution method",
-    "categoryId": "17582046453732"
+  "test-export-button": {
+    "contentMarkdown": "when clicked should generate and download a PDF file containing all removed patients data with proper formatting",
+    "categoryId": "interaction"
   },
-  "task-notes-section": {
-    "contentMarkdown": "**Task Notes Section**\n- Notes Label\n- Notes Content",
-    "categoryId": "17582046453732"
+  "test-sort-button": {
+    "contentMarkdown": "when clicked toggles between sorting by removal date (newest first) and alphabetical order by name, with clear labels indicating next sort option",
+    "categoryId": "interaction"
   },
-  "task-periods-checkboxes": {
-    "contentMarkdown": "**Multiple Period Selection** Checkbox interface allowing users to assign a single task to multiple checklist periods (start_day, start_shift, end_shift, end_day) for tasks that occur multiple times per day",
+  "toggle-status-button": {
+    "contentMarkdown": "**Click Event**\nWhen status toggle button is clicked, immediately activates or deactivates the user. Inactive users cannot login and won't appear in professional selection lists.",
+    "categoryId": "Interaction"
+  },
+  "unassign-nurse-button": {
+    "contentMarkdown": "**Click Event**\nWhen clicked by obstetric nurse user, removes the current user as the obstetric nurse for the patient and creates a history log entry. Button is only visible when:\n- User is obstetric nurse without admin privileges\n- Patient is not born\n- Patient has 'normal' delivery type\n- Patient has the current user assigned as obstetric nurse\n- Button shows loading state during unassignment with red styling",
     "categoryId": "17582046453731"
   },
-  "template-header-actions": {
-    "contentMarkdown": "**Action Buttons Section**\n- Reset Templates Button\n- New Template Dialog Button",
-    "categoryId": "17582046453732"
+  "user-action-buttons": {
+    "contentMarkdown": "**User Action Buttons**\n- Edit Button: Opens edit user modal\n- Toggle Status Button: Activates/deactivates user\n- Reset Password Button: Resets password to default\n- Delete Button: Opens confirmation modal for deletion\nAll buttons are always visible in the actions column for each user row.",
+    "categoryId": "Content"
   },
-  "universal-logout-btn": {
-    "contentMarkdown": "**Universal Logout Button**\nVisible to all users in the header. Logs out the current user and returns to login screen. Red styling to indicate logout action.",
-    "categoryId": "17582046453731"
+  "user-action-buttons-restored": {
+    "contentMarkdown": "**User Management Action Buttons**\n\n**Button Visibility Logic:**\n- Edit: Available if canEditUser() returns true\n- Toggle Status: Available if canToggleStatus() returns true\n- Reset Password: Blue button for admin reset (canResetPassword())\n- Change Own Password: Green button for self password change\n- Admin Privileges: Available for non-superusers to authorized users\n- Delete: Available if canDeleteUser() returns true\n\n**Visual Design:**\n- All buttons use ghost variant with appropriate colors\n- Consistent 8x8 size for all action buttons\n- Tooltips explain each action clearly\n- Icons match action functionality",
+    "categoryId": "Design"
   },
-  "universal-nav-buttons": {
-    "contentMarkdown": "**Universal Navigation Buttons**\n\nNavigation buttons visible to all users\n- Theme color: Standard outline buttons with red accent for logout\n- Font: Standard button font with icon support\n- Border radius style: Rounded buttons with consistent spacing",
-    "categoryId": "17582046453730"
+  "user-action-buttons-simplified": {
+    "contentMarkdown": "**User Management Action Buttons - Simplified Logic**\n\n**Always Visible Buttons:**\n- Edit Button: Available for all users (ghost variant with Edit icon)\n- Password Button: Green for own password change, Blue for admin reset\n\n**Conditional Buttons:**\n- Toggle Status: Only visible for non-superuser accounts\n  - Orange UserX for deactivation, Green UserCheck for activation\n  - Superuser accounts cannot be deactivated (button hidden)\n- Admin Privileges: Only for non-superuser, non-self accounts\n  - Purple ShieldMinus to remove, Indigo ShieldPlus to grant\n  - Requires superuser or administrative privileges\n- Delete: Only for non-superuser, non-self accounts\n  - Red Trash2 icon, requires confirmation modal",
+    "categoryId": "Design"
   },
-  "user-change-password-dialog": {
-    "contentMarkdown": "**Change Password Form**\n\n- Current Password: Text input (password type)\n  - Required for users with existing passwords\n  - Optional for users with temporary passwords (temp-hash)\n  - Validation: Must match stored password_hash in database\n  - Toggle visibility with eye icon\n\n- New Password: Text input (password type)  \n  - Required\n  - Validation: Minimum 6 characters\n  - Must be different from current password\n  - Toggle visibility with eye icon\n  - Placeholder: \"Mínimo 6 caracteres\"\n\n- Confirm New Password: Text input (password type)\n  - Required  \n  - Validation: Must match new password exactly\n  - Toggle visibility with eye icon\n\n- Submit Button: \"Alterar Senha\"\n  - Saves new password to Supabase users.password_hash\n  - Shows loading state during submission\n  - Updates updated_at timestamp",
+  "user-deletion-modal": {
+    "contentMarkdown": "**User Deletion Confirmation Modal**\n\n**Modal Content:**\n- Warning icon and title\n- User details (name, email, type)\n- Clear explanation of soft delete behavior\n- Warning about association removal from active patients\n- Assurance that birth records remain unchanged\n- Cancel and Confirm buttons\n- Loading state during deletion",
+    "categoryId": "Content"
+  },
+  "user-form-admin-checkbox-fixed": {
+    "contentMarkdown": "**User Form Admin Checkbox - Fixed Implementation**\n\n**Authorization Logic:**\n```javascript\nconst canManageAdmin = (currentUser?.role === 'superusuario') || (currentUser?.role === 'administrativo');\n```\n\n**Authorized Roles:**\n- 'superusuario': Full system access, can manage all admin privileges\n- 'administrativo': Administrative staff, can manage admin privileges for other users\n\n**Unauthorized Roles:**\n- Users with has_admin_power but different role cannot manage admin privileges\n- Users cannot modify their own admin status through this interface\n- All other roles are excluded from admin privilege management\n\n**Form Field:**\n- Checkbox labeled 'Usuário Administrador'\n- Controlled by React Hook Form with is_admin field\n- Alert explanation of admin privileges scope\n- Only visible when canManageAdmin evaluates to true",
+    "categoryId": "Development"
+  },
+  "user-form-admin-section": {
+    "contentMarkdown": "**User Form Admin Permissions Section**\n\n**Admin Checkbox:**\n- Label: 'Usuário Administrador'\n- Controlled by React Hook Form Controller\n- Only visible to authorized users (superuser or administrative type)\n\n**Information Alert:**\n- Alert icon with info message\n- Text: 'Usuários administradores têm acesso ampliado para gerenciar pacientes e registros.'\n- Explains the scope of admin privileges\n- Helps users understand permission implications",
+    "categoryId": "Content"
+  },
+  "user-form-admin-states": {
+    "contentMarkdown": "**User Form Admin Checkbox States**\n\n**State 1: Automatic Admin (Administrative Type)**\n- Trigger: `isAdministrativeType || isEditingAdministrative`\n- Display: Disabled checkbox (always checked)\n- Label: 'Usuário Administrador (Automático para tipo Administrativo)'\n- Alert: 'Usuários do tipo Administrativo sempre possuem privilégios de administrador.'\n- Behavior: Cannot be unchecked, automatically set by useEffect\n\n**State 2: Editable Admin (Other Types)**\n- Trigger: `!isAdministrativeType \u0026\u0026 !isEditingAdministrative \u0026\u0026 canEditThisUserAdmin`\n- Display: Normal checkbox (user can toggle)\n- Label: 'Usuário Administrador'\n- Alert: 'Usuários administradores têm acesso ampliado para gerenciar pacientes e registros.'\n- Behavior: User can check/uncheck freely\n\n**State 3: Self-Edit Warning**\n- Trigger: `user?.id === currentUser?.id`\n- Display: Destructive alert (no checkbox)\n- Message: 'Você não pode alterar seus próprios privilégios administrativos.'\n- Behavior: Completely blocks self-permission modification\n\n**State 4: Not Authorized (Hidden)**\n- Trigger: `!canManageAdmin`\n- Display: Entire admin section hidden\n- No checkbox, alerts, or admin-related UI elements\n- Only superusuario and administrativo roles can see admin section",
+    "categoryId": "Interaction"
+  },
+  "user-form-modal": {
+    "contentMarkdown": "**User Form Modal**\n\n**Basic Information Section:**\n- Full Name: Required, min 2 characters\n- Display Name: Required, auto-filled from full name\n- Email: Required, email validation\n\n**Credentials Section:**\n- Username: Required, min 3 characters, unique\n- Password: Required for new users, optional for editing\n    - Show/hide toggle button\n    - Placeholder text changes based on mode\n\n**Permissions Section:**\n- User Type: Required dropdown (excludes superuser)\n- Admin Checkbox: Superuser only\n    - Info alert about admin privileges\n\n**Validation Rules:**\n- All required fields validated\n- Email format validation\n- Username uniqueness check\n- Password handling for edit mode",
     "categoryId": "17582046453733"
   },
-  "user-item-${user.id}": {
-    "contentMarkdown": "**User Management List Item**\n\n- User Avatar (circular with initials)\n- User Details Section\n  - User Name (truncated on mobile)\n  - User Email (with mail icon)\n  - Role Badge (mobile: below details, desktop: right side)\n- Action Buttons Section\n  - Edit Button (with text on mobile, icon-only on desktop)\n  - Password Reset Button (with \"Senha\" text on mobile)\n  - Delete Button (with \"Excluir\" text on mobile)",
+  "user-info": {
+    "contentMarkdown": "User information section displaying current user name, role, and access level badges. Visual indicators for admin privileges and obstetrician access levels.",
     "categoryId": "17582046453732"
   },
-  "user-management-card": {
-    "contentMarkdown": "**Mobile-First Admin Dashboard Design**\n\nModern, responsive design optimized for mobile devices while maintaining desktop functionality.\n\n- Theme color: Blue-gray accent with clean whites and subtle borders\n- Font: System fonts with responsive sizing (text-lg on desktop, smaller on mobile)\n- Border radius style: Consistent rounded-lg for cards, rounded-md for inner elements",
+  "user-management-access-control": {
+    "contentMarkdown": "**User Management Access Control**\n\n**Access Requirements:**\n- Admin users (is_admin = true) can access user management\n- Superusers can access user management\n- Administrative role users can access user management\n- Non-admin users are blocked from accessing the user management panel\n\n**Sidebar Menu Item:**\n- 'Gestão de Usuários' menu item only visible to authorized users\n- Uses hasPermission('manage_users') for access control\n- Redirects unauthorized users if they attempt direct access",
+    "categoryId": "Interaction"
+  },
+  "user-management-access-restriction": {
+    "contentMarkdown": "**User Management Access Restriction System**\n\n**Sidebar Menu Control:**\n- Old condition: `hasPermission('manage_users')`\n- New condition: `user.role === 'administrativo' || user.role === 'superusuario'`\n- Only shows 'Gestão de Usuários' menu item to authorized roles\n- Removes access for users with admin power but different roles\n\n**UsersView Access Guard:**\n- Double-layer protection: Sidebar + Component level\n- Access check: `user?.role === 'administrativo' || user?.role === 'superusuario'`\n- Access denied message for unauthorized users\n- Prevents direct URL access or navigation bypassing\n\n**Superuser Visibility Control:**\n- includeSuperuser: Only true for superusuario role\n- includeSuperuserType: Only true for superusuario role\n- Prevents non-superusers from seeing superuser data\n- Enhanced data isolation and security\n\n**Security Impact:**\n- Users with admin power (other roles) can only manage patients\n- User management reserved for administrative staff only\n- Clear separation between patient management and system administration",
+    "categoryId": "Development"
+  },
+  "user-management-actions": {
+    "contentMarkdown": "**User Management Action Buttons**\n\nAll action buttons are always visible in the users table:\n- Edit Button: Opens edit modal for user information\n- Toggle Status Button: Immediately activates/deactivates user\n- Reset Password Button: Resets password to default 'mudar1234!'\n- Delete Button: Opens confirmation modal for permanent deletion\n- Consistent visual hierarchy with color coding for different action types",
+    "categoryId": "Interaction"
+  },
+  "user-management-button-structure": {
+    "contentMarkdown": "**User Management Table Actions Column**\n\n- Edit Button\n- Status Toggle Button\n    - Deactivate User (Orange)\n    - Activate User (Green)\n- Password Reset Button\n    - Reset Others Password (Blue)\n    - Change Own Password (Green)\n- Admin Privileges Button\n    - Grant Admin Privileges (Indigo)\n    - Remove Admin Privileges (Purple)\n- Delete User Button",
+    "categoryId": "Content"
+  },
+  "user-management-tab": {
+    "contentMarkdown": "**User Management Section**\n- Create User Button\n- Users Table\n    - Name Column\n    - Email Column\n    - Type Column\n    - Status Column\n    - Permissions Column\n    - Actions Column\n        - Edit Button\n        - Toggle Status Button\n        - Reset Password Button\n        - Delete Button",
+    "categoryId": "Content"
+  },
+  "user-status-toggle-icon": {
+    "contentMarkdown": "**User Status Toggle Button**\n\nIcon design for user activation/deactivation:\n- Active users: UserX icon in orange color indicating deactivation action\n- Inactive users: UserCheck icon in green color indicating activation action\n- Icons clearly represent user status management\n- Colors provide visual feedback about current status and available action",
+    "categoryId": "Design"
+  },
+  "user-type-action-buttons": {
+    "contentMarkdown": "**User Type Action Buttons**\n- Edit Button: Opens edit user type modal\n- Toggle Status Button: Activates/deactivates user type\nBoth buttons are always visible in the actions column for each user type row.",
+    "categoryId": "Content"
+  },
+  "user-type-form-modal": {
+    "contentMarkdown": "**User Type Form Modal**\n- Display Name: Required, minimum 2 characters\n- Technical Name: Required, auto-generated from display name, only lowercase letters and underscore\n- Description: Optional, multi-line text area\n- Active Status: Only visible when editing, checkbox to set active/inactive status",
+    "categoryId": "Development"
+  },
+  "user-type-form-simplification": {
+    "contentMarkdown": "**User Type Form Modal**\n\nSimplified form structure:\n- Display Name: Required field\n- Technical Name: Auto-generated, disabled when editing\n- Description: Optional field\n- Status management: Removed from modal, handled via table toggle button\n- Cleaner interface focused on essential information only",
+    "categoryId": "Content"
+  },
+  "user-type-protection": {
+    "contentMarkdown": "**Protected User Type Design**\n\n**Superusuario Type Protection:**\n- Edit and toggle buttons hidden for 'superusuario' type\n- 'Protegido' badge displayed instead of action buttons\n- Gray outline badge styling for protected indication\n- Clear visual distinction from editable types\n- Prevents accidental system administrator type modification",
+    "categoryId": "Design"
+  },
+  "user-type-toggle-icon": {
+    "contentMarkdown": "**User Type Status Toggle Button**\n\nIcon design for user type activation/deactivation:\n- Active types: Ban icon (🚫) in orange color indicating deactivation action\n- Inactive types: CheckCircle icon (✅) in green color indicating activation action\n- Icons are intuitive and clearly show the action that will be performed\n- Colors provide visual feedback about current status and available action",
+    "categoryId": "Design"
+  },
+  "user-types-tab": {
+    "contentMarkdown": "**User Types Management Section**\n- Create Type Button\n- User Types Table\n    - Technical Name Column\n    - Display Name Column\n    - Description Column\n    - Status Column\n    - Actions Column\n        - Edit Button\n- Information Alert",
+    "categoryId": "Content"
+  },
+  "user-types-table-structure": {
+    "contentMarkdown": "**User Types Table Structure (Filtered)**\n\n**Header Row:**\n- Nome Interno\n- Nome de Exibição  \n- Descrição\n- Status\n- Ações\n\n**Data Rows (excluding superusuario):**\n- administrativo\n- consultora_amamentacao\n- doula  \n- enfermeira_obstetrica\n- fisioterapeuta_pelvica\n- obstetra\n- pediatra\n- nutricionista\n- sdr\n\n**Action Buttons for each row:**\n- Edit Button (pencil icon)\n- Toggle Status Button (ban/check circle icon)",
+    "categoryId": "Content"
+  },
+  "users-management-container": {
+    "contentMarkdown": "**User Management System**\n\n**Main Sections:**\n- Header Section\n    - Page Title: \"Gestão de Usuários\"\n    - Page Description\n    - Statistics Badges (User count, Type count)\n- Management Tabs Card\n    - Tab Navigation (Users / User Types)\n    - Users Tab Content\n    - User Types Tab Content\n\n**Key Features:**\n- Tabbed interface for managing users and user types\n- Real-time statistics display\n- Permission-based access control\n- Loading and error states\n- Responsive design for all screen sizes",
+    "categoryId": "17582046453732"
+  },
+  "users-management-system": {
+    "contentMarkdown": "**Complete User Management System**\n- User Management Tab\n    - Create new users with email-based login (no username)\n    - Edit existing users\n    - Toggle user active/inactive status\n    - Reset user passwords to default 'mudar1234!'\n    - Delete users with confirmation\n    - View user status, type and permissions\n- User Types Management Tab\n    - Create new user types\n    - Edit user types including active/inactive status\n    - Auto-generate technical names from display names\n    - Manage user type descriptions\n- Security Features\n    - Only active users can login\n    - Only active users appear in professional selection\n    - Only active user types appear in user creation\n    - Permission-based access control\n    - Users cannot modify themselves",
+    "categoryId": "Content"
+  },
+  "vTVXSakRr1IcHaVg": {
+    "contentMarkdown": "Dropdown menu chevron icon with maximum z-index positioning to ensure proper layering above all interface elements. Uses z-[9999] for dropdown content to prevent clipping issues with other UI components.",
     "categoryId": "17582046453730"
   },
-  "user-menu": {
-    "contentMarkdown": "\n\n**Click Event**\nWhen user clicks on avatar, dropdown menu appears with navigation options. Menu provides quick access to main sections and logout functionality with proper visual feedback.",
+  "via-parto-select": {
+    "contentMarkdown": "Birth route selection dropdown - When 'Cesarean' is selected, automatically disables and clears Obstetric Nurse, Doula and Birth Preparation Course fields with visual indicators.",
     "categoryId": "17582046453731"
   },
-  "view-checklist-details": {
-    "contentMarkdown": "**Click Event**\nWhen clicked, opens dialog showing detailed view of the checklist including all tasks, completion status, notes, and timing information.",
+  "view-34-37-weeks-button": {
+    "contentMarkdown": "**Active Filter Visual Feedback**\nFilter button uses conditional styling based on gestationalAgeFilter state:\n- Active state (gestationalAgeFilter === '34-37'): variant='default' (blue solid)\n- Inactive state: variant='outline' (border only)\nProvides clear visual indication when specific gestational age filter is applied.",
+    "categoryId": "17582046453730"
+  },
+  "view-active-button": {
+    "contentMarkdown": "**Active Patients View Button**\nQuick action button in Active Patients statistics card. When clicked, filters view to show only active (not born) patients. Provides rapid access to main patient list with single click.",
     "categoryId": "17582046453731"
   },
-  "vsCTS9InxDWMj672": {
-    "contentMarkdown": "**Logo and Brand Section**\n\n- Logo Container\n  - Logo Image (10x10 on mobile, 12x12 on desktop)\n  - Flex-shrink-0 to maintain size\n- Brand Information\n  - Company Name (truncated text, responsive font size)\n  - Subtitle (hidden on mobile, visible on desktop)\n  - Min-width-0 and flex-1 for proper truncation",
+  "view-controls": {
+    "contentMarkdown": "Mobile layout stacks controls vertically with compact buttons. Desktop shows horizontal layout with full button labels.",
+    "categoryId": "Design"
+  },
+  "view-details-button": {
+    "contentMarkdown": "Responsive button - shows icon with text on desktop, icon only with tooltip on mobile",
+    "categoryId": "17582046453730"
+  },
+  "view-normal-without-professionals-button": {
+    "contentMarkdown": "**Active Filter Visual Feedback**\nFilter button uses conditional styling based on gestationalAgeFilter state:\n- Active state (gestationalAgeFilter === 'normal-no-prof'): variant='default' (blue solid)  \n- Inactive state: variant='outline' (border only)\nProvides clear visual indication when normal delivery without professionals filter is applied.",
+    "categoryId": "17582046453730"
+  },
+  "view-over-37-weeks-button": {
+    "contentMarkdown": "**Active Filter Visual Feedback**\nFilter button uses conditional styling based on gestationalAgeFilter state:\n- Active state (gestationalAgeFilter === '37+'): variant='default' (blue solid)\n- Inactive state: variant='outline' (border only)\nProvides clear visual indication when 37+ weeks filter is applied.",
+    "categoryId": "17582046453730"
+  },
+  "zip-cell": {
+    "contentMarkdown": "**ZIP Code Display in Birth Records**\n\n**Data Field:**\n- Field: `zip_code` (stored from patient registration)\n- Content: Patient's residential ZIP code\n- Format: Raw ZIP format (e.g., \"30110042\")\n\n**Display Rules:**\n- Show: Direct field value `patient.zip_code`\n- Fallback: Show \"-\" if no ZIP code recorded\n- No formatting: Display as stored in database\n- Position: Between age and birth date columns\n\n**Purpose:**\n- Geographic tracking of births\n- Regional analysis capability\n- Patient location reference\n- Statistical mapping support",
     "categoryId": "17582046453732"
   }
 }
